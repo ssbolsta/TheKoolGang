@@ -1,6 +1,7 @@
 package kalenderGUI;
 
 public class Test {
-	
-	String testAttributt;
+	public static void main(String[] args){
+		System.out.println("The cool gang is the coolest");
+	}
 }
