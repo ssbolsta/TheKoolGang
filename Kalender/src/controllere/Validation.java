@@ -26,4 +26,15 @@ public class Validation {
 			throw new Exception ("Feil lengde");
 		}
 	}
+	
+	static void validateUsername(String username) throws Exception{
+		username = username.trim();
+		char[] chars = username.toCharArray();
+
+		for (char c : chars) {
+			if(!Character.isLetter(c)) {
+				throw new Exception ("Brukernavnet kan ikke innheolde tall");
+			}
+		}
+	}
 }
