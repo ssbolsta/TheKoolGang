@@ -5,7 +5,7 @@ public class LoginController {
 	private String username = "sappis";
 	
 	
-	protected void login(String pass, String user){
+	public void login(String pass, String user){
 		try{
 			Validation.validateUsername(user);
 			if(user.equals(username)&&pass.equals(password)){
