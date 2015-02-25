@@ -1,5 +1,9 @@
 package controllere;
 
+import exceptions.IntegerOnlyException;
+import exceptions.NameContainsIntegerOrSign;
+import exceptions.WrongLengthOfInput;
+
 public class Validation {
 
 	static void validateName(String name) throws Exception{
@@ -8,7 +12,7 @@ public class Validation {
 
 		for (char c : chars) {
 			if(!Character.isLetter(c)) {
-				throw new Exception ("Navn kan ikke inneholde tall");
+				throw new NameContainsIntegerOrSign("Navn kan ikke inneholde tall");
 			}
 		}
 	}
@@ -20,10 +24,10 @@ public class Validation {
 			Long.parseLong(pnr);
 		}
 		catch(Exception e){
-			System.out.println("Personnummer må bestå av elleve tall");
+			throw new IntegerOnlyException("Personnummer må bestå av elleve tall");
 		}
 		if(pnr.length()!= 11){
-			throw new Exception ("Feil lengde");
+			throw new WrongLengthOfInput("Feil lengde");
 		}
 	}
 	
@@ -33,7 +37,7 @@ public class Validation {
 
 		for (char c : chars) {
 			if(!Character.isLetter(c)) {
-				throw new Exception ("Brukernavnet kan ikke innheolde tall");
+				throw new NameContainsIntegerOrSign("Brukernavnet kan ikke innheolde tall");
 			}
 		}
 	}

@@ -2,6 +2,8 @@ package kalender.kontroller;
 
 import java.time.LocalDate;
 
+import exceptions.NameContainsIntegerOrSign;
+
 public class Validation {
 
 	static void validateName(String name) throws Exception{
@@ -10,7 +12,7 @@ public class Validation {
 
 		for (char c : chars) {
 			if(!Character.isLetter(c)) {
-				throw new Exception ("Navn kan ikke inneholde tall");
+				throw new NameContainsIntegerOrSign("Navn kan ikke inneholde tall");
 			}
 		}
 	}
