@@ -45,7 +45,11 @@ public class NewEvent1Controller {
 			nameList.add(string.toString());
 		}
 		for (int i = 0; i < 25; i++) {
-			timeList.add(LocalTime.of(i, 0));
+			if( i == 24){
+				timeList.add(LocalTime.of(23, 59));
+			}else{
+				timeList.add(LocalTime.of(i, 0));				
+			}
 		}
 		fromTime.setItems(timeList);
 		toTime.setItems(timeList);
