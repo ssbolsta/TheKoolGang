@@ -47,4 +47,8 @@ public class Person {
 	public IntegerProperty getUidProperty(){
 		return uId;
 	}
+	
+	public String toString(){
+		return lastName + ", " + firstName + " #" + uId.toString();
+	}
 }
