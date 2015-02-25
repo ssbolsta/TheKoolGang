@@ -63,7 +63,7 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="5">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="Legg Til Person">
+                  <Button mnemonicParsing="false" onAction="#handleLeggTilPerson" prefHeight="25.0" prefWidth="110.0" text="Legg Til Person">
                      <HBox.margin>
                         <Insets top="6.0" />
                      </HBox.margin>
@@ -101,7 +101,7 @@
                   <Insets top="20.0" />
                </GridPane.margin>
             </ScrollPane>
-            <ComboBox fx:id="personSearchField" editable="true" prefHeight="25.0" prefWidth="254.0" promptText="Søk etter person" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <ComboBox fx:id="personSearchField" prefHeight="25.0" prefWidth="254.0" promptText="Søk etter person" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
