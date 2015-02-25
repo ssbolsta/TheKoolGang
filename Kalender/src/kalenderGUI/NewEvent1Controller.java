@@ -65,11 +65,38 @@ public class NewEvent1Controller {
 	@FXML
 	private  void handleLeggTilPerson(){
 		if(personSearchField.getSelectionModel().getSelectedItem() != null){
-			personTableList.add((Person)personSearchField.getSelectionModel().getSelectedItem());
-			personList.remove(personSearchField.getSelectionModel().getSelectedItem());
-			personSearchField.setItems(personList);
-			recipientTable.setItems(personTableList);
+			personTableList.add(personSearchField.getSelectionModel().getSelectedItem());
+			nameList.remove(personSearchField.getSelectionModel().getSelectedItem());
 		}
 	}
 	
+	@FXML
+	private void handleFjernPerson(){
+		if(recipientTable.getSelectionModel().getSelectedItem() != null){
+			nameList.add(recipientTable.getSelectionModel().getSelectedItem());
+			personTableList.remove(recipientTable.getSelectionModel().getSelectedItem());
+		}
+	}
+	@FXML
+	private void handleFromTime(){
+		if(toTime.getSelectionModel().getSelectedItem() != null){
+			LocalTime time = null;
+			if(fromTime.getSelectionModel().getSelectedItem().isBefore(toTime.getSelectionModel().getSelectedItem())){
+				time = toTime.getSelectionModel().getSelectedItem();
+			}
+			timeToList.removeAll(timeToList);
+			int t = fromTime.getSelectionModel().getSelectedIndex();
+			for (int i = t+1; i < 25; i++) {
+				if(i != 24){
+					timeToList.add(LocalTime.of(i, 0));
+				}else{
+					timeToList.add(LocalTime.of(23, 59));
+				}
+			}
+			toTime.setItems(timeToList);
+			if(time != null){
+				toTime.getSelectionModel().select(time);
+			}
+		}
+	}
 }
