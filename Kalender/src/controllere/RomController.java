@@ -1,4 +1,4 @@
-package kalender.kontroller;
+package controllere;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
