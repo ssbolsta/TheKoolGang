@@ -11,8 +11,8 @@
    <children>
       <HBox alignment="BOTTOM_RIGHT" layoutX="236.0" layoutY="386.0" prefHeight="40.0" prefWidth="245.0" spacing="20.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Next" />
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Cancel" />
+            <Button defaultButton="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Next" />
+            <Button cancelButton="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Cancel" />
          </children>
       </HBox>
       <GridPane layoutX="14.0" layoutY="6.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="6.0">
@@ -31,7 +31,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField fx:id="nameField" GridPane.columnIndex="1" />
+            <TextField fx:id="nameField" promptText="Tast inn navn på Arrangement" GridPane.columnIndex="1" />
             <TextArea fx:id="descriptionField" promptText="Tast inn en beskrivelse for arrangementet om ønsket" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets top="10.0" />
