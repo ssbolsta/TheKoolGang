@@ -13,6 +13,7 @@ import java.util.TreeMap;
 
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+import javafx.event.ActionEvent;
 import javafx.geometry.HPos;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -30,10 +31,7 @@ import jfxtras.scene.control.CalendarTextField;
 import jfxtras.scene.control.agenda.Agenda;
 
 
-/**
- *
- * @author Maxim
- */
+
 public class AgendaApplication extends Application
 {
     public AgendaApplication()
@@ -53,19 +51,7 @@ public class AgendaApplication extends Application
         lAppointmentGroupMap.put("group08", new Agenda.AppointmentGroupImpl().withStyleClass("group8"));
         lAppointmentGroupMap.put("group09", new Agenda.AppointmentGroupImpl().withStyleClass("group9"));
         lAppointmentGroupMap.put("group10", new Agenda.AppointmentGroupImpl().withStyleClass("group10"));
-        lAppointmentGroupMap.put("group11", new Agenda.AppointmentGroupImpl().withStyleClass("group11"));
-        lAppointmentGroupMap.put("group12", new Agenda.AppointmentGroupImpl().withStyleClass("group12"));
-        lAppointmentGroupMap.put("group13", new Agenda.AppointmentGroupImpl().withStyleClass("group13"));
-        lAppointmentGroupMap.put("group14", new Agenda.AppointmentGroupImpl().withStyleClass("group14"));
-        lAppointmentGroupMap.put("group15", new Agenda.AppointmentGroupImpl().withStyleClass("group15"));
-        lAppointmentGroupMap.put("group16", new Agenda.AppointmentGroupImpl().withStyleClass("group16"));
-        lAppointmentGroupMap.put("group17", new Agenda.AppointmentGroupImpl().withStyleClass("group17"));
-        lAppointmentGroupMap.put("group18", new Agenda.AppointmentGroupImpl().withStyleClass("group18"));
-        lAppointmentGroupMap.put("group19", new Agenda.AppointmentGroupImpl().withStyleClass("group19"));
-        lAppointmentGroupMap.put("group20", new Agenda.AppointmentGroupImpl().withStyleClass("group20"));
-        lAppointmentGroupMap.put("group21", new Agenda.AppointmentGroupImpl().withStyleClass("group21"));
-        lAppointmentGroupMap.put("group22", new Agenda.AppointmentGroupImpl().withStyleClass("group22"));
-        lAppointmentGroupMap.put("group23", new Agenda.AppointmentGroupImpl().withStyleClass("group23"));
+
         for (String lId : lAppointmentGroupMap.keySet())
         {
             Agenda.AppointmentGroup lAppointmentGroup = lAppointmentGroupMap.get(lId);
@@ -91,52 +77,31 @@ public class AgendaApplication extends Application
         });
 */
         // initial set
-        Calendar lFirstDayOfWeekCalendar = getFirstDayOfWeekCalendar(agenda.getLocale(), agenda.getDisplayedCalendar());
-        int lFirstDayOfWeekYear = lFirstDayOfWeekCalendar.get(Calendar.YEAR);
-        int lFirstDayOfWeekMonth = lFirstDayOfWeekCalendar.get(Calendar.MONTH);
-        int FirstDayOfWeek = lFirstDayOfWeekCalendar.get(Calendar.DATE);
+
         Calendar lToday = agenda.getDisplayedCalendar();
         int lTodayYear = lToday.get(Calendar.YEAR);
         int lTodayMonth = lToday.get(Calendar.MONTH);
         int lTodayDay = lToday.get(Calendar.DATE);
         agenda.appointments().addAll(
-        /*
-         *  . . . .
-         *  . . . .
-         *  A . . .  8:00
-         *  A B C .  8:30
-         *  A B C D  9:00
-         *  A B . D  9:30
-         *  A . . D 10:00
-         *  A E . D 10:30
-         *  A . . D 11:00
-         *  . . . D 11:30
-         *  . . . D 12:00
-         *  F . . D 12:30
-         *  F H . D 13:00
-         *  . . . . 13:30
-         *  G . . . 14:00
-         *  . . . . 14:30
-         *
-         */
+
         new Agenda.AppointmentImpl()
                 .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 8, 00))
                 .withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 11, 30))
-                .withSummary("A")
-                .withDescription("A much longer test description")
-                .withAppointmentGroup(lAppointmentGroupMap.get("group07"))
+                .withSummary("A mistake")
+                .withDescription("Dette er eventent til gruppe 3. De skjønte ikke event systemet, så denne ble laget ved en feil.")
+                .withAppointmentGroup(lAppointmentGroupMap.get("group03"))
         ,   new Agenda.AppointmentImpl()
             .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 8, 30))
             .withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 10, 00))
-            .withSummary("B")
-            .withDescription("A description 2")
-            .withAppointmentGroup(lAppointmentGroupMap.get("group08"))
+            .withSummary("Snusmumriken")
+            .withDescription("Dette er eventet til gruppe 2. De skal til Mumidalen")
+            .withAppointmentGroup(lAppointmentGroupMap.get("group02"))
         ,   new Agenda.AppointmentImpl()
             .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 8, 30))
             .withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 9, 30))
-            .withSummary("C")
-            .withDescription("A description 3")
-            .withAppointmentGroup(lAppointmentGroupMap.get("group09"))
+            .withSummary("Stek")
+            .withDescription("Dette er et event for gruppe 1. De skal steke dagen lang")
+            .withAppointmentGroup(lAppointmentGroupMap.get("group01"))
 
 
 
@@ -144,48 +109,10 @@ public class AgendaApplication extends Application
     }
     final Agenda agenda;
 
-    public String getSampleName() {
-        return this.getClass().getSimpleName();
-    }
 
-    public String getSampleDescription() {
-        return "Basic Agenda usage";
-    }
 
-    public Node getPanel(Stage stage) {
-        return agenda;
-    }
 
-    public Node getControlPanel() {
-        // the result
-        GridPane lGridPane = new GridPane();
-        lGridPane.setVgap(2.0);
-        lGridPane.setHgap(2.0);
 
-        // setup the grid so all the labels will not grow, but the rest will
-        ColumnConstraints lColumnConstraintsAlwaysGrow = new ColumnConstraints();
-        lColumnConstraintsAlwaysGrow.setHgrow(Priority.ALWAYS);
-        ColumnConstraints lColumnConstraintsNeverGrow = new ColumnConstraints();
-        lColumnConstraintsNeverGrow.setHgrow(Priority.NEVER);
-        lGridPane.getColumnConstraints().addAll(lColumnConstraintsNeverGrow, lColumnConstraintsAlwaysGrow);
-        int lRowIdx = 0;
-
-        // week
-        {
-           /* lGridPane.add(new Label("Week of"), new GridPane.C().row(lRowIdx).col(0).halignment(HPos.RIGHT));
-            CalendarTextField lCalendarTextField = new CalendarTextField();
-            lGridPane.add(lCalendarTextField, new GridPane.C().row(lRowIdx).col(1));
-            lCalendarTextField.calendarProperty().bindBidirectional(agenda.displayedCalendar());*/
-        }
-        lRowIdx++;
-
-        // done
-        return lGridPane;
-    }
-
-    public String getJavaDocURL() {
-        return "http://jfxtras.org/doc/8.0/" + Agenda.class.getName().replace(".", "/") + ".html";
-    }
 
     public static void main(String[] args) {
         launch(args);
@@ -214,6 +141,16 @@ public class AgendaApplication extends Application
         return c;
     }
 
+    private void nextWeek(){
+
+    	Agenda agenda2=new Agenda();
+
+    	Calendar nextWeek = agenda.getDisplayedCalendar();
+    	nextWeek.set(nextWeek.get(Calendar.YEAR), nextWeek.get(Calendar.MONTH), nextWeek.get(Calendar.DATE)+7, nextWeek.get(Calendar.HOUR), nextWeek.get(Calendar.MINUTE));
+    	agenda.setDisplayedCalendar(nextWeek);
+
+    }
+
     @Override
     public void start(Stage primaryStage) {
 
@@ -223,7 +160,7 @@ public class AgendaApplication extends Application
     	Button delEvent = new Button();
     	Button makeGroup = new Button();
 
-    	next.setText("Neste uke");
+
     	prev.setText("Forrige uke");
     	prev.setLayoutX(840);
     	prev.setLayoutY(30);
@@ -239,17 +176,28 @@ public class AgendaApplication extends Application
     	makeGroup.setLayoutX(210);
     	makeGroup.setText("Lag gruppe");
 
+    	next.setText("Neste uke");
     	next.setLayoutX(920);
     	next.setLayoutY(30);
-        primaryStage.setTitle("Kalender");
 
+
+        primaryStage.setTitle("Kalender");
         primaryStage.centerOnScreen();
-        Pane soot = new Pane();
-        StackPane root = new StackPane();
+
+       /* Agenda agenda2 = new Agenda();
+        Calendar nextWeek = agenda.getDisplayedCalendar();
+    	nextWeek.set(nextWeek.get(Calendar.YEAR), nextWeek.get(Calendar.MONTH), nextWeek.get(Calendar.DATE)+7, nextWeek.get(Calendar.HOUR), nextWeek.get(Calendar.MINUTE));
+    	agenda2.setDisplayedCalendar(nextWeek);
+
+
+		HER er koden for å vise neste uke. Litt usikker på om vi må lage ny agenda2 eller om vi kan endre den agendaen vi allerede har.
+		Ser mer på det i morgen.
+		*/
 
         agenda.setLayoutY(60);
-        root.getChildren().add(agenda);
-        root.getChildren().addAll(next, prev);
+
+
+        Pane soot = new Pane();
         soot.getChildren().add(agenda);
         soot.getChildren().addAll(prev, next, eventButton, makeGroup, delEvent);
         primaryStage.setScene(new Scene(soot, 1000, 600));
