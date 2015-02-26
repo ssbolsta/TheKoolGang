@@ -39,7 +39,7 @@ public class LoginModel  extends LoginController  implements Initializable  {
 	@FXML 
 	private Button cancel;
 	
-	//Event hanldlers
+	//Event handlers
 
 	private EventHandler<KeyEvent> loginKeyPress = new EventHandler<KeyEvent>(){
 		@Override
