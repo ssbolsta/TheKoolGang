@@ -45,7 +45,6 @@ public class NewGroupModel implements Initializable {
 		cancel.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent event) {
-				System.out.println("ghjkl");
 				Stage stage = (Stage) cancel.getScene().getWindow();
 				stage.close();
 			}
