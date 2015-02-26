@@ -6,13 +6,13 @@ public abstract class DBConnection {
 
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 	static final String DB_URL = "jdbc:mysql://mysql.stud.ntnu.no/boyebn_calendar";
-	static final String USER = "Boyebn_fellespro";
-	static final String PASS = "Boyebn_fellespro";
+	static final String USER = "boyebn_fellespro";
+	static final String PASS = "#3RosaRever";
 
-	Connection conn = null;
-	Statement stmt = null;
-	ResultSet st = null;
-	String query;
+	static Connection conn = null;
+	static Statement stmt = null;
+	static ResultSet st = null;
+	static String query;
 
 /* void viewTable(Connection con, String dbname) {
 
