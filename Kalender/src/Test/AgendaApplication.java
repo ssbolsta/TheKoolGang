@@ -219,7 +219,7 @@ public class AgendaApplication extends Application
 
     	Button next=new Button();
     	Button prev = new Button();
-    	Button eventButton = new Button();
+    	Button makeEvent = new Button();
     	Button delEvent = new Button();
     	Button makeGroup = new Button();
 
@@ -227,9 +227,9 @@ public class AgendaApplication extends Application
     	prev.setText("Forrige uke");
     	prev.setLayoutX(840);
     	prev.setLayoutY(30);
-    	eventButton.setLayoutY(30);
-    	eventButton.setLayoutX(40);
-    	eventButton.setText("Opprett event");
+    	makeEvent.setLayoutY(30);
+    	makeEvent.setLayoutX(40);
+    	makeEvent.setText("Opprett event");
 
     	delEvent.setLayoutX(135);
     	delEvent.setText("Slett event");
@@ -251,7 +251,7 @@ public class AgendaApplication extends Application
         root.getChildren().add(agenda);
         root.getChildren().addAll(next, prev);
         soot.getChildren().add(agenda);
-        soot.getChildren().addAll(prev, next, eventButton, makeGroup, delEvent);
+        soot.getChildren().addAll(prev, next, makeEvent, makeGroup, delEvent);
         primaryStage.setScene(new Scene(soot, 1000, 600));
         primaryStage.show();
     }
