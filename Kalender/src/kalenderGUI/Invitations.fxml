@@ -7,12 +7,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllere.InvitationsController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kalenderGUI.InvitationsController">
    <children>
-      <TableView layoutX="271.0" layoutY="8.0" prefHeight="323.0" prefWidth="322.0" AnchorPane.topAnchor="10.0">
+      <TableView fx:id="invitationTable" layoutX="271.0" layoutY="8.0" prefHeight="323.0" prefWidth="322.0" AnchorPane.topAnchor="10.0">
         <columns>
-          <TableColumn prefWidth="94.0" text="Date" />
-          <TableColumn prefWidth="227.0" text="Tag" />
+          <TableColumn fx:id="dateColumn" prefWidth="94.0" text="Date" />
+          <TableColumn fx:id="tagColumn" prefWidth="227.0" text="Tag" />
         </columns>
       </TableView>
       <HBox alignment="CENTER" layoutX="380.0" layoutY="342.0" prefHeight="44.0" prefWidth="206.0" spacing="10.0">
@@ -50,12 +50,12 @@
                   <Insets />
                </opaqueInsets>
             </HBox>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Text fx:id="tag" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" />
+            <Text fx:id="date" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Text fx:id="invitedBy" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextFlow prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="86.13671875" />
+                  <Text fx:id="desc" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="86.13671875" />
                </children>
             </TextFlow>
          </children>
