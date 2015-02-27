@@ -18,6 +18,7 @@ public class EventMain extends Application {
 			root = (AnchorPane) FXMLLoader.load(EventMain.class.getResource("NewEvent1.fxml"));
 			primaryStage.setScene(new Scene(root));
 			primaryStage.show();
+			primaryStage.setAlwaysOnTop(true);
 		}catch(IOException e){
 			e.printStackTrace();
 		}
