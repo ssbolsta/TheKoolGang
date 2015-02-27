@@ -11,6 +11,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
+import controllere.NewEvent1Controller;
 import models.NewGroupModel;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -42,6 +43,7 @@ public class AgendaApplication extends Application
 
 
 	private Stage newGroupStage = null;
+	private Stage newEventStage = null;
 	Stage primaryStage =null;
 	Agenda agenda = new Agenda();
 	Agenda agendaNext = new Agenda();
@@ -88,13 +90,13 @@ public class AgendaApplication extends Application
 		@Override
 		public void handle(KeyEvent arg0) {
 			if(arg0.getCode().equals(KeyCode.ENTER)){
-				NewGroupMain ng = new NewGroupMain();
+				NewGroupMain NGC = new NewGroupMain();
 				if(newGroupStage == null){
 					try{
 						newGroupStage = new Stage();
 						newGroupStage.setOnCloseRequest(newGroupClosed);
 						newGroupStage.setOnHidden(newGroupClosed);
-						ng.start(newGroupStage);
+						NGC.start(newGroupStage);
 					}
 					catch(Exception e){
 						System.out.println(e);
@@ -102,6 +104,35 @@ public class AgendaApplication extends Application
 				}
 			}
 		}
+	};
+	
+	private EventHandler<KeyEvent> newEventPressed = new EventHandler<KeyEvent>(){
+		@Override
+		public void handle(KeyEvent arg0) {
+			if(arg0.getCode().equals(KeyCode.ENTER)){
+				EventMain NEC = new EventMain();
+				if(newGroupStage == null){
+					try{
+						newEventStage = new Stage();
+						newEventStage.setOnCloseRequest(newEventClosed);
+						newEventStage.setOnHidden(newEventClosed);
+						NEC.start(newGroupStage);
+					}
+					catch(Exception e){
+						System.out.println(e);
+					}
+				}
+			}
+		}
+	};
+	
+	private EventHandler<WindowEvent> newEventClosed = new EventHandler<WindowEvent>(){
+
+		@Override
+		public void handle(WindowEvent event) {
+			newEventStage = null;
+		}
+
 	};
 
 	private EventHandler<WindowEvent> newGroupClosed = new EventHandler<WindowEvent>(){
@@ -247,6 +278,25 @@ public class AgendaApplication extends Application
 	    	eventButton.setLayoutY(30);
 	    	eventButton.setLayoutX(40);
 	    	eventButton.setText("Opprett event");
+	    	eventButton.setOnAction(new EventHandler<ActionEvent>(){
+				@Override
+				public void handle(ActionEvent arg0) {
+					NewGroupMain ng = new NewGroupMain();
+	    			if(newEventStage == null){
+	    				try{
+	    					newEventStage = new Stage();
+	    					newEventStage.setOnCloseRequest(newEventClosed);
+	    					newEventStage.setOnHidden(newEventClosed);
+	    					ng.start(newEventStage);
+	    				}
+	    				catch(Exception e){
+	    					System.out.println(e);
+	    				}
+	    			}
+					
+				}
+	    		
+	    	});
 
 	      	next.setText("Neste uke");
 	    	next.setLayoutX(920);

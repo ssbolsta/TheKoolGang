@@ -6,13 +6,19 @@ import java.util.HashMap;
 import models.Person;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 
 public class NewEvent1Controller {
 	
@@ -27,6 +33,7 @@ public class NewEvent1Controller {
 	@FXML private TableView<Person> recipientTable;
 	@FXML private TableColumn<Person,String> uidColumn;
 	@FXML private TableColumn<Person,String> nameColumn;
+	@FXML private Button cancel;
 	
 	private ObservableList<Person> personTableList = FXCollections.observableArrayList();
 	private ObservableList<Person> nameList = FXCollections.observableArrayList();
@@ -34,6 +41,17 @@ public class NewEvent1Controller {
 	private ObservableList<LocalTime> timeToList = FXCollections.observableArrayList();
 	private HashMap<String,Person> personList = new HashMap<String,Person>();
 	
+	
+	private EventHandler<KeyEvent> cancelKeyPress = new EventHandler<KeyEvent>(){
+		@Override
+		public void handle(KeyEvent arg0){
+			if(arg0.getCode().equals(KeyCode.ENTER)){
+				Stage stage = (Stage) cancel.getScene().getWindow();
+				stage.hide();
+				stage.close();
+			}
+		}
+	};
 	
 	public NewEvent1Controller(){
 	}
@@ -61,6 +79,17 @@ public class NewEvent1Controller {
 		toTime.setItems(timeToList);
 		this.personSearchField.setItems(nameList);
 		new AutoCompleteCombobox<>(this.personSearchField);
+		
+		cancel.setOnKeyPressed(cancelKeyPress);
+
+		cancel.setOnAction(new EventHandler<ActionEvent>(){
+			@Override
+			public void handle(ActionEvent event) {
+				Stage stage = (Stage) cancel.getScene().getWindow();
+				stage.hide();
+				stage.close();
+			}
+		});
 		
 	}
 	
