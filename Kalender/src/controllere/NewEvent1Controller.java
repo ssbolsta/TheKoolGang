@@ -1,6 +1,7 @@
-package kalenderGUI;
+package controllere;
 
 import java.time.LocalTime;
+import java.util.HashMap;
 
 import models.Person;
 import javafx.collections.FXCollections;
@@ -27,11 +28,11 @@ public class NewEvent1Controller {
 	@FXML private TableColumn<Person,String> uidColumn;
 	@FXML private TableColumn<Person,String> nameColumn;
 	
-	private ObservableList<Person> personList = FXCollections.observableArrayList();
 	private ObservableList<Person> personTableList = FXCollections.observableArrayList();
 	private ObservableList<Person> nameList = FXCollections.observableArrayList();
 	private ObservableList<LocalTime> timeFromList = FXCollections.observableArrayList();
 	private ObservableList<LocalTime> timeToList = FXCollections.observableArrayList();
+	private HashMap<String,Person> personList = new HashMap<String,Person>();
 	
 	
 	public NewEvent1Controller(){
@@ -41,13 +42,13 @@ public class NewEvent1Controller {
 		uidColumn.setCellValueFactory(cellData -> cellData.getValue().getUidStringProperty());
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().getFullNameProperty());
 		recipientTable.setItems(personTableList);
-		personList.add( new Person("Mats","Egedal",1234));
-		personList.add( new Person("Kristian","Bø",1235));
-		personList.add( new Person("Boye","Data",1236));
-		personList.add( new Person("John","Smith",1237));
-		personList.add( new Person("Jim","Jiminy",1238));
-		for (Person string : personList) {
-			nameList.add(string);
+		nameList.add( new Person("Mats","Egedal",1234));
+		nameList.add( new Person("Kristian","Bø",1235));
+		nameList.add( new Person("Boye","Data",1236));
+		nameList.add( new Person("John","Smith",1237));
+		nameList.add( new Person("Jim","Jiminy",1238));
+		for (Person person : nameList) {
+			personList.put(person.toString(), person);
 		}
 		for (int i = 0; i < 24; i++) {
 			timeFromList.add(LocalTime.of(i, 0));
@@ -59,14 +60,15 @@ public class NewEvent1Controller {
 		fromTime.setItems(timeFromList);
 		toTime.setItems(timeToList);
 		this.personSearchField.setItems(nameList);
+		new AutoCompleteCombobox<>(this.personSearchField);
 		
 	}
 	
 	@FXML
 	private  void handleLeggTilPerson(){
-		if(personSearchField.getSelectionModel().getSelectedItem() != null){
-			personTableList.add(personSearchField.getSelectionModel().getSelectedItem());
-			nameList.remove(personSearchField.getSelectionModel().getSelectedItem());
+		if(personList.get(personSearchField.getSelectionModel().getSelectedItem()) != null){
+			personTableList.add(personList.get(personSearchField.getSelectionModel().getSelectedItem()));
+			nameList.remove(personList.get(personSearchField.getSelectionModel().getSelectedItem()));
 		}
 	}
 	
