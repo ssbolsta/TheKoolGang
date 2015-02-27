@@ -14,12 +14,15 @@ import java.util.TreeMap;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -32,11 +35,51 @@ import jfxtras.scene.control.agenda.Agenda;
 
 
 
-public class AgendaApplication extends Application
-{
+public class AgendaApplication extends Application{
+
+	Stage primaryStage =null;
+
+	private EventHandler<KeyEvent> nextWeekPressed = new EventHandler<KeyEvent>(){
+		@Override
+		public void handle(KeyEvent arg0){
+			if(arg0.getCode().equals(KeyCode.ENTER)){
+				Agenda agendaNext = new Agenda();
+    			Calendar nextWeek = agenda.getDisplayedCalendar();
+
+    	    	nextWeek.set(nextWeek.get(Calendar.YEAR), nextWeek.get(Calendar.MONTH), nextWeek.get(Calendar.DATE)+7, nextWeek.get(Calendar.HOUR), nextWeek.get(Calendar.MINUTE));
+    	    	agendaNext.setDisplayedCalendar(nextWeek);
+    	    	agenda =agendaNext;
+
+    	    	start(primaryStage);
+
+
+			}
+		}
+	};
+
+	private EventHandler<KeyEvent> prevWeekPressed = new EventHandler<KeyEvent>(){
+		@Override
+		public void handle(KeyEvent arg0){
+			if(arg0.getCode().equals(KeyCode.ENTER)){
+				Agenda agendaNext = new Agenda();
+    			Calendar nextWeek = agenda.getDisplayedCalendar();
+
+    	    	nextWeek.set(nextWeek.get(Calendar.YEAR), nextWeek.get(Calendar.MONTH), nextWeek.get(Calendar.DATE)-7, nextWeek.get(Calendar.HOUR), nextWeek.get(Calendar.MINUTE));
+    	    	agendaNext.setDisplayedCalendar(nextWeek);
+    	    	agenda =agendaNext;
+
+    	    	start(primaryStage);
+
+
+			}
+		}
+	};
+
+
     public AgendaApplication()
     {
-        agenda = new Agenda();
+    	agenda = new Agenda();
+
 
         // setup appointment groups
         final Map<String, Agenda.AppointmentGroup> lAppointmentGroupMap = new TreeMap<String, Agenda.AppointmentGroup>();
@@ -107,7 +150,7 @@ public class AgendaApplication extends Application
 
         );
     }
-    final Agenda agenda;
+    private Agenda agenda;
 
 
 
@@ -141,29 +184,59 @@ public class AgendaApplication extends Application
         return c;
     }
 
-    private void nextWeek(){
 
-    	Agenda agenda2=new Agenda();
+    private Agenda nextWeek(Agenda a){
 
-    	Calendar nextWeek = agenda.getDisplayedCalendar();
+
+
+    	Calendar nextWeek = a.getDisplayedCalendar();
     	nextWeek.set(nextWeek.get(Calendar.YEAR), nextWeek.get(Calendar.MONTH), nextWeek.get(Calendar.DATE)+7, nextWeek.get(Calendar.HOUR), nextWeek.get(Calendar.MINUTE));
-    	agenda.setDisplayedCalendar(nextWeek);
-
+    	a.setDisplayedCalendar(nextWeek);
+    	return a;
     }
 
     @Override
     public void start(Stage primaryStage) {
 
-    	Button next=new Button();
-    	Button prev = new Button();
     	Button eventButton = new Button();
     	Button delEvent = new Button();
-    	Button makeGroup = new Button();
+     	Button makeGroup = new Button();
+    	Button next=new Button();
+    	Button prev = new Button();
+
+    	Agenda agendaNext = new Agenda();
+    	Pane soot = new Pane();
+
+
+
 
 
     	prev.setText("Forrige uke");
     	prev.setLayoutX(840);
     	prev.setLayoutY(30);
+    	prev.setOnKeyPressed(prevWeekPressed);
+    	prev.setOnAction(new EventHandler<ActionEvent>(){
+    		@Override
+    		public void handle(ActionEvent arg0){
+
+
+
+    			Calendar nextWeek = agenda.getDisplayedCalendar();
+
+    	    	nextWeek.set(nextWeek.get(Calendar.YEAR), nextWeek.get(Calendar.MONTH), nextWeek.get(Calendar.DATE)-7, nextWeek.get(Calendar.HOUR), nextWeek.get(Calendar.MINUTE));
+    	    	agendaNext.setDisplayedCalendar(nextWeek);
+    	    	agenda =agendaNext;
+
+
+    	    	start(primaryStage);
+
+
+
+    		}
+    	});
+
+
+
     	eventButton.setLayoutY(30);
     	eventButton.setLayoutX(40);
     	eventButton.setText("Opprett event");
@@ -179,7 +252,25 @@ public class AgendaApplication extends Application
     	next.setText("Neste uke");
     	next.setLayoutX(920);
     	next.setLayoutY(30);
+    	next.setOnKeyPressed(nextWeekPressed);
+    	next.setOnAction(new EventHandler<ActionEvent>(){
+    		@Override
+    		public void handle(ActionEvent arg0){
 
+
+
+    			Calendar nextWeek = agenda.getDisplayedCalendar();
+    	    	nextWeek.set(nextWeek.get(Calendar.YEAR), nextWeek.get(Calendar.MONTH), nextWeek.get(Calendar.DATE)+7, nextWeek.get(Calendar.HOUR), nextWeek.get(Calendar.MINUTE));
+    	    	agendaNext.setDisplayedCalendar(nextWeek);
+    	    	agenda =agendaNext;
+
+
+    	    	start(primaryStage);
+
+
+
+    		}
+    	});
 
         primaryStage.setTitle("Kalender");
         primaryStage.centerOnScreen();
@@ -194,13 +285,17 @@ public class AgendaApplication extends Application
 		Ser mer på det i morgen.
 		*/
 
+
         agenda.setLayoutY(60);
 
 
-        Pane soot = new Pane();
+
+
         soot.getChildren().add(agenda);
-        soot.getChildren().addAll(prev, next, eventButton, makeGroup, delEvent);
+        soot.getChildren().addAll(eventButton, delEvent, makeGroup, prev, next);
+        this.primaryStage = primaryStage;
         primaryStage.setScene(new Scene(soot, 1000, 600));
         primaryStage.show();
+
     }
 }
