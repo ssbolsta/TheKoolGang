@@ -13,13 +13,20 @@ import javafx.scene.text.Text;
 
 public class InvitationsController {
 	
-	@FXML private Text tag;
-	@FXML private Text date;
-	@FXML private Text invitedBy;
-	@FXML private Text desc;
-	@FXML TableView<Invitation> invitationTable;
-	@FXML TableColumn<Invitation,String> dateColumn;
-	@FXML TableColumn<Invitation,String> tagColumn;
+	@FXML 
+	private Text tag;
+	@FXML 
+	private Text date;
+	@FXML 
+	private Text invitedBy;
+	@FXML 
+	private Text desc;
+	@FXML 
+	private TableView<Invitation> invitationTable;
+	@FXML 
+	private TableColumn<Invitation,String> dateColumn;
+	@FXML 
+	private TableColumn<Invitation,String> tagColumn;
 	
 	private ObservableList<Invitation> invitationTableList = FXCollections.observableArrayList();
 	
