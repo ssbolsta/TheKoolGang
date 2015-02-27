@@ -1,5 +1,6 @@
 package server;
 
-public class RequestHandler {
+public class RequestHandler extends Thread {
+	
 	
 }
