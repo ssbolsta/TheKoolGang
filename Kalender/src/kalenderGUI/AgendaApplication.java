@@ -216,7 +216,9 @@ public class AgendaApplication extends Application
 	    	Pane soot = new Pane();
 
 
-
+	    	delEvent.setText("Slett Arrengement");
+	    	delEvent.setLayoutX(133);
+	    	delEvent.setLayoutY(30);
 
 	    	prev.setText("Forrige uke");
 	    	prev.setLayoutX(840);
@@ -273,7 +275,7 @@ public class AgendaApplication extends Application
 
 
 	    	makeGroup.setLayoutY(30);
-	    	makeGroup.setLayoutX(210);
+	    	makeGroup.setLayoutX(250);
 	    	makeGroup.setText("Lag gruppe");
 	    	makeGroup.setOnKeyPressed(newGroupPressed);
 
