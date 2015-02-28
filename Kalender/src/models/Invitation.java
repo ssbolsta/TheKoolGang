@@ -1,6 +1,7 @@
 package models;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -14,6 +15,7 @@ public class Invitation extends NotificationSuper{
 	
 	public Invitation(Person recipient, Person sentBy, Event event){
 		this.date = LocalDate.now();
+		this.time = LocalTime.now();
 		this.recipient = recipient;
 		this.sender = sentBy;
 		this.event = event;
@@ -21,6 +23,7 @@ public class Invitation extends NotificationSuper{
 	}
 	public Invitation(Person recipient, Person sentBy, Group group){
 		this.date = LocalDate.now();
+		this.time = LocalTime.now();
 		this.recipient = recipient;
 		this.sender = sentBy;
 		this.group = group;

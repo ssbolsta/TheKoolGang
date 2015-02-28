@@ -7,12 +7,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kalenderGUI.InvitationsController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllere.InvitationsController">
    <children>
       <TableView fx:id="invitationTable" layoutX="271.0" layoutY="8.0" prefHeight="323.0" prefWidth="322.0" AnchorPane.topAnchor="10.0">
         <columns>
-          <TableColumn fx:id="dateColumn" prefWidth="94.0" text="Date" />
-          <TableColumn fx:id="tagColumn" prefWidth="227.0" text="Tag" />
+          <TableColumn fx:id="dateColumn" prefWidth="69.0" text="Date" />
+            <TableColumn fx:id="timeColumn" prefWidth="69.0" text="Time" />
+          <TableColumn fx:id="tagColumn" prefWidth="183.0" text="Tag" />
         </columns>
       </TableView>
       <HBox alignment="CENTER" layoutX="380.0" layoutY="342.0" prefHeight="44.0" prefWidth="206.0" spacing="10.0">
@@ -33,31 +34,45 @@
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="169.0" minWidth="10.0" prefWidth="156.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="129.0" minHeight="4.0" prefHeight="35.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="176.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="212.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="212.0" minHeight="10.0" prefHeight="110.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="129.0" minHeight="4.0" prefHeight="37.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="176.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="176.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="212.0" minHeight="10.0" prefHeight="137.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Tag:" />
             <Label text="Date:" GridPane.rowIndex="1" />
-            <Label text="Invited by:" GridPane.rowIndex="2" />
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
                <children>
-                  <Label text="Description:" />
+                  <Label text="Description:">
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin></Label>
                </children>
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
             </HBox>
-            <Text fx:id="tag" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" />
             <Text fx:id="date" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Text fx:id="invitedBy" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextFlow prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <children>
                   <Text fx:id="desc" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="86.13671875" />
                </children>
+               <GridPane.margin>
+                  <Insets top="10.0" />
+               </GridPane.margin>
             </TextFlow>
+            <TextFlow prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+               <children>
+                  <Text fx:id="tag" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+               </children>
+            </TextFlow>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label text="Tag:" />
+               </children>
+            </HBox>
+            <Label text="Time:" GridPane.rowIndex="2" />
+            <Text fx:id="time" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
    </children>
