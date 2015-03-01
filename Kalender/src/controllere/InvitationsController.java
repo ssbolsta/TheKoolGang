@@ -59,6 +59,7 @@ public class InvitationsController {
 			time.setText(invitation.getTimeAsString());
 			if(invitation.getGroup() != null){
 				eventLabel.setText("");
+				eventDesc.setText("");
 				desc.setText("Du har mottatt en forespørsel om å bli med i gruppen " + invitation.getGroup().getName() + ". Trykk på knappen for å akseptere/avslå.");
 			}else{
 				eventLabel.setText("Arrangement beskrivelse:");

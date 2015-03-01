@@ -61,6 +61,7 @@ public class NewEvent1Controller {
 		toTime.setItems(timeToList);
 		this.personSearchField.setItems(nameList);
 		new AutoCompleteCombobox<>(this.personSearchField);
+		new AutoCompleteCombobox<>(this.groupSearchField);
 		
 	}
 	
