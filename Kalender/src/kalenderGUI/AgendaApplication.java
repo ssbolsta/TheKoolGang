@@ -30,6 +30,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
@@ -341,6 +342,7 @@ public class AgendaApplication extends Application
 	    					newEventStage.setOnCloseRequest(newEventClosed);
 	    					newEventStage.setOnHidden(newEventClosed);
 	    					ng.start(newEventStage);
+
 	    				}
 	    				catch(Exception e){
 	    					System.out.println(e);

@@ -1,18 +1,28 @@
 package controllere;
 
+import javafx.fxml.FXML;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import kalenderGUI.AgendaApplication;
+
 public class LoginController {
-	private String password = "niggaboy";
-	private String username = "sappis";
-	
-	
+
+	@FXML Text errorMessage;
+	private String username = "bruker";
+	private String password = "passord";
+
 	public void login(String pass, String user){
 		try{
 			Validation.validateUsername(user);
 			if(user.equals(username)&&pass.equals(password)){
-				System.out.println("Du har logget inn, fliiink");
+				Stage newStage = new Stage();
+				AgendaApplication a = new AgendaApplication();
+				a.start(newStage);
 			}
 			else{
-				System.out.println("Brukernavn og/eller passord er feil.");
+				errorMessage.setVisible(true);
+
+
 			}
 		}
 		catch(Exception e){
