@@ -400,7 +400,7 @@ public class AgendaApplication extends Application
 	    		});
 
 	        primaryStage.setTitle("Kalender");
-	        primaryStage.centerOnScreen();
+
 
 	        agenda.setLayoutY(60);
 
@@ -410,8 +410,18 @@ public class AgendaApplication extends Application
 	        soot.getChildren().addAll(eventButton, delEvent, makeGroup, notify, prev, next);
 	        soot.setBottomAnchor(agenda, 0.0);
 	        soot.setTopAnchor(agenda, 60.0);
+	        soot.setRightAnchor(agenda, 0.0);
+	        soot.setLeftAnchor(agenda, 0.0);
+	        soot.setRightAnchor(next, 5.0);
+	        soot.setRightAnchor(prev, 80.0);
+	        soot.setLeftAnchor(eventButton, 40.0);
+	        soot.setLeftAnchor(delEvent, 133.0);
+	        soot.setLeftAnchor(makeGroup, 250.0);
+	        soot.setLeftAnchor(notify, 330.0);
+
 	        this.primaryStage = primaryStage;
 	        primaryStage.setScene(new Scene(soot, 1000, 600));
+	        primaryStage.centerOnScreen();
 	        primaryStage.show();
 
 	    }
