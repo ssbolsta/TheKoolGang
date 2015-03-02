@@ -97,6 +97,8 @@ public class AgendaApplication extends Application
 						newGroupStage = new Stage();
 						newGroupStage.setOnCloseRequest(newGroupClosed);
 						newGroupStage.setOnHidden(newGroupClosed);
+						newGroupStage.initModality(Modality.WINDOW_MODAL);
+    					newGroupStage.initOwner(primaryStage);
 						NGC.start(newGroupStage);
 					}
 					catch(Exception e){
@@ -117,6 +119,8 @@ public class AgendaApplication extends Application
 						newGroupStage = new Stage();
 						newGroupStage.setOnCloseRequest(newGroupClosed);
 						newGroupStage.setOnHidden(newGroupClosed);
+						newGroupStage.initModality(Modality.WINDOW_MODAL);
+    					newGroupStage.initOwner(primaryStage);
 						invMain.start(newGroupStage);
 					}
 					catch(Exception e){
@@ -138,6 +142,8 @@ public class AgendaApplication extends Application
 						newEventStage = new Stage();
 						newEventStage.setOnCloseRequest(newEventClosed);
 						newEventStage.setOnHidden(newEventClosed);
+						newEventStage.initModality(Modality.WINDOW_MODAL);
+    					newEventStage.initOwner(primaryStage);
 						NEC.start(newGroupStage);
 					}
 					catch(Exception e){
@@ -285,6 +291,8 @@ public class AgendaApplication extends Application
 		    					newEventStage = new Stage();
 		    					newEventStage.setOnCloseRequest(newEventClosed);
 		    					newEventStage.setOnHidden(newEventClosed);
+		    					newEventStage.initModality(Modality.WINDOW_MODAL);
+		    					newEventStage.initOwner(primaryStage);
 		    					invMain.start(newEventStage);
 		    				}
 		    				catch(Exception e){
@@ -341,6 +349,8 @@ public class AgendaApplication extends Application
 	    					newEventStage = new Stage();
 	    					newEventStage.setOnCloseRequest(newEventClosed);
 	    					newEventStage.setOnHidden(newEventClosed);
+	    					newEventStage.initModality(Modality.WINDOW_MODAL);
+	    					newEventStage.initOwner(primaryStage);
 	    					ng.start(newEventStage);
 
 	    				}
@@ -391,6 +401,8 @@ public class AgendaApplication extends Application
 	    					newGroupStage = new Stage();
 	    					newGroupStage.setOnCloseRequest(newGroupClosed);
 	    					newGroupStage.setOnHidden(newGroupClosed);
+	    					newGroupStage.initModality(Modality.WINDOW_MODAL);
+	    					newGroupStage.initOwner(primaryStage);
 	    					ng.start(newGroupStage);
 	    				}
 	    				catch(Exception e){
