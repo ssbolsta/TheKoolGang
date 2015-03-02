@@ -242,10 +242,33 @@ public class AgendaApplication extends Application
 	      	Button makeGroup = new Button();
 	    	Button next=new Button();
 	    	Button prev = new Button();
+	    	Button notify = new Button();
 
 	    	Agenda agendaNext = new Agenda();
 	    	Pane soot = new Pane();
 
+	    	notify.setLayoutY(30);
+	    	notify.setLayoutX(330);
+	    	notify.setText("Notifikasjoner");
+	    	notify.setOnAction(new EventHandler<ActionEvent>(){
+					@Override
+					public void handle(ActionEvent arg0) {
+						InvitationsMain invMain = new InvitationsMain();
+		    			if(newEventStage == null){
+		    				try{
+		    					newEventStage = new Stage();
+		    					newEventStage.setOnCloseRequest(newEventClosed);
+		    					newEventStage.setOnHidden(newEventClosed);
+		    					invMain.start(newEventStage);
+		    				}
+		    				catch(Exception e){
+		    					System.out.println(e);
+		    				}
+		    			}
+
+					}
+
+		    	});
 
 
 
@@ -359,7 +382,7 @@ public class AgendaApplication extends Application
 
 
 	        soot.getChildren().add(agenda);
-	        soot.getChildren().addAll(eventButton, delEvent, makeGroup, prev, next);
+	        soot.getChildren().addAll(eventButton, delEvent, makeGroup, notify, prev, next);
 	        this.primaryStage = primaryStage;
 	        primaryStage.setScene(new Scene(soot, 1000, 600));
 	        primaryStage.show();
