@@ -1,13 +1,16 @@
 package controllere;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import kalenderGUI.AgendaApplication;
+import kalenderGUI.LoginMain;
 
 public class LoginController {
 
 	@FXML Text errorMessage;
+	@FXML Button cancel;
 	private String username = "bruker";
 	private String password = "passord";
 
@@ -16,8 +19,13 @@ public class LoginController {
 			Validation.validateUsername(user);
 			if(user.equals(username)&&pass.equals(password)){
 				Stage newStage = new Stage();
-				AgendaApplication a = new AgendaApplication();
-				a.start(newStage);
+				AgendaApplication kalender = new AgendaApplication();
+
+				kalender.start(newStage);
+				cancel.fire();
+
+
+
 			}
 			else{
 				errorMessage.setVisible(true);
