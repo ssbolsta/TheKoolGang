@@ -105,7 +105,7 @@ public class AgendaApplication extends Application
 			}
 		}
 	};
-	
+
 	private EventHandler<KeyEvent> newEventPressed = new EventHandler<KeyEvent>(){
 		@Override
 		public void handle(KeyEvent arg0) {
@@ -125,7 +125,7 @@ public class AgendaApplication extends Application
 			}
 		}
 	};
-	
+
 	private EventHandler<WindowEvent> newEventClosed = new EventHandler<WindowEvent>(){
 
 		@Override
@@ -178,20 +178,20 @@ public class AgendaApplication extends Application
 		agenda.appointments().addAll(
 
 				new Agenda.AppointmentImpl()
-				.withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 8, 00))
-				.withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 11, 30))
+				.withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay,9, 00))
+				.withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 9, 30))
 				.withSummary("A mistake")
 				.withDescription("Dette er eventent til gruppe 3. De skjønte ikke event systemet, så denne ble laget ved en feil.")
 				.withAppointmentGroup(lAppointmentGroupMap.get("group03"))
 				,   new Agenda.AppointmentImpl()
-				.withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 8, 30))
-				.withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 10, 00))
+				.withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 12, 30))
+				.withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 23, 00))
 				.withSummary("Snusmumriken")
 				.withDescription("Dette er eventet til gruppe 2. De skal til Mumidalen")
 				.withAppointmentGroup(lAppointmentGroupMap.get("group02"))
 				,   new Agenda.AppointmentImpl()
-				.withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 8, 30))
-				.withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 9, 30))
+				.withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 23, 30))
+				.withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 23, 50))
 				.withSummary("Stek")
 				.withDescription("Dette er et event for gruppe 1. De skal steke dagen lang")
 				.withAppointmentGroup(lAppointmentGroupMap.get("group01"))
@@ -247,6 +247,9 @@ public class AgendaApplication extends Application
 	    	Pane soot = new Pane();
 
 
+
+
+
 	    	delEvent.setText("Slett Arrengement");
 	    	delEvent.setLayoutX(133);
 	    	delEvent.setLayoutY(30);
@@ -295,9 +298,9 @@ public class AgendaApplication extends Application
 	    					System.out.println(e);
 	    				}
 	    			}
-					
+
 				}
-	    		
+
 	    	});
 
 	      	next.setText("Neste uke");
@@ -350,7 +353,9 @@ public class AgendaApplication extends Application
 
 	        primaryStage.setTitle("Kalender");
 	        primaryStage.centerOnScreen();
+
 	        agenda.setLayoutY(60);
+
 
 
 	        soot.getChildren().add(agenda);
@@ -361,11 +366,3 @@ public class AgendaApplication extends Application
 
 	    }
 	}
-
-
-
-
-
-
-
-
