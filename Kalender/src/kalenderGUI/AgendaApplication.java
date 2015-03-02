@@ -106,6 +106,27 @@ public class AgendaApplication extends Application
 		}
 	};
 
+	private EventHandler<KeyEvent> notifyEventPressed = new EventHandler<KeyEvent>(){
+		@Override
+		public void handle(KeyEvent arg0) {
+			if(arg0.getCode().equals(KeyCode.ENTER)){
+				InvitationsMain invMain = new InvitationsMain();
+				if(newGroupStage == null){
+					try{
+						newGroupStage = new Stage();
+						newGroupStage.setOnCloseRequest(newGroupClosed);
+						newGroupStage.setOnHidden(newGroupClosed);
+						invMain.start(newGroupStage);
+					}
+					catch(Exception e){
+						System.out.println(e);
+					}
+				}
+			}
+		}
+	};
+
+
 	private EventHandler<KeyEvent> newEventPressed = new EventHandler<KeyEvent>(){
 		@Override
 		public void handle(KeyEvent arg0) {
@@ -250,6 +271,7 @@ public class AgendaApplication extends Application
 	    	notify.setLayoutY(30);
 	    	notify.setLayoutX(330);
 	    	notify.setText("Notifikasjoner");
+	    	notify.setOnKeyPressed(notifyEventPressed);
 	    	notify.setOnAction(new EventHandler<ActionEvent>(){
 					@Override
 					public void handle(ActionEvent arg0) {
