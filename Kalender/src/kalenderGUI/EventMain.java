@@ -15,7 +15,7 @@ public class EventMain extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try{
-			root = (AnchorPane) FXMLLoader.load(EventMain.class.getResource("NewEvent1.fxml"));
+			root = (AnchorPane) FXMLLoader.load(EventMain.class.getResource("NewEvent2.fxml"));
 			primaryStage.setScene(new Scene(root));
 			primaryStage.show();
 		}catch(IOException e){
@@ -27,4 +27,6 @@ public class EventMain extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
+	
+	
 }
