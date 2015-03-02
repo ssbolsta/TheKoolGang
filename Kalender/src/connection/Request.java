@@ -19,9 +19,7 @@ public class Request extends Thread {
 	
 	public void run() {
 		try {
-			System.out.println("Request: " + request);
 			response = connection.sendRequest(request);
-			System.out.println("Response: " + response);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

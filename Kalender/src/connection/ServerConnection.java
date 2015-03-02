@@ -16,7 +16,7 @@ public class ServerConnection {
 	private final String SERVER_IP = "78.91.50.146";
 	private final int SERVER_PORT = 5432;
 	
-	public ServerConnection() throws UnknownHostException, IOException {
+	public ServerConnection() throws IOException {
 		client = new Socket(SERVER_IP, SERVER_PORT);
 		
 		out = new DataOutputStream(client.getOutputStream());
