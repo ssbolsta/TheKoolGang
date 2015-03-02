@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import controllere.NewEvent1Controller;
-import models.NewGroupModel;
+
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.event.ActionEvent;
