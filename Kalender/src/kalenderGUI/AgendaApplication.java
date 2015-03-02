@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import controllere.NewEvent1Controller;
-
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.event.ActionEvent;
@@ -25,6 +24,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -266,7 +266,10 @@ public class AgendaApplication extends Application
 	    	Button notify = new Button();
 
 	    	Agenda agendaNext = new Agenda();
-	    	Pane soot = new Pane();
+	    	AnchorPane soot = new AnchorPane();
+
+
+
 
 	    	notify.setLayoutY(30);
 	    	notify.setLayoutX(330);
@@ -405,6 +408,8 @@ public class AgendaApplication extends Application
 
 	        soot.getChildren().add(agenda);
 	        soot.getChildren().addAll(eventButton, delEvent, makeGroup, notify, prev, next);
+	        soot.setBottomAnchor(agenda, 0.0);
+	        soot.setTopAnchor(agenda, 60.0);
 	        this.primaryStage = primaryStage;
 	        primaryStage.setScene(new Scene(soot, 1000, 600));
 	        primaryStage.show();
