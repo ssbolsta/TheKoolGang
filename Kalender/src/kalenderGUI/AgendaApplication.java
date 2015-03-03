@@ -6,7 +6,9 @@ package kalenderGUI;
  */
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.Map;
@@ -291,7 +293,9 @@ public class AgendaApplication extends Application
 	    	Button invites = new Button();
 	    	DatePicker datePick = new DatePicker();
 	    	Text dateText = new Text("Velg dato:");
-
+	    	Calendar findDateCal = agenda.getDisplayedCalendar();
+	    	Date calendarDateNow = new Date(findDateCal.get(Calendar.YEAR), findDateCal.get(Calendar.MONTH), findDateCal.get(Calendar.DATE));
+	    	LocalDate localDateNow = calendarDateNow .toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
 	    	Agenda agendaNext = new Agenda();
 	    	AnchorPane soot = new AnchorPane();
@@ -309,6 +313,7 @@ public class AgendaApplication extends Application
 
 	    	datePick.setLayoutX(665);
 	    	datePick.setLayoutY(30);
+	    	datePick.setValue(localDateNow);
 	    	datePick.setOnAction(new EventHandler<ActionEvent>(){
 	    		@Override
 	    		public void handle(ActionEvent arg0){
