@@ -47,7 +47,6 @@ public class AgendaApplication extends Application
 	private Stage newEventStage = null;
 	Stage primaryStage;
 	Agenda agenda = new Agenda();
-	Agenda agendaNext = new Agenda();
 
 	private EventHandler<KeyEvent> nextWeekPressed = new EventHandler<KeyEvent>(){
 		@Override
@@ -137,14 +136,14 @@ public class AgendaApplication extends Application
 		public void handle(KeyEvent arg0) {
 			if(arg0.getCode().equals(KeyCode.ENTER)){
 				EventMain NEC = new EventMain();
-				if(newGroupStage == null){
+				if(newEventStage == null){
 					try{
 						newEventStage = new Stage();
 						newEventStage.setOnCloseRequest(newEventClosed);
 						newEventStage.setOnHidden(newEventClosed);
 						newEventStage.initModality(Modality.WINDOW_MODAL);
     					newEventStage.initOwner(primaryStage);
-						NEC.start(newGroupStage);
+						NEC.start(newEventStage);
 					}
 					catch(Exception e){
 						System.out.println(e);
@@ -343,6 +342,7 @@ public class AgendaApplication extends Application
 	    	eventButton.setLayoutY(30);
 	    	eventButton.setLayoutX(40);
 	    	eventButton.setText("Opprett event");
+	    	eventButton.setOnKeyPressed(newEventPressed);
 	    	eventButton.setOnAction(new EventHandler<ActionEvent>(){
 				@Override
 				public void handle(ActionEvent arg0) {
@@ -394,7 +394,6 @@ public class AgendaApplication extends Application
 	    	makeGroup.setLayoutX(250);
 	    	makeGroup.setText("Lag gruppe");
 	    	makeGroup.setOnKeyPressed(newGroupPressed);
-
 	    	makeGroup.setOnAction(new EventHandler<ActionEvent>(){
 	    		@Override
 	    		public void handle(ActionEvent arg0) {
