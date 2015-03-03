@@ -62,7 +62,7 @@ public class AutoCompleteCombobox<T> implements EventHandler<KeyEvent>{
 
         ObservableList<T> list = FXCollections.observableArrayList();
         for (int i=0; i<data.size(); i++) {
-            if(data.get(i).toString().toLowerCase().startsWith(
+            if(data.get(i).toString().toLowerCase().contains(
                 AutoCompleteCombobox.this.comboBox
                 .getEditor().getText().toLowerCase())) {
                 list.add(data.get(i));
