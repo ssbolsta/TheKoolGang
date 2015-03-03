@@ -3,9 +3,8 @@ package requests;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-/**
- * Created by boye on 03.03.15.
- */
+import java.util.ArrayList;
+
 public class ModifyEventRequest implements Request {
     
     private String name = "";
@@ -14,12 +13,19 @@ public class ModifyEventRequest implements Request {
     private int room = -1;
     private String[] time = new String[]{"",""};
     private String date = "";
+    private ArrayList<Integer> add_members = new ArrayList<Integer>();
+    private ArrayList<Integer> remove_members = new ArrayList<Integer>();
 
     @Override
     public String toString() {
         JSONObject main = new JSONObject();
         JSONObject content = new JSONObject();
         JSONArray time = new JSONArray();
+        JSONArray add_members = new JSONArray();
+        JSONArray remove_members = new JSONArray();
+        
+        add_members.addAll(this.add_members);
+        remove_members.addAll(this.remove_members);
 
         time.add(this.time[0]);
         time.add(this.time[1]);
@@ -30,12 +36,38 @@ public class ModifyEventRequest implements Request {
         content.put("room", room);
         content.put("date", date);
         content.put("time", time);
+        content.put("add_members", add_members);
+        content.put("remove_members", remove_members);
 
         main.put("request", "event");
         main.put("type", "modify");
         main.put("content", content);
 
         return main.toJSONString();
+    }
+    
+    public boolean addMemeberToAdd(int pnr) {
+        return add_members.add(new Integer(pnr));
+    }
+    
+    public ArrayList<Integer> getMeembersToAdd() {
+        return add_members;
+    }
+    
+    public boolean removeMemberToAdd(int pnr) {
+        return add_members.remove(new Integer(pnr));
+    }
+
+    public boolean addMemeberToRemove(int pnr) {
+        return remove_members.add(new Integer(pnr));
+    }
+
+    public ArrayList<Integer> getMeembersToRemove() {
+        return remove_members;
+    }
+
+    public boolean removeMemberToRemove(int pnr) {
+        return remove_members.remove(new Integer(pnr));
     }
 
     public String getName() {
