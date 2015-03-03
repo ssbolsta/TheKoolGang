@@ -5,7 +5,6 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import kalenderGUI.AgendaApplication;
-import kalenderGUI.LoginMain;
 
 public class LoginController {
 

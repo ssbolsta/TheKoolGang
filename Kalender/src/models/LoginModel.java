@@ -1,31 +1,22 @@
 package models;
 
-import java.awt.event.KeyAdapter;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.sun.javafx.tk.Toolkit;
-
 import controllere.LoginController;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 
 public class LoginModel  extends LoginController  implements Initializable  {
-
-	private LoginController lc = new LoginController();
 
 	@FXML
 	private Button login;

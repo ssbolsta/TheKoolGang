@@ -1,8 +1,6 @@
 package controllere;
 
-	import java.time.LocalTime;
 	import java.util.HashMap;
-
 	import models.Person;
 	import javafx.collections.FXCollections;
 	import javafx.collections.ObservableList;
@@ -11,7 +9,6 @@ package controllere;
 	import javafx.fxml.FXML;
 	import javafx.scene.control.Button;
 	import javafx.scene.control.ComboBox;
-	import javafx.scene.control.DatePicker;
 	import javafx.scene.control.TableColumn;
 	import javafx.scene.control.TableView;
 	import javafx.scene.control.TextArea;
@@ -34,8 +31,6 @@ package controllere;
 
 	private ObservableList<Person> personTableList = FXCollections.observableArrayList();
 	private ObservableList<Person> nameList = FXCollections.observableArrayList();
-	private ObservableList<LocalTime> timeFromList = FXCollections.observableArrayList();
-	private ObservableList<LocalTime> timeToList = FXCollections.observableArrayList();
 	private HashMap<String,Person> personList = new HashMap<String,Person>();
 
 
