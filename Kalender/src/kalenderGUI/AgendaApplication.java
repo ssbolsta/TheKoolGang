@@ -383,6 +383,7 @@ public class AgendaApplication extends Application
 	    	    	agenda =agendaNext;
 
 
+
 	    	    	start(primaryStage);
 
 
@@ -420,6 +421,7 @@ public class AgendaApplication extends Application
 
 
 	        agenda.setLayoutY(60);
+
 
 
 
