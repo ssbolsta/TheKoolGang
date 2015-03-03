@@ -10,43 +10,40 @@ import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
-import controllere.NewEvent1Controller;
+import models.Person;
 import javafx.application.Application;
-import static javafx.application.Application.launch;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import javafx.util.Callback;
-import jfxtras.internal.scene.control.skin.agenda.AgendaDaySkin;
-import jfxtras.scene.control.CalendarTextField;
 import jfxtras.scene.control.agenda.Agenda;
 
 
 public class AgendaApplication extends Application
 {
+	
+	private ObservableList<Person> personList = FXCollections.observableArrayList();
+	
+	public ObservableList<Person> getPersonList() {
+		return personList;
+	}
+	public void setPersonList(ObservableList<Person> personList) {
+		this.personList = personList;
+	}
 
 	private AgendaApplication application;
 	private Stage newGroupStage = null;
@@ -56,6 +53,7 @@ public class AgendaApplication extends Application
 	Text yearText = new Text(""+ Calendar.getInstance().get(Calendar.YEAR));
 
 	private EventHandler<KeyEvent> nextWeekPressed = new EventHandler<KeyEvent>(){
+		@SuppressWarnings("deprecation")
 		@Override
 		public void handle(KeyEvent arg0){
 			if(arg0.getCode().equals(KeyCode.ENTER)){
@@ -75,6 +73,7 @@ public class AgendaApplication extends Application
 
 
 	private EventHandler<KeyEvent> prevWeekPressed = new EventHandler<KeyEvent>(){
+		@SuppressWarnings("deprecation")
 		@Override
 		public void handle(KeyEvent arg0){
 			if(arg0.getCode().equals(KeyCode.ENTER)){
@@ -186,6 +185,7 @@ public class AgendaApplication extends Application
 
 	};
 
+	@SuppressWarnings("deprecation")
 	public AgendaApplication()
 	{
 
@@ -255,7 +255,7 @@ public class AgendaApplication extends Application
 
 	/**
 	 * get the calendar for the first day of the week
-	 */
+	 * 
 	static private Calendar getFirstDayOfWeekCalendar(Locale locale, Calendar c)
 	{
 		// result
@@ -278,11 +278,13 @@ public class AgendaApplication extends Application
 	public Stage getPrimaryStage(){
 		return primaryStage;
 	}
+	
+	*/
 
 
 
-
-	 @Override
+	 @SuppressWarnings("static-access")
+	@Override
 	    public void start(Stage primaryStage) {
 		 	application = this;
 		 	Button eventButton = new Button();
@@ -315,7 +317,8 @@ public class AgendaApplication extends Application
 	    	datePick.setLayoutY(30);
 	    	datePick.setValue(localDateNow);
 	    	datePick.setOnAction(new EventHandler<ActionEvent>(){
-	    		@Override
+	    		@SuppressWarnings("deprecation")
+				@Override
 	    		public void handle(ActionEvent arg0){
 
 
@@ -376,7 +379,8 @@ public class AgendaApplication extends Application
 	    	prev.setLayoutY(30);
 	    	prev.setOnKeyPressed(prevWeekPressed);
 	    	prev.setOnAction(new EventHandler<ActionEvent>(){
-	    		@Override
+	    		@SuppressWarnings("deprecation")
+				@Override
 	    		public void handle(ActionEvent arg0){
 
 
@@ -433,7 +437,8 @@ public class AgendaApplication extends Application
 	    	next.setLayoutY(30);
 	    	next.setOnKeyPressed(nextWeekPressed);
 	    	next.setOnAction(new EventHandler<ActionEvent>(){
-	    		@Override
+	    		@SuppressWarnings("deprecation")
+				@Override
 	    		public void handle(ActionEvent arg0){
 
 
