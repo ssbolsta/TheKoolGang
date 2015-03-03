@@ -285,7 +285,7 @@ public class AgendaApplication extends Application
 
 
 	    	invites.setLayoutY(30);
-	    	invites.setLayoutX(330);
+	    	invites.setLayoutX(360);
 	    	invites.setText("Invitasjoner");
 	    	invites.setOnKeyPressed(notifyEventPressed);
 	    	invites.setOnAction(new EventHandler<ActionEvent>(){
@@ -313,8 +313,8 @@ public class AgendaApplication extends Application
 
 
 
-	    	delEvent.setText("Slett Arrengement");
-	    	delEvent.setLayoutX(133);
+	    	delEvent.setText("Slett Arragement");
+	    	delEvent.setLayoutX(173);
 	    	delEvent.setLayoutY(30);
 
 	    	prev.setText("Forrige uke");
@@ -345,7 +345,7 @@ public class AgendaApplication extends Application
 
 	    	eventButton.setLayoutY(30);
 	    	eventButton.setLayoutX(40);
-	    	eventButton.setText("Opprett event");
+	    	eventButton.setText("Opprett Arrangement");
 	    	eventButton.setOnKeyPressed(newEventPressed);
 	    	eventButton.setOnAction(new EventHandler<ActionEvent>(){
 				@Override
@@ -395,7 +395,7 @@ public class AgendaApplication extends Application
 
 
 	    	makeGroup.setLayoutY(30);
-	    	makeGroup.setLayoutX(250);
+	    	makeGroup.setLayoutX(280);
 	    	makeGroup.setText("Lag gruppe");
 	    	makeGroup.setOnKeyPressed(newGroupPressed);
 	    	makeGroup.setOnAction(new EventHandler<ActionEvent>(){
@@ -437,9 +437,9 @@ public class AgendaApplication extends Application
 	        soot.setRightAnchor(next, 5.0);
 	        soot.setRightAnchor(prev, 80.0);
 	        soot.setLeftAnchor(eventButton, 40.0);
-	        soot.setLeftAnchor(delEvent, 133.0);
-	        soot.setLeftAnchor(makeGroup, 250.0);
-	        soot.setLeftAnchor(invites, 330.0);
+	        soot.setLeftAnchor(delEvent, 173.0);
+	        soot.setLeftAnchor(makeGroup, 280.0);
+	        soot.setLeftAnchor(invites, 360.0);
 
 	        primaryStage.setScene(new Scene(soot, 1000, 600));
 	        primaryStage.centerOnScreen();
