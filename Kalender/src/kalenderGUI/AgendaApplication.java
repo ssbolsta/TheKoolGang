@@ -490,9 +490,7 @@ public class AgendaApplication extends Application
 	        soot.setLeftAnchor(invites, 360.0);
 
 	        primaryStage.setScene(new Scene(soot, 1000, 600));
-	        primaryStage.setResizable(false);
-	        primaryStage.centerOnScreen();
-	        primaryStage.setMinWidth(600.0);
+	        primaryStage.setMinWidth(1015.0);
 	        primaryStage.setMinHeight(300);
 	        this.primaryStage = primaryStage;
 
