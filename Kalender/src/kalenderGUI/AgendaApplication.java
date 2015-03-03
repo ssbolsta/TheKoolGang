@@ -45,7 +45,7 @@ public class AgendaApplication extends Application
 
 	private Stage newGroupStage = null;
 	private Stage newEventStage = null;
-	Stage primaryStage =null;
+	Stage primaryStage;
 	Agenda agenda = new Agenda();
 	Agenda agendaNext = new Agenda();
 
@@ -433,9 +433,13 @@ public class AgendaApplication extends Application
 	        soot.setLeftAnchor(makeGroup, 250.0);
 	        soot.setLeftAnchor(notify, 330.0);
 
+
 	        this.primaryStage = primaryStage;
 	        primaryStage.setScene(new Scene(soot, 1000, 600));
 	        primaryStage.centerOnScreen();
+	        primaryStage.setMinWidth(600.0);
+	        primaryStage.setMinHeight(300);
+
 	        primaryStage.show();
 
 	    }
