@@ -14,20 +14,15 @@ public class PutEventRequest implements Request {
     private int room = -1;
     private String[] time = new String[]{"",""};
     private String date = "";
-    private int[] limit = new int[]{0,0};
 
     @Override
     public String toString() {
         JSONObject main = new JSONObject();
         JSONObject content = new JSONObject();
-        JSONArray limit = new JSONArray();
         JSONArray time = new JSONArray();
 
         time.add(this.time[0]);
         time.add(this.time[1]);
-
-        limit.add(this.limit[0]);
-        limit.add(this.limit[1]);
         
         content.put("name", name);
         content.put("desc", desc);
@@ -35,7 +30,6 @@ public class PutEventRequest implements Request {
         content.put("room", room);
         content.put("date", date);
         content.put("time", time);
-        content.put("limit", limit);
 
         main.put("request", "event");
         main.put("type", "put");
@@ -91,14 +85,5 @@ public class PutEventRequest implements Request {
 
     public void setDate(String date) {
         this.date = date;
-    }
-
-    public int[] getLimit() {
-        return limit;
-    }
-
-    public void setLimit(int from, int to) {
-        limit[0] = from;
-        limit[1] = to;
     }
 }
