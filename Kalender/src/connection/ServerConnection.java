@@ -8,6 +8,7 @@ import java.net.Socket;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.json.simple.parser.JSONParser;
+import requests.Request;
 
 public class ServerConnection {
 	
@@ -30,8 +31,8 @@ public class ServerConnection {
 		client.close();
 	}
 	
-	public JSONObject sendRequest(JSONObject data) throws IOException {
-        out.writeUTF(data.toJSONString());
+	public JSONObject sendRequest(Request request) throws IOException {
+        out.writeUTF(request.toString());
         JSONObject result;
         try {
             result = (JSONObject)new JSONParser().parse(in.readUTF());
