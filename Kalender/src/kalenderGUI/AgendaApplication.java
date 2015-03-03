@@ -350,15 +350,14 @@ public class AgendaApplication extends Application
 	    	eventButton.setOnAction(new EventHandler<ActionEvent>(){
 				@Override
 				public void handle(ActionEvent arg0) {
-					NewGroupMain ng = new NewGroupMain();
+					EventMain NEC = new EventMain();
 	    			if(newEventStage == null){
 	    				try{
 	    					newEventStage = new Stage();
-	    					newEventStage.setOnCloseRequest(newEventClosed);
-	    					newEventStage.setOnHidden(newEventClosed);
-	    					newEventStage.initModality(Modality.WINDOW_MODAL);
-	    					newEventStage.initOwner(primaryStage);
-	    					ng.start(newEventStage);
+							newEventStage.setOnCloseRequest(newEventClosed);
+							newEventStage.setOnHidden(newEventClosed);
+							NEC.setMainApp(application);
+							NEC.start(newEventStage);
 
 	    				}
 	    				catch(Exception e){
