@@ -7,9 +7,23 @@ import org.json.simple.JSONObject;
 public class RequestHandler  {
 
 	
-		//Identifserer hva requesten dreier seg om 
+		//Identifiserer hva requesten dreier seg om 
 	public void identifyQuery(){
-		String request = ClientConnection.getJSONObject.get("Request");
+		JSONObject jobj = ClientConnection.getJSONObject();
+		String request = (String) jobj.get("Request");
+		
+		switch(request) {
+		case "user":
+			if (jobj.get("type") == "get"){
+				usergetRequest();	
+				break;
+			}
+			elif jobj.
+		case 
+		
+		}
+		
+		
 	}
 	
 	
