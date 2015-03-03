@@ -17,7 +17,7 @@ public class LoginController {
 	public void login(String pass, String user){
 		try{
 			Validation.validateUsername(user);
-			if(user.equals(username)&&pass.equals(password)){
+			if(user.trim().equals(username)&&pass.equals(password)){
 				Stage newStage = new Stage();
 				AgendaApplication kalender = new AgendaApplication();
 
