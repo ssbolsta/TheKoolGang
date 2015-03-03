@@ -276,7 +276,7 @@ public class AgendaApplication extends Application
 	      	Button makeGroup = new Button();
 	    	Button next=new Button();
 	    	Button prev = new Button();
-	    	Button notify = new Button();
+	    	Button invites = new Button();
 
 	    	Agenda agendaNext = new Agenda();
 	    	AnchorPane soot = new AnchorPane();
@@ -284,11 +284,11 @@ public class AgendaApplication extends Application
 
 
 
-	    	notify.setLayoutY(30);
-	    	notify.setLayoutX(330);
-	    	notify.setText("Notifikasjoner");
-	    	notify.setOnKeyPressed(notifyEventPressed);
-	    	notify.setOnAction(new EventHandler<ActionEvent>(){
+	    	invites.setLayoutY(30);
+	    	invites.setLayoutX(330);
+	    	invites.setText("Invitasjoner");
+	    	invites.setOnKeyPressed(notifyEventPressed);
+	    	invites.setOnAction(new EventHandler<ActionEvent>(){
 					@Override
 					public void handle(ActionEvent arg0) {
 						InvitationsMain invMain = new InvitationsMain();
@@ -430,7 +430,7 @@ public class AgendaApplication extends Application
 
 
 	        soot.getChildren().add(agenda);
-	        soot.getChildren().addAll(eventButton, delEvent, makeGroup, notify, prev, next);
+	        soot.getChildren().addAll(eventButton, delEvent, makeGroup, invites, prev, next);
 	        soot.setBottomAnchor(agenda, 0.0);
 	        soot.setTopAnchor(agenda, 60.0);
 	        soot.setRightAnchor(agenda, 0.0);
@@ -440,7 +440,7 @@ public class AgendaApplication extends Application
 	        soot.setLeftAnchor(eventButton, 40.0);
 	        soot.setLeftAnchor(delEvent, 133.0);
 	        soot.setLeftAnchor(makeGroup, 250.0);
-	        soot.setLeftAnchor(notify, 330.0);
+	        soot.setLeftAnchor(invites, 330.0);
 
 	        primaryStage.setScene(new Scene(soot, 1000, 600));
 	        primaryStage.centerOnScreen();
