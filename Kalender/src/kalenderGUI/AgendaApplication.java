@@ -261,6 +261,9 @@ public class AgendaApplication extends Application
 		return c;
 	}
 
+	public Stage getPrimaryStage(){
+		return primaryStage;
+	}
 
 
 	 @Override
