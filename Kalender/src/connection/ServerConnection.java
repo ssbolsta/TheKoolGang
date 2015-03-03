@@ -33,14 +33,15 @@ public class ServerConnection {
 	
 	public JSONObject sendRequest(Request request) throws IOException {
         out.writeUTF(request.toString());
-        JSONObject result;
+        String result = in.readUTF();
+        JSONObject result_json;
         try {
-            result = (JSONObject)new JSONParser().parse(in.readUTF());
+            result_json = (JSONObject)new JSONParser().parse(result);
         } catch (ParseException e) {
-            e.printStackTrace();
-            result = formatError();
+            System.err.println(result);
+            result_json = formatError();
         }
-		return result;
+		return result_json;
 	}
     
     private JSONObject formatError() {
