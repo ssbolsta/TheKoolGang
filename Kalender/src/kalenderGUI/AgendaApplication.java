@@ -32,6 +32,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -49,6 +51,7 @@ public class AgendaApplication extends Application
 	private Stage newEventStage = null;
 	Stage primaryStage;
 	Agenda agenda = new Agenda();
+	Text yearText = new Text(""+ Calendar.getInstance().get(Calendar.YEAR));
 
 	private EventHandler<KeyEvent> nextWeekPressed = new EventHandler<KeyEvent>(){
 		@Override
@@ -270,6 +273,8 @@ public class AgendaApplication extends Application
 	}
 
 
+
+
 	 @Override
 	    public void start(Stage primaryStage) {
 		 	application = this;
@@ -280,9 +285,22 @@ public class AgendaApplication extends Application
 	    	Button prev = new Button();
 	    	Button invites = new Button();
 	    	DatePicker datePick = new DatePicker();
+	    	Text dateText = new Text();
+
 
 	    	Agenda agendaNext = new Agenda();
 	    	AnchorPane soot = new AnchorPane();
+
+
+
+
+		    yearText.setLayoutX(475);
+		    yearText.setLayoutY(20);
+		    yearText.setFont(new Font(26));
+
+	    	dateText.setText("Velg dato:");
+	    	dateText.setLayoutX(605);
+	    	dateText.setLayoutY(46);
 
 
 	    	datePick.setLayoutX(665);
@@ -296,11 +314,13 @@ public class AgendaApplication extends Application
 	    			Calendar nextWeek = agenda.getDisplayedCalendar();
 	    	    	nextWeek.set(datePickTime.getYear(), datePickTime.getMonthValue(), datePickTime.getDayOfMonth(), 0, 0);
 	    	    	agendaNext.setDisplayedCalendar(nextWeek);
+
 	    	    	agenda =agendaNext;
 
 
 
 	    	    	start(primaryStage);
+	    	    	yearText.setText("" +datePickTime.getYear());
 
 
 
@@ -447,6 +467,9 @@ public class AgendaApplication extends Application
 	        primaryStage.setTitle("Kalender");
 
 
+
+
+
 	        agenda.setLayoutY(60);
 
 
@@ -454,7 +477,7 @@ public class AgendaApplication extends Application
 
 
 	        soot.getChildren().add(agenda);
-	        soot.getChildren().addAll(eventButton, delEvent, makeGroup, invites, datePick, prev, next);
+	        soot.getChildren().addAll(yearText, eventButton, delEvent, makeGroup, invites, dateText, datePick, prev, next);
 	        soot.setBottomAnchor(agenda, 0.0);
 	        soot.setTopAnchor(agenda, 60.0);
 	        soot.setRightAnchor(agenda, 0.0);
@@ -467,6 +490,7 @@ public class AgendaApplication extends Application
 	        soot.setLeftAnchor(invites, 360.0);
 
 	        primaryStage.setScene(new Scene(soot, 1000, 600));
+	        primaryStage.setResizable(false);
 	        primaryStage.centerOnScreen();
 	        primaryStage.setMinWidth(600.0);
 	        primaryStage.setMinHeight(300);
