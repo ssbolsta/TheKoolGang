@@ -146,6 +146,11 @@ public class AgendaApplication extends Application
 						newEventStage = new Stage();
 						newEventStage.setOnCloseRequest(newEventClosed);
 						newEventStage.setOnHidden(newEventClosed);
+						newEventStage.setTitle("Nytt Arrangement");
+						newEventStage.setResizable(false);
+						newEventStage.setAlwaysOnTop(true);
+						newEventStage.initModality(Modality.WINDOW_MODAL);
+						newEventStage.initOwner(primaryStage);
 						NEC.setMainApp(application);
 						NEC.start(newEventStage);
 					}
@@ -400,6 +405,11 @@ public class AgendaApplication extends Application
 	    					newEventStage = new Stage();
 							newEventStage.setOnCloseRequest(newEventClosed);
 							newEventStage.setOnHidden(newEventClosed);
+							newEventStage.setTitle("Nytt Arrangement");
+							newEventStage.setResizable(false);
+							newEventStage.setAlwaysOnTop(true);
+							newEventStage.initModality(Modality.WINDOW_MODAL);
+							newEventStage.initOwner(primaryStage);
 							NEC.setMainApp(application);
 							NEC.start(newEventStage);
 
