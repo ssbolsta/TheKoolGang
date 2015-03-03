@@ -38,7 +38,7 @@ public class PutEventRequest implements Request {
         content.put("limit", limit);
 
         main.put("request", "event");
-        main.put("type", "get");
+        main.put("type", "put");
         main.put("content", content);
 
         return main.toJSONString();
