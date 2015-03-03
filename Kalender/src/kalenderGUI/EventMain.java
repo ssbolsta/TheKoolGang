@@ -32,11 +32,7 @@ public class EventMain extends Application {
 	
 	
 	public EventMain(){
-		personList.add( new Person("Mats","Egedal",1234));
-		personList.add( new Person("Kristian","Bø",1235));
-		personList.add( new Person("Boye","Data",1236));
-		personList.add( new Person("John","Smith",1237));
-		personList.add( new Person("Jim","Jiminy",1238));
+		
 	}
 	
 	
@@ -61,6 +57,7 @@ public class EventMain extends Application {
 	
 	public void setMainApp(AgendaApplication mainApp){
 		this.mainApp = mainApp;
+		this.personList = mainApp.getPersonList();
 	}
 	
 	public void showNewEvent1(){
@@ -98,6 +95,12 @@ public class EventMain extends Application {
 		this.primaryStage.close();
 		this.mainApp.setNewEventStage(null);
 	}
+	
+	public void createEvent(){
+		
+	}
+	
+	
 	
 	
 	public Stage getPrimaryStage(){
