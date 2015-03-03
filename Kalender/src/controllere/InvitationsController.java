@@ -9,10 +9,16 @@ import models.Invitation;
 import models.Person;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class InvitationsController {
 	
@@ -37,7 +43,20 @@ public class InvitationsController {
 	@FXML
 	private TableColumn<Invitation,String> timeColumn;
 	
+	@FXML private Button close;
+	
 	private ObservableList<Invitation> invitationTableList = FXCollections.observableArrayList();
+	
+	private EventHandler<KeyEvent> closeKeyPressed = new EventHandler<KeyEvent>(){
+		@Override
+		public void handle(KeyEvent arg0){
+			if(arg0.getCode().equals(KeyCode.ENTER)){
+				Stage stage = (Stage) close.getScene().getWindow();
+				stage.hide();
+				stage.close();
+			}
+		}
+	};
 	
 	@FXML
 	private void initialize(){
@@ -74,5 +93,17 @@ public class InvitationsController {
 			desc.setText("");
 			eventDesc.setText("");
 		}
+		
+		close.setOnKeyPressed(closeKeyPressed);
+		close.setOnAction(new EventHandler<ActionEvent>(){
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				Stage stage =(Stage) close.getScene().getWindow();
+				stage.hide();
+				stage.close();
+			}
+			
+		});
 	}
 }
