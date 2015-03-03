@@ -12,7 +12,7 @@ import org.json.simple.parser.JSONParser;
 public class ClientConnection implements Runnable{
 	
 	private final Socket clientSocket;
-	private JSONObject jobj; 
+	private static JSONObject jobj; 
 	
 	public ClientConnection(Socket clientSocket) {
 		this.clientSocket = clientSocket;
@@ -54,7 +54,7 @@ public class ClientConnection implements Runnable{
 		}
 	}
 	
-	public JSONObject getJSONObject(){
+	public static JSONObject getJSONObject(){
 		return jobj;
 	}
 
