@@ -5,6 +5,7 @@ package kalenderGUI;
  * and open the template in the editor.
  */
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -21,6 +22,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -277,10 +279,33 @@ public class AgendaApplication extends Application
 	    	Button next=new Button();
 	    	Button prev = new Button();
 	    	Button invites = new Button();
+	    	DatePicker datePick = new DatePicker();
 
 	    	Agenda agendaNext = new Agenda();
 	    	AnchorPane soot = new AnchorPane();
 
+
+	    	datePick.setLayoutX(665);
+	    	datePick.setLayoutY(30);
+	    	datePick.setOnAction(new EventHandler<ActionEvent>(){
+	    		@Override
+	    		public void handle(ActionEvent arg0){
+
+
+	    			LocalDate datePickTime = datePick.getValue();
+	    			Calendar nextWeek = agenda.getDisplayedCalendar();
+	    	    	nextWeek.set(datePickTime.getYear(), datePickTime.getMonthValue(), datePickTime.getDayOfMonth(), 0, 0);
+	    	    	agendaNext.setDisplayedCalendar(nextWeek);
+	    	    	agenda =agendaNext;
+
+
+
+	    	    	start(primaryStage);
+
+
+
+	    		}
+	    	});
 
 
 
@@ -429,7 +454,7 @@ public class AgendaApplication extends Application
 
 
 	        soot.getChildren().add(agenda);
-	        soot.getChildren().addAll(eventButton, delEvent, makeGroup, invites, prev, next);
+	        soot.getChildren().addAll(eventButton, delEvent, makeGroup, invites, datePick, prev, next);
 	        soot.setBottomAnchor(agenda, 0.0);
 	        soot.setTopAnchor(agenda, 60.0);
 	        soot.setRightAnchor(agenda, 0.0);
