@@ -34,6 +34,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
+import jfxtras.internal.scene.control.skin.agenda.AgendaDaySkin;
 import jfxtras.scene.control.CalendarTextField;
 import jfxtras.scene.control.agenda.Agenda;
 
@@ -422,6 +423,7 @@ public class AgendaApplication extends Application
 
 
 
+
 	        soot.getChildren().add(agenda);
 	        soot.getChildren().addAll(eventButton, delEvent, makeGroup, notify, prev, next);
 	        soot.setBottomAnchor(agenda, 0.0);
@@ -435,12 +437,11 @@ public class AgendaApplication extends Application
 	        soot.setLeftAnchor(makeGroup, 250.0);
 	        soot.setLeftAnchor(notify, 330.0);
 
-
-	        this.primaryStage = primaryStage;
 	        primaryStage.setScene(new Scene(soot, 1000, 600));
 	        primaryStage.centerOnScreen();
 	        primaryStage.setMinWidth(600.0);
 	        primaryStage.setMinHeight(300);
+	        this.primaryStage = primaryStage;
 
 	        primaryStage.show();
 
