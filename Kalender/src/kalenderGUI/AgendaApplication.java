@@ -5,10 +5,9 @@ package kalenderGUI;
  * and open the template in the editor.
  */
 
+
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Map;
 import java.util.TreeMap;
@@ -35,9 +34,9 @@ import jfxtras.scene.control.agenda.Agenda;
 
 public class AgendaApplication extends Application
 {
-	
+
 	private ObservableList<Person> personList = FXCollections.observableArrayList();
-	
+
 	public ObservableList<Person> getPersonList() {
 		return personList;
 	}
@@ -255,7 +254,7 @@ public class AgendaApplication extends Application
 
 	/**
 	 * get the calendar for the first day of the week
-	 * 
+	 *
 	static private Calendar getFirstDayOfWeekCalendar(Locale locale, Calendar c)
 	{
 		// result
@@ -278,7 +277,7 @@ public class AgendaApplication extends Application
 	public Stage getPrimaryStage(){
 		return primaryStage;
 	}
-	
+
 	*/
 
 
@@ -296,8 +295,8 @@ public class AgendaApplication extends Application
 	    	DatePicker datePick = new DatePicker();
 	    	Text dateText = new Text("Velg dato:");
 	    	Calendar findDateCal = agenda.getDisplayedCalendar();
-	    	Date calendarDateNow = new Date(findDateCal.get(Calendar.YEAR), findDateCal.get(Calendar.MONTH), findDateCal.get(Calendar.DATE));
-	    	LocalDate localDateNow = calendarDateNow .toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+	    	LocalDate localDateNow = LocalDate.of(findDateCal.get(Calendar.YEAR), findDateCal.get(Calendar.MONTH), findDateCal.get(Calendar.DATE));
 
 	    	Agenda agendaNext = new Agenda();
 	    	AnchorPane soot = new AnchorPane();
