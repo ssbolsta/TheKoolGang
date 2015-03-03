@@ -113,14 +113,14 @@ public class AgendaApplication extends Application
 		public void handle(KeyEvent arg0) {
 			if(arg0.getCode().equals(KeyCode.ENTER)){
 				InvitationsMain invMain = new InvitationsMain();
-				if(newGroupStage == null){
+				if(newEventStage == null){
 					try{
-						newGroupStage = new Stage();
-						newGroupStage.setOnCloseRequest(newGroupClosed);
-						newGroupStage.setOnHidden(newGroupClosed);
-						newGroupStage.initModality(Modality.WINDOW_MODAL);
-    					newGroupStage.initOwner(primaryStage);
-						invMain.start(newGroupStage);
+						newEventStage = new Stage();
+						newEventStage.setOnCloseRequest(newEventClosed);
+						newEventStage.setOnHidden(newEventClosed);
+						newEventStage.initModality(Modality.WINDOW_MODAL);
+						newEventStage.initOwner(primaryStage);
+						invMain.start(newEventStage);
 					}
 					catch(Exception e){
 						System.out.println(e);
@@ -138,6 +138,9 @@ public class AgendaApplication extends Application
 				EventMain NEC = new EventMain();
 				if(newEventStage == null){
 					try{
+						newEventStage = new Stage();
+						newEventStage.setOnCloseRequest(newEventClosed);
+						newEventStage.setOnHidden(newEventClosed);
 						NEC.setMainApp(application);
 						NEC.start(newEventStage);
 					}
