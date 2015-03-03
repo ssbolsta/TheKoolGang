@@ -285,7 +285,7 @@ public class AgendaApplication extends Application
 	    	Button prev = new Button();
 	    	Button invites = new Button();
 	    	DatePicker datePick = new DatePicker();
-	    	Text dateText = new Text();
+	    	Text dateText = new Text("Velg dato:");
 
 
 	    	Agenda agendaNext = new Agenda();
@@ -294,11 +294,10 @@ public class AgendaApplication extends Application
 
 
 
-		    yearText.setLayoutX(475);
-		    yearText.setLayoutY(20);
-		    yearText.setFont(new Font(26));
 
-	    	dateText.setText("Velg dato:");
+		    yearText.setLayoutY(46);
+		    yearText.setFont(new Font(28));
+
 	    	dateText.setLayoutX(605);
 	    	dateText.setLayoutY(46);
 
@@ -487,10 +486,14 @@ public class AgendaApplication extends Application
 	        soot.setLeftAnchor(eventButton, 40.0);
 	        soot.setLeftAnchor(delEvent, 173.0);
 	        soot.setLeftAnchor(makeGroup, 280.0);
+	        soot.setRightAnchor(datePick, 160.0);
 	        soot.setLeftAnchor(invites, 360.0);
+	        soot.setLeftAnchor(yearText, 460.0);
+	        soot.setRightAnchor(dateText, 340.0);
+
 
 	        primaryStage.setScene(new Scene(soot, 1000, 600));
-	        primaryStage.setMinWidth(1015.0);
+	        primaryStage.setMinWidth(950.0);
 	        primaryStage.setMinHeight(300);
 	        this.primaryStage = primaryStage;
 
