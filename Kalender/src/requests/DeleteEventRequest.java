@@ -2,16 +2,6 @@ package requests;
 
 import org.json.simple.JSONObject;
 
-
-/*
- * {
-	"request" : "event",
-	"type" : "delete",
-	"content" : {a
-		"id" : "<eid>"
-	}
- */
-
 public class DeleteEventRequest {
 
 	private int id = -1;
@@ -39,6 +29,5 @@ public class DeleteEventRequest {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-	
+
 }

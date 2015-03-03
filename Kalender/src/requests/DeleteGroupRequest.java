@@ -1,20 +1,6 @@
 package requests;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
-/*
- * 
-
- {
- "request" : "group",
- "type" : "delete",
- "content" : {
- "id" : "<gid>"
- }
- }
-
- */
 
 public class DeleteGroupRequest {
 

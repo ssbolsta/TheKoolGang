@@ -124,4 +124,5 @@ public class GetUserRequest implements Request {
         limit[0] = from;
         limit[1] = to;
     }
+    
 }

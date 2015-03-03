@@ -105,4 +105,5 @@ public class ModifyGroupRequest implements Request {
     public void setAdmin(int admin) {
         this.admin = admin;
     }
+    
 }

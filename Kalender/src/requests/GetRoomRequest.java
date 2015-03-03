@@ -44,7 +44,6 @@ public class GetRoomRequest implements Request {
         return main.toJSONString();
     }
 
-
     public int getId() {
         return id;
     }
@@ -102,4 +101,5 @@ public class GetRoomRequest implements Request {
         limit[0] = from;
         limit[1] = to;
     }
+    
 }

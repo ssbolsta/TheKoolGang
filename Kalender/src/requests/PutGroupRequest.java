@@ -1,11 +1,7 @@
 package requests;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-/**
- * Created by boye on 03.03.15.
- */
 public class PutGroupRequest {
 
     private String name = "";
@@ -41,4 +37,5 @@ public class PutGroupRequest {
     public void setAdmin(int admin) {
         this.admin = admin;
     }
+    
 }

@@ -78,4 +78,5 @@ public class GetEventRequest implements Request {
         limit[0] = from;
         limit[1] = to;
     }
+    
 }

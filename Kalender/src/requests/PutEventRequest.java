@@ -3,9 +3,6 @@ package requests;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-/**
- * Created by boye on 03.03.15.
- */
 public class PutEventRequest implements Request {
 
     private String name = "";
