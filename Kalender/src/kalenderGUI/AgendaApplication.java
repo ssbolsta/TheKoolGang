@@ -12,7 +12,9 @@ import java.util.GregorianCalendar;
 import java.util.Map;
 import java.util.TreeMap;
 
+import models.Event;
 import models.Person;
+import models.Room;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -42,6 +44,43 @@ public class AgendaApplication extends Application
 	}
 	public void setPersonList(ObservableList<Person> personList) {
 		this.personList = personList;
+	}
+	
+	public void addPerson(Person person){
+		this.personList.add(person);
+	}
+	public void removePerson(Person person){
+		this.personList.remove(person);
+	}
+	
+	private ObservableList<Event> eventList = FXCollections.observableArrayList();
+	
+	public ObservableList<Event> getEventList() {
+		return eventList;
+	}
+	public void setEventList(ObservableList<Event> eventList) {
+		this.eventList = eventList;
+	}
+	public void addEvent(Event event){
+		this.eventList.add(event);
+	}
+	public void removeEvent(Event event){
+		this.eventList.remove(event);
+	}
+	
+	private ObservableList<Room> roomList = FXCollections.observableArrayList();
+	
+	public ObservableList<Room> getRoomList() {
+		return roomList;
+	}
+	public void setRoomList(ObservableList<Room> roomList) {
+		this.roomList = roomList;
+	}
+	public void addRoom(Room room){
+		this.roomList.add(room);
+	}
+	public void removeRoom(Room room){
+		this.roomList.remove(room);
 	}
 
 	private AgendaApplication application;
@@ -187,7 +226,15 @@ public class AgendaApplication extends Application
 	@SuppressWarnings("deprecation")
 	public AgendaApplication()
 	{
-
+		this.personList.add(new Person("Mats","Egedal",2503));
+		this.personList.add(new Person("Rosa","Rever",1054));
+		this.personList.add(new Person("Boye","Borg",1234));
+		this.personList.add(new Person("Syver","Bolstad",3456));
+		this.personList.add(new Person("Kristian","Svoren",9467));
+		this.personList.add(new Person("Jo","Aarvaag",4567));
+		this.roomList.add(new Room(1,"IT vest 115", 7,"Gitar(2),Ukulele(1),Piano(1),Trompet(4)"));
+		this.roomList.add(new Room(2,"Hovedsal 2", 30,"Langbord(1),stikkontaker(36),Bord(4),Tavle(1)"));
+		this.roomList.add(new Room(3,"Ultimate Gaming Room", 18,"Gaming PC(18),Mousemats(18),Refrigirator(4),Gaming Chairs(18)"));
 
 		// setup appointment groups
 		final Map<String, Agenda.AppointmentGroup> lAppointmentGroupMap = new TreeMap<String, Agenda.AppointmentGroup>();
@@ -282,7 +329,7 @@ public class AgendaApplication extends Application
 
 
 
-	 @SuppressWarnings("static-access")
+	 @SuppressWarnings({ "static-access", "deprecation" })
 	@Override
 	    public void start(Stage primaryStage) {
 		 	application = this;
@@ -316,8 +363,7 @@ public class AgendaApplication extends Application
 	    	datePick.setLayoutY(30);
 	    	datePick.setValue(localDateNow);
 	    	datePick.setOnAction(new EventHandler<ActionEvent>(){
-	    		@SuppressWarnings("deprecation")
-				@Override
+	    		@Override
 	    		public void handle(ActionEvent arg0){
 
 
@@ -378,8 +424,7 @@ public class AgendaApplication extends Application
 	    	prev.setLayoutY(30);
 	    	prev.setOnKeyPressed(prevWeekPressed);
 	    	prev.setOnAction(new EventHandler<ActionEvent>(){
-	    		@SuppressWarnings("deprecation")
-				@Override
+	    		@Override
 	    		public void handle(ActionEvent arg0){
 
 
@@ -436,8 +481,7 @@ public class AgendaApplication extends Application
 	    	next.setLayoutY(30);
 	    	next.setOnKeyPressed(nextWeekPressed);
 	    	next.setOnAction(new EventHandler<ActionEvent>(){
-	    		@SuppressWarnings("deprecation")
-				@Override
+	    		@Override
 	    		public void handle(ActionEvent arg0){
 
 

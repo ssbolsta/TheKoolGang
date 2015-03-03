@@ -110,6 +110,17 @@ public class NewEvent1Controller {
 			if(time != null){
 				toTime.getSelectionModel().select(time);
 			}
+		}else{
+			timeToList.removeAll(timeToList);
+			int t = fromTime.getSelectionModel().getSelectedIndex();
+			for (int i = t+1; i < 25; i++) {
+				if(i != 24){
+					timeToList.add(LocalTime.of(i, 0));
+				}else{
+					timeToList.add(LocalTime.of(23, 59));
+				}
+			}
+			toTime.setItems(timeToList);
 		}
 	}
 	

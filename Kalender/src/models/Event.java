@@ -16,17 +16,18 @@ public class Event {
 	private LocalTime timeFrom;
 	private LocalTime timeTo;
 	private StringProperty desc;
+	private Room location;
 	private ObservableList<Person> attending = FXCollections.observableArrayList();
 	private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 	private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
 	
-	public Event(String name,LocalDate date,LocalTime timeFrom,LocalTime timeTo,String description,Person creator){
+	public Event(String name,LocalDate date,LocalTime timeFrom,LocalTime timeTo,String description,Room location){
 		this.name = new SimpleStringProperty(name);
 		this.date = date;
 		this.timeFrom = timeFrom;
 		this.timeTo = timeTo;
 		this.desc = new SimpleStringProperty(description);
-		attending.add(creator);
+		this.location = location;
 	}
 	
 	
@@ -37,6 +38,10 @@ public class Event {
 		return name;
 	}
 	
+	
+	public Room getLocation(){
+		return location;
+	}
 	
 	public String getDescription(){
 		return desc.get();

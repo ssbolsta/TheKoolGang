@@ -23,7 +23,7 @@
       <ListView fx:id="equipmentList" layoutX="50.0" layoutY="199.0" prefHeight="283.0" prefWidth="300.0" />
       <HBox alignment="CENTER" layoutX="78.0" layoutY="508.0" prefHeight="58.0" prefWidth="300.0" spacing="20.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
          <children>
-            <Button mnemonicParsing="false" text="Opprett Arrangement" />
+            <Button mnemonicParsing="false" onAction="#handleCreateEvent" text="Opprett Arrangement" />
             <Button mnemonicParsing="false" onAction="#handleBack" text="Tilbake" />
             <Button mnemonicParsing="false" onAction="#handleCancel" text="Avbryt" />
          </children>

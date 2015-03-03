@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import models.Event;
 import models.Person;
+import models.Room;
 import controllere.NewEvent1Controller;
 import controllere.NewEvent2Controller;
 import javafx.application.Application;
@@ -94,10 +96,16 @@ public class EventMain extends Application {
 	public void close(){
 		this.primaryStage.close();
 		this.mainApp.setNewEventStage(null);
+		try {
+			this.finalize();
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 	}
 	
-	public void createEvent(){
-		
+	public void createEvent(Room location){
+		Event event = new Event(name,date,fromTime,toTime,desc,location);
+		this.mainApp.addEvent(event);
 	}
 	
 	
@@ -174,5 +182,8 @@ public class EventMain extends Application {
 		this.date = date;
 	}
 	
+	public ObservableList<Room>	getRoomList(){
+		return this.mainApp.getRoomList();
+	}
 	
 }
