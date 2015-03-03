@@ -8,6 +8,7 @@ import java.net.Socket;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.json.simple.parser.JSONParser;
+import requests.Request;
 
 public class ServerConnection {
 	
@@ -30,16 +31,17 @@ public class ServerConnection {
 		client.close();
 	}
 	
-	public JSONObject sendRequest(JSONObject data) throws IOException {
-        out.writeUTF(data.toJSONString());
-        JSONObject result;
+	public JSONObject sendRequest(Request request) throws IOException {
+        out.writeUTF(request.toString());
+        String result = in.readUTF();
+        JSONObject result_json;
         try {
-            result = (JSONObject)new JSONParser().parse(in.readUTF());
+            result_json = (JSONObject)new JSONParser().parse(result);
         } catch (ParseException e) {
-            e.printStackTrace();
-            result = formatError();
+            System.err.println(result);
+            result_json = formatError();
         }
-		return result;
+		return result_json;
 	}
     
     private JSONObject formatError() {

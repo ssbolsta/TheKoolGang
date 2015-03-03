@@ -8,6 +8,8 @@ public class GetUserRequest implements Request {
     private int id = -1;
     private String first_name = "";
     private String last_name = "";
+    private String username = "";
+    private String password = "";
     private int member_of = -1;
     private int participant_of = -1;
     private String email = "";
@@ -27,6 +29,8 @@ public class GetUserRequest implements Request {
         content.put("id", id);
         content.put("first_name", first_name);
         content.put("last_name", last_name);
+        content.put("username", username);
+        content.put("password", password);
         content.put("member_of", member_of);
         content.put("participant_of", participant_of);
         content.put("email", email);
@@ -38,6 +42,22 @@ public class GetUserRequest implements Request {
         main.put("content", content);
         
         return main.toJSONString();
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFirst_name() {
