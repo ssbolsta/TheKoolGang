@@ -42,8 +42,7 @@ import jfxtras.scene.control.agenda.Agenda;
 public class AgendaApplication extends Application
 {
 
-
-
+	private AgendaApplication application;
 	private Stage newGroupStage = null;
 	private Stage newEventStage = null;
 	Stage primaryStage;
@@ -139,11 +138,7 @@ public class AgendaApplication extends Application
 				EventMain NEC = new EventMain();
 				if(newEventStage == null){
 					try{
-						newEventStage = new Stage();
-						newEventStage.setOnCloseRequest(newEventClosed);
-						newEventStage.setOnHidden(newEventClosed);
-						newEventStage.initModality(Modality.WINDOW_MODAL);
-    					newEventStage.initOwner(primaryStage);
+						NEC.setMainApp(application);
 						NEC.start(newEventStage);
 					}
 					catch(Exception e){
@@ -153,6 +148,10 @@ public class AgendaApplication extends Application
 			}
 		}
 	};
+	
+	public void setNewEventStage(Stage newValue){
+		newEventStage = newValue;
+	}
 
 	private EventHandler<WindowEvent> newEventClosed = new EventHandler<WindowEvent>(){
 
@@ -268,7 +267,8 @@ public class AgendaApplication extends Application
 
 	 @Override
 	    public void start(Stage primaryStage) {
-		 Button eventButton = new Button();
+		 	application = this;
+		 	Button eventButton = new Button();
 	    	Button delEvent = new Button();
 	      	Button makeGroup = new Button();
 	    	Button next=new Button();

@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import kalenderGUI.EventMain;
 
 public class NewEvent2Controller {
 	
@@ -18,6 +19,7 @@ public class NewEvent2Controller {
 	
 	private ObservableList<Room> rooms = FXCollections.observableArrayList();
 	private HashMap<String,Room> roomMap = new HashMap<String,Room>();
+	private EventMain mainApp;
 	
 	@FXML
 	private void initialize(){
@@ -50,5 +52,9 @@ public class NewEvent2Controller {
 		}else{
 			equipmentList.setItems(null);
 		}
+	}
+	
+	public void setMainApp(EventMain mainApp){
+		this.mainApp = mainApp;
 	}
 }

@@ -19,6 +19,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import kalenderGUI.EventMain;
 
 public class NewEvent1Controller {
 	
@@ -40,6 +41,7 @@ public class NewEvent1Controller {
 	private ObservableList<LocalTime> timeFromList = FXCollections.observableArrayList();
 	private ObservableList<LocalTime> timeToList = FXCollections.observableArrayList();
 	private HashMap<String,Person> personList = new HashMap<String,Person>();
+	private EventMain mainApp;
 	
 	
 	private EventHandler<KeyEvent> cancelKeyPress = new EventHandler<KeyEvent>(){
@@ -130,5 +132,19 @@ public class NewEvent1Controller {
 				toTime.getSelectionModel().select(time);
 			}
 		}
+	}
+	
+	@FXML
+	private void handleClose(){
+		this.mainApp.getPrimaryStage().close();
+	}
+	
+	@FXML
+	private void handleNext(){
+		this.mainApp.showNewEvent2();
+	}
+	
+	public void setMainApp(EventMain mainApp){
+		this.mainApp = mainApp;
 	}
 }
