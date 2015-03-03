@@ -148,7 +148,7 @@ public class AgendaApplication extends Application
 			}
 		}
 	};
-	
+
 	public void setNewEventStage(Stage newValue){
 		newEventStage = newValue;
 	}

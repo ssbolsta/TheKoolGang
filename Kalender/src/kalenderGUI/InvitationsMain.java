@@ -10,17 +10,18 @@ import javafx.stage.Stage;
 
 public class InvitationsMain extends Application{
 private AnchorPane root;
-	
+
 	@Override
 	public void start(Stage primaryStage) {
 		try{
 			root = (AnchorPane) FXMLLoader.load(EventMain.class.getResource("Invitations.fxml"));
+			primaryStage.setTitle("Invitasjoner");
 			primaryStage.setScene(new Scene(root));
 			primaryStage.show();
 		}catch(IOException e){
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public static void main(String[] args) {
