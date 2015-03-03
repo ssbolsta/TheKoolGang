@@ -5,9 +5,14 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+
 public class ClientConnection implements Runnable{
 	
 	private final Socket clientSocket;
+	private JSONObject jobj; 
 	
 	public ClientConnection(Socket clientSocket) {
 		this.clientSocket = clientSocket;
@@ -33,6 +38,35 @@ public class ClientConnection implements Runnable{
 			e.printStackTrace();
 		}
 		
+		
+			
+		}
+	
+	// Parser strengen som ble sendt tilbake til et JSONobjekt 
+	private void stringToJSON(String line) throws Exception{
+		try{
+			JSONParser parser = new JSONParser();
+			JSONObject obj = (JSONObject)parser.parse(line);
+			this.jobj = obj;
+		}
+		catch (Exception e){
+			 throw new Exception("Feil ved JSON-parsing");
+		}
+	}
+	
+	public JSONObject getJSONObject(){
+		return jobj;
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
