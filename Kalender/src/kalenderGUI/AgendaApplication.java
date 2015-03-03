@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import controllere.NewEvent1Controller;
-import models.NewGroupModel;
+//import models.NewGroupModel;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.event.ActionEvent;
@@ -283,13 +283,13 @@ public class AgendaApplication extends Application
 	    	eventButton.setOnAction(new EventHandler<ActionEvent>(){
 				@Override
 				public void handle(ActionEvent arg0) {
-					NewGroupMain ng = new NewGroupMain();
+					EventMain NVC = new EventMain();
 	    			if(newEventStage == null){
 	    				try{
 	    					newEventStage = new Stage();
 	    					newEventStage.setOnCloseRequest(newEventClosed);
 	    					newEventStage.setOnHidden(newEventClosed);
-	    					ng.start(newEventStage);
+	    					NVC.start(newEventStage);
 	    				}
 	    				catch(Exception e){
 	    					System.out.println(e);

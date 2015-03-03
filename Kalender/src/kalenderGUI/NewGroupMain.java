@@ -21,7 +21,6 @@ public class NewGroupMain extends Application {
 			AnchorPane root = (AnchorPane) FXMLLoader.load(NewGroupMain.class.getResource("NewGroupGUI.fxml"));
 			primaryStage.setScene(new Scene(root));
 			primaryStage.show();
-			primaryStage.setAlwaysOnTop(true);
 		}catch(IOException e){
 			e.printStackTrace();
 		}
