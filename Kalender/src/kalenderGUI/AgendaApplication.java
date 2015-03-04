@@ -290,6 +290,10 @@ public class AgendaApplication extends Application
 
 	    	Agenda agendaNext = new Agenda();
 	    	AnchorPane soot = new AnchorPane();
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of 85add19... asd
 
 
 
@@ -491,9 +495,12 @@ public class AgendaApplication extends Application
 	        soot.setLeftAnchor(delEvent, 173.0);
 	        soot.setLeftAnchor(makeGroup, 280.0);
 	        soot.setLeftAnchor(invites, 360.0);
+<<<<<<< HEAD
 	        soot.setRightAnchor(datePick, 162.0);
 	        soot.setRightAnchor(dateText, 340.0);
 	        soot.setLeftAnchor(yearText, 445.0);
+=======
+>>>>>>> parent of 85add19... asd
 
 	        primaryStage.setScene(new Scene(soot, 1000, 600));
 	        primaryStage.setMinWidth(1015.0);
