@@ -12,7 +12,7 @@
       <HBox alignment="BOTTOM_RIGHT" layoutX="236.0" layoutY="386.0" prefHeight="40.0" prefWidth="245.0" spacing="20.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
          <children>
             <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Next" />
-            <Button fx:id="cancel" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Cancel"/>
+            <Button fx:id="cancel" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Cancel" />
          </children>
       </HBox>
       <GridPane layoutX="14.0" layoutY="6.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="6.0">
@@ -60,7 +60,7 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="Legg Til Person">
+                  <Button mnemonicParsing="false" onAction="#handleLeggTilPerson" prefHeight="25.0" prefWidth="110.0" text="Legg Til Person">
                      <HBox.margin>
                         <Insets top="6.0" />
                      </HBox.margin>
