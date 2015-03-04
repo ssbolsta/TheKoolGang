@@ -294,14 +294,13 @@ public class AgendaApplication extends Application
 
 
 
-		    yearText.setLayoutX(475);
-		    yearText.setLayoutY(20);
-		    yearText.setFont(new Font(26));
+
+		    yearText.setLayoutY(46);
+		    yearText.setFont(new Font(28));
 		   	LocalDate localDateNow = LocalDate.of(findDateCal.get(Calendar.YEAR), findDateCal.get(Calendar.MONTH), findDateCal.get(Calendar.DATE));
 
 
 	    	dateText.setText("Velg dato:");
-	    	dateText.setLayoutX(605);
 	    	dateText.setLayoutY(46);
 
 
@@ -492,6 +491,9 @@ public class AgendaApplication extends Application
 	        soot.setLeftAnchor(delEvent, 173.0);
 	        soot.setLeftAnchor(makeGroup, 280.0);
 	        soot.setLeftAnchor(invites, 360.0);
+	        soot.setRightAnchor(datePick, 162.0);
+	        soot.setRightAnchor(dateText, 340.0);
+	        soot.setLeftAnchor(yearText, 445.0);
 
 	        primaryStage.setScene(new Scene(soot, 1000, 600));
 	        primaryStage.setMinWidth(1015.0);
