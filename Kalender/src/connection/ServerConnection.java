@@ -1,29 +1,35 @@
 package connection;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.json.simple.parser.JSONParser;
+
 import requests.Request;
 
 public class ServerConnection {
 	
-	private DataOutputStream out;
-	private DataInputStream in;
+	private BufferedWriter out;
+	private BufferedReader in;
 	private Socket client;
 	
-	private final String SERVER_IP = "localhost";
+	private final String SERVER_IP = "78.91.49.79";
 	private final int SERVER_PORT = 5432;
 	
 	public ServerConnection() throws IOException {
 		client = new Socket(SERVER_IP, SERVER_PORT);
 		
-		out = new DataOutputStream(client.getOutputStream());
-		in = new DataInputStream(client.getInputStream());
+		out = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
+		in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 
 	}
 	
@@ -32,13 +38,15 @@ public class ServerConnection {
 	}
 	
 	public JSONObject sendRequest(Request request) throws IOException {
-        out.writeUTF(request.toString());
-        String result = in.readUTF();
+		System.out.println(request.toString());
+        out.write(request.toString());
+        out.flush();
+        String result = in.readLine();
         JSONObject result_json;
         try {
             result_json = (JSONObject)new JSONParser().parse(result);
         } catch (ParseException e) {
-            System.err.println(result);
+            System.out.println(result);
             result_json = formatError();
         }
 		return result_json;
