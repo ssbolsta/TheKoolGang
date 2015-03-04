@@ -3,7 +3,6 @@ package kalenderGUI;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-
 import models.Event;
 import models.Person;
 import models.Room;
