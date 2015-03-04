@@ -45,16 +45,16 @@ public class AgendaApplication extends Application
 	public void setPersonList(ObservableList<Person> personList) {
 		this.personList = personList;
 	}
-	
+
 	public void addPerson(Person person){
 		this.personList.add(person);
 	}
 	public void removePerson(Person person){
 		this.personList.remove(person);
 	}
-	
+
 	private ObservableList<Event> eventList = FXCollections.observableArrayList();
-	
+
 	public ObservableList<Event> getEventList() {
 		return eventList;
 	}
@@ -67,9 +67,9 @@ public class AgendaApplication extends Application
 	public void removeEvent(Event event){
 		this.eventList.remove(event);
 	}
-	
+
 	private ObservableList<Room> roomList = FXCollections.observableArrayList();
-	
+
 	public ObservableList<Room> getRoomList() {
 		return roomList;
 	}
@@ -418,6 +418,19 @@ public class AgendaApplication extends Application
 	    	delEvent.setText("Slett Arragement");
 	    	delEvent.setLayoutX(173);
 	    	delEvent.setLayoutY(30);
+	    	delEvent.setOnAction(new EventHandler<ActionEvent>(){
+	    		@Override
+	    		public void handle(ActionEvent arg0){
+
+	    			agenda.appointments().clear();
+
+
+
+
+
+	    		}
+	    	});
+
 
 	    	prev.setText("Forrige uke");
 	    	prev.setLayoutX(840);
