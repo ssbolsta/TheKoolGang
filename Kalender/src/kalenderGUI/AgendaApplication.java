@@ -17,12 +17,15 @@ import models.Person;
 import models.Room;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -31,7 +34,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import jfxtras.labs.scene.control.ListView;
 import jfxtras.scene.control.agenda.Agenda;
+import jfxtras.scene.control.agenda.Agenda.Appointment;
 
 
 public class AgendaApplication extends Application
@@ -89,6 +94,8 @@ public class AgendaApplication extends Application
 	Stage primaryStage;
 	Agenda agenda = new Agenda();
 	Text yearText = new Text(""+ Calendar.getInstance().get(Calendar.YEAR));
+	Appointment ap;
+
 
 	private EventHandler<KeyEvent> nextWeekPressed = new EventHandler<KeyEvent>(){
 		@SuppressWarnings("deprecation")
@@ -103,6 +110,8 @@ public class AgendaApplication extends Application
 				agenda =agendaNext;
 
 				start(primaryStage);
+
+
 
 
 			}
@@ -151,6 +160,8 @@ public class AgendaApplication extends Application
 			}
 		}
 	};
+
+
 
 	private EventHandler<KeyEvent> notifyEventPressed = new EventHandler<KeyEvent>(){
 		@Override
@@ -258,28 +269,30 @@ public class AgendaApplication extends Application
 		}
 
 
-
 		Calendar lToday = agenda.getDisplayedCalendar();
 		int lTodayYear = lToday.get(Calendar.YEAR);
 		int lTodayMonth = lToday.get(Calendar.MONTH);
 		int lTodayDay = lToday.get(Calendar.DATE);
+
 		agenda.appointments().addAll(
 
+
+
 				new Agenda.AppointmentImpl()
-				.withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay,9, 00))
+				.withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay,05, 00))
 				.withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 9, 30))
 				.withSummary("A mistake")
 				.withDescription("Dette er eventent til gruppe 3. De skjønte ikke event systemet, så denne ble laget ved en feil.")
 				.withAppointmentGroup(lAppointmentGroupMap.get("group03"))
 				,   new Agenda.AppointmentImpl()
-				.withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 12, 30))
-				.withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 23, 00))
+				.withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay+2, 02, 30))
+				.withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay+2, 23, 00))
 				.withSummary("Snusmumriken")
 				.withDescription("Dette er eventet til gruppe 2. De skal til Mumidalen")
 				.withAppointmentGroup(lAppointmentGroupMap.get("group02"))
 				,   new Agenda.AppointmentImpl()
-				.withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 23, 30))
-				.withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 23, 50))
+				.withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay +1, 03, 30))
+				.withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay +1, 06, 50))
 				.withSummary("Stek")
 				.withDescription("Dette er et event for gruppe 1. De skal steke dagen lang")
 				.withAppointmentGroup(lAppointmentGroupMap.get("group01"))
@@ -288,6 +301,7 @@ public class AgendaApplication extends Application
 
 				);
 	}
+
 
 
 
@@ -326,6 +340,7 @@ public class AgendaApplication extends Application
 	}
 
 	*/
+
 
 
 
@@ -421,8 +436,14 @@ public class AgendaApplication extends Application
 	    	delEvent.setOnAction(new EventHandler<ActionEvent>(){
 	    		@Override
 	    		public void handle(ActionEvent arg0){
+	    			  for(int i = 0, n = agenda.appointments().size(); i < n; i++) {
+	    				  Appointment a = agenda.appointments().get(i);
+	    				  if ( a.equals(ap)){
+	    					  agenda.appointments().remove(i);
+	    				  }
 
-	    			agenda.appointments().clear();
+	    			    }
+
 
 
 
@@ -546,6 +567,29 @@ public class AgendaApplication extends Application
 
 
 	        agenda.setLayoutY(60);
+	        agenda.selectedAppointments().addListener(new ListChangeListener< Appointment >() {
+	            public void onChanged(Change<? extends Appointment> c) {
+	                while (c.next()) {
+	                    if (c.wasPermutated()) {
+	                        for (int i = c.getFrom(); i < c.getTo(); ++i) {
+	                        	System.out.println("Nå ble det trykket PERMUTATED");
+
+	                        }
+	                    } else if (c.wasUpdated()) {
+	                           System.out.println(" Nå ble det trykket UPDATE " );
+	                    } else {
+	                        for (Appointment a : c.getRemoved()) {
+	                        	System.out.println("Avtalen som ble trykket på er ikke lenger trykket på");
+	                        }
+	                        for (Appointment a : c.getAddedSubList()) {
+
+	                        	ap = c.getAddedSubList().get(0);
+	                        	System.out.println("Avtale har blitt trykket på. ");
+	                        }
+	                    }
+	                }
+	            }
+	        });
 
 
 
@@ -566,6 +610,7 @@ public class AgendaApplication extends Application
 	        soot.setLeftAnchor(invites, 360.0);
 	        soot.setLeftAnchor(yearText, 460.0);
 	        soot.setRightAnchor(dateText, 340.0);
+
 
 
 	        primaryStage.setScene(new Scene(soot, 1000, 600));
