@@ -290,7 +290,7 @@ public class AgendaApplication extends Application
 
 	    	Agenda agendaNext = new Agenda();
 	    	AnchorPane soot = new AnchorPane();
-
+	    	
 
 
 
@@ -473,11 +473,8 @@ public class AgendaApplication extends Application
 	        agenda.setLayoutY(60);
 
 
-
-
-
 	        soot.getChildren().add(agenda);
-	        soot.getChildren().addAll(yearText, eventButton, delEvent, makeGroup, invites, dateText, datePick, prev, next);
+	        soot.getChildren().addAll( yearText, eventButton, delEvent, makeGroup, invites, dateText, datePick, prev, next);
 	        soot.setBottomAnchor(agenda, 0.0);
 	        soot.setTopAnchor(agenda, 60.0);
 	        soot.setRightAnchor(agenda, 0.0);
@@ -488,11 +485,14 @@ public class AgendaApplication extends Application
 	        soot.setLeftAnchor(delEvent, 173.0);
 	        soot.setLeftAnchor(makeGroup, 280.0);
 	        soot.setLeftAnchor(invites, 360.0);
+	        
+	        
 
 	        primaryStage.setScene(new Scene(soot, 1000, 600));
 	        primaryStage.setMinWidth(1015.0);
 	        primaryStage.setMinHeight(300);
 	        this.primaryStage = primaryStage;
+	        
 
 	        primaryStage.show();
 
