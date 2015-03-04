@@ -1,6 +1,9 @@
 package connection;
 
 import java.io.IOException;
+import java.util.HashMap;
+
+import org.json.simple.JSONObject;
 
 public class Test {
 	
@@ -8,18 +11,18 @@ public class Test {
 		try {
 			
 			ServerConnection serverConnection = new ServerConnection();
-			
-			Request request1 = new Request(serverConnection, "Test 1");
-			Request request2 = new Request(serverConnection, "Test 2");
-			
-			Request request3 = new Request(serverConnection);
-			request3.setRequest("Test 3");
-			
-			request1.start();
-			request2.start();
-			request3.start();
-			
-		} catch (IOException e) {
+			JSONObject request = new JSONObject();
+            request.put("request", "user");
+            request.put("type", "get");
+            HashMap<String, Object> content = new HashMap<String, Object>();
+            content.put("id",45);
+            request.put("content", content);
+			JSONObject response = serverConnection.sendRequest(request);
+            
+            System.out.println(request);
+            System.out.println(response);
+
+        } catch (IOException e) {
 			e.printStackTrace();
 		}
 		
