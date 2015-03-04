@@ -286,7 +286,7 @@ public class AgendaApplication extends Application
 	    	Button invites = new Button();
 	    	DatePicker datePick = new DatePicker();
 	    	Text dateText = new Text();
-
+	    	Calendar findDateCal = agenda.getDisplayedCalendar();
 
 	    	Agenda agendaNext = new Agenda();
 	    	AnchorPane soot = new AnchorPane();
@@ -297,6 +297,8 @@ public class AgendaApplication extends Application
 		    yearText.setLayoutX(475);
 		    yearText.setLayoutY(20);
 		    yearText.setFont(new Font(26));
+		   	LocalDate localDateNow = LocalDate.of(findDateCal.get(Calendar.YEAR), findDateCal.get(Calendar.MONTH), findDateCal.get(Calendar.DATE));
+
 
 	    	dateText.setText("Velg dato:");
 	    	dateText.setLayoutX(605);
@@ -305,7 +307,9 @@ public class AgendaApplication extends Application
 
 	    	datePick.setLayoutX(665);
 	    	datePick.setLayoutY(30);
+	    	datePick.setValue(localDateNow);
 	    	datePick.setOnAction(new EventHandler<ActionEvent>(){
+
 	    		@Override
 	    		public void handle(ActionEvent arg0){
 
