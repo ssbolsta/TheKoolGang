@@ -1,13 +1,14 @@
 package controllere;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashMap;
+
+import org.controlsfx.dialog.Dialogs;
 
 import models.Person;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -16,9 +17,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
 import kalenderGUI.EventMain;
 
 public class NewEvent1Controller {
@@ -36,24 +34,10 @@ public class NewEvent1Controller {
 	@FXML private TableColumn<Person,String> nameColumn;
 	@FXML private Button cancel;
 	
-	private ObservableList<Person> personTableList = FXCollections.observableArrayList();
-	private ObservableList<Person> nameList = FXCollections.observableArrayList();
 	private ObservableList<LocalTime> timeFromList = FXCollections.observableArrayList();
 	private ObservableList<LocalTime> timeToList = FXCollections.observableArrayList();
-	private HashMap<String,Person> personList = new HashMap<String,Person>();
+	private HashMap<String,Person> personKeyList = new HashMap<String,Person>();
 	private EventMain mainApp;
-	
-	
-	private EventHandler<KeyEvent> cancelKeyPress = new EventHandler<KeyEvent>(){
-		@Override
-		public void handle(KeyEvent arg0){
-			if(arg0.getCode().equals(KeyCode.ENTER)){
-				Stage stage = (Stage) cancel.getScene().getWindow();
-				stage.hide();
-				stage.close();
-			}
-		}
-	};
 	
 	public NewEvent1Controller(){
 	}
@@ -61,15 +45,6 @@ public class NewEvent1Controller {
 	@FXML private void initialize(){
 		uidColumn.setCellValueFactory(cellData -> cellData.getValue().getUidStringProperty());
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().getFullNameProperty());
-		recipientTable.setItems(personTableList);
-		nameList.add( new Person("Mats","Egedal",1234));
-		nameList.add( new Person("Kristian","Bø",1235));
-		nameList.add( new Person("Boye","Data",1236));
-		nameList.add( new Person("John","Smith",1237));
-		nameList.add( new Person("Jim","Jiminy",1238));
-		for (Person person : nameList) {
-			personList.put(person.toString(), person);
-		}
 		for (int i = 0; i < 24; i++) {
 			timeFromList.add(LocalTime.of(i, 0));
 			if(i != 0){
@@ -79,36 +54,40 @@ public class NewEvent1Controller {
 		timeToList.add(LocalTime.of(23, 59));
 		fromTime.setItems(timeFromList);
 		toTime.setItems(timeToList);
-		this.personSearchField.setItems(nameList);
+	}
+	
+	public void showData(){
+		recipientTable.setItems(mainApp.getRecipientList());
+		for (Person person : mainApp.getPersonList()) {
+			personKeyList.put(person.toString(), person);
+		}
+		this.personSearchField.setItems(mainApp.getPersonList());
 		new AutoCompleteCombobox<>(this.personSearchField);
 		new AutoCompleteCombobox<>(this.groupSearchField);
 		
-		cancel.setOnKeyPressed(cancelKeyPress);
-
-		cancel.setOnAction(new EventHandler<ActionEvent>(){
-			@Override
-			public void handle(ActionEvent event) {
-				Stage stage = (Stage) cancel.getScene().getWindow();
-				stage.hide();
-				stage.close();
-			}
-		});
-		
+		if(mainApp.getName() != null && mainApp.getDate() != null && mainApp.getFromTime() != null && mainApp.getToTime() != null && mainApp.getDesc() != null && mainApp.getSpaces() != null){
+			nameField.setText(mainApp.getName());
+			dateField.setValue(mainApp.getDate());
+			fromTime.getSelectionModel().select(mainApp.getFromTime());
+			toTime.getSelectionModel().select(mainApp.getToTime());
+			descriptionField.setText(mainApp.getDesc());
+			spacesField.setText(mainApp.getSpaces().toString());
+		}
 	}
 	
 	@FXML
 	private  void handleLeggTilPerson(){
-		if(personList.get(personSearchField.getSelectionModel().getSelectedItem()) != null){
-			personTableList.add(personList.get(personSearchField.getSelectionModel().getSelectedItem()));
-			nameList.remove(personList.get(personSearchField.getSelectionModel().getSelectedItem()));
+		if(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()) != null){
+			mainApp.getRecipientList().add(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()));
+			mainApp.getPersonList().remove(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()));
 		}
 	}
 	
 	@FXML
 	private void handleFjernPerson(){
 		if(recipientTable.getSelectionModel().getSelectedItem() != null){
-			nameList.add(recipientTable.getSelectionModel().getSelectedItem());
-			personTableList.remove(recipientTable.getSelectionModel().getSelectedItem());
+			mainApp.getPersonList().add(recipientTable.getSelectionModel().getSelectedItem());
+			mainApp.getRecipientList().remove(recipientTable.getSelectionModel().getSelectedItem());
 		}
 	}
 	@FXML
@@ -131,20 +110,76 @@ public class NewEvent1Controller {
 			if(time != null){
 				toTime.getSelectionModel().select(time);
 			}
+		}else{
+			timeToList.removeAll(timeToList);
+			int t = fromTime.getSelectionModel().getSelectedIndex();
+			for (int i = t+1; i < 25; i++) {
+				if(i != 24){
+					timeToList.add(LocalTime.of(i, 0));
+				}else{
+					timeToList.add(LocalTime.of(23, 59));
+				}
+			}
+			toTime.setItems(timeToList);
 		}
 	}
+	
+	
+	@FXML
+	private void handleNext(){
+		if(inputIsValid()){
+			this.mainApp.setSpaces(Integer.parseUnsignedInt(spacesField.getText()));
+			this.mainApp.setName(nameField.getText());
+			this.mainApp.setDate(dateField.getValue());
+			this.mainApp.setFromTime(fromTime.getSelectionModel().getSelectedItem());
+			this.mainApp.setToTime(toTime.getSelectionModel().getSelectedItem());
+			if(descriptionField.getText() == null || descriptionField.getText().length() == 0){
+				this.mainApp.setDesc("");
+			}else{
+				this.mainApp.setDesc(descriptionField.getText());
+			}
+			this.mainApp.showNewEvent2();
+		}
+	}
+	
 	
 	@FXML
 	private void handleClose(){
 		this.mainApp.getPrimaryStage().close();
 	}
 	
-	@FXML
-	private void handleNext(){
-		this.mainApp.showNewEvent2();
-	}
 	
 	public void setMainApp(EventMain mainApp){
 		this.mainApp = mainApp;
+	}
+	
+	private boolean inputIsValid(){
+		String message = "";
+		if(nameField.getText() == null || nameField.getText().length() == 0){
+			message += "Du må taste inn et gyldig navn!\n";
+		}if(dateField.getValue() == null ){
+			message += "Du må velge en dato!\n";
+		}if(dateField.getValue() != null && dateField.getValue().isBefore(LocalDate.now())){
+			message += "Du kan ikke velge en dato tidligere enn i dag!\n";
+		}if(fromTime.getSelectionModel().getSelectedItem() == null || toTime.getSelectionModel().getSelectedItem() == null){
+			message += "Du må velge et gyldig tidsrom!\n";
+		}if(recipientTable.getItems().isEmpty()){
+			message +="Arrangementet må ha minst 1 deltaker!\n";
+		}if(spacesField.getText() == null || spacesField.getText().length() == 0){
+			message += "Du taste inn antall plasser som trengs!\n";
+		}else{
+			try{
+				Integer.parseUnsignedInt(spacesField.getText());
+			}catch(NumberFormatException e){
+				message += "Ikke et gyldig antall plasser!\n";
+			}
+		}
+		
+		if(message.length() == 0){
+			return true;
+		}else{
+			Dialogs.create().title("Ugyldige Felter").masthead("Vennligst rett ugyldige felter!").message(message).showError();
+			return false;
+		}
 	}
 }

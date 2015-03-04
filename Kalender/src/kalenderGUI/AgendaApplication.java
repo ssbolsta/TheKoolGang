@@ -5,46 +5,83 @@ package kalenderGUI;
  * and open the template in the editor.
  */
 
+
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
-import controllere.NewEvent1Controller;
+import models.Event;
+import models.Person;
+import models.Room;
 import javafx.application.Application;
-import static javafx.application.Application.launch;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import javafx.util.Callback;
-import jfxtras.internal.scene.control.skin.agenda.AgendaDaySkin;
-import jfxtras.scene.control.CalendarTextField;
 import jfxtras.scene.control.agenda.Agenda;
 
 
 public class AgendaApplication extends Application
 {
+
+	private ObservableList<Person> personList = FXCollections.observableArrayList();
+
+	public ObservableList<Person> getPersonList() {
+		return personList;
+	}
+	public void setPersonList(ObservableList<Person> personList) {
+		this.personList = personList;
+	}
+	
+	public void addPerson(Person person){
+		this.personList.add(person);
+	}
+	public void removePerson(Person person){
+		this.personList.remove(person);
+	}
+	
+	private ObservableList<Event> eventList = FXCollections.observableArrayList();
+	
+	public ObservableList<Event> getEventList() {
+		return eventList;
+	}
+	public void setEventList(ObservableList<Event> eventList) {
+		this.eventList = eventList;
+	}
+	public void addEvent(Event event){
+		this.eventList.add(event);
+	}
+	public void removeEvent(Event event){
+		this.eventList.remove(event);
+	}
+	
+	private ObservableList<Room> roomList = FXCollections.observableArrayList();
+	
+	public ObservableList<Room> getRoomList() {
+		return roomList;
+	}
+	public void setRoomList(ObservableList<Room> roomList) {
+		this.roomList = roomList;
+	}
+	public void addRoom(Room room){
+		this.roomList.add(room);
+	}
+	public void removeRoom(Room room){
+		this.roomList.remove(room);
+	}
 
 	private AgendaApplication application;
 	private Stage newGroupStage = null;
@@ -54,6 +91,7 @@ public class AgendaApplication extends Application
 	Text yearText = new Text(""+ Calendar.getInstance().get(Calendar.YEAR));
 
 	private EventHandler<KeyEvent> nextWeekPressed = new EventHandler<KeyEvent>(){
+		@SuppressWarnings("deprecation")
 		@Override
 		public void handle(KeyEvent arg0){
 			if(arg0.getCode().equals(KeyCode.ENTER)){
@@ -73,6 +111,7 @@ public class AgendaApplication extends Application
 
 
 	private EventHandler<KeyEvent> prevWeekPressed = new EventHandler<KeyEvent>(){
+		@SuppressWarnings("deprecation")
 		@Override
 		public void handle(KeyEvent arg0){
 			if(arg0.getCode().equals(KeyCode.ENTER)){
@@ -146,6 +185,11 @@ public class AgendaApplication extends Application
 						newEventStage = new Stage();
 						newEventStage.setOnCloseRequest(newEventClosed);
 						newEventStage.setOnHidden(newEventClosed);
+						newEventStage.setTitle("Nytt Arrangement");
+						newEventStage.setResizable(false);
+						newEventStage.setAlwaysOnTop(true);
+						newEventStage.initModality(Modality.WINDOW_MODAL);
+						newEventStage.initOwner(primaryStage);
 						NEC.setMainApp(application);
 						NEC.start(newEventStage);
 					}
@@ -179,9 +223,18 @@ public class AgendaApplication extends Application
 
 	};
 
+	@SuppressWarnings("deprecation")
 	public AgendaApplication()
 	{
-
+		this.personList.add(new Person("Mats","Egedal",2503));
+		this.personList.add(new Person("Rosa","Rever",1054));
+		this.personList.add(new Person("Boye","Borg",1234));
+		this.personList.add(new Person("Syver","Bolstad",3456));
+		this.personList.add(new Person("Kristian","Svoren",9467));
+		this.personList.add(new Person("Jo","Aarvaag",4567));
+		this.roomList.add(new Room(1,"IT vest 115", 7,"Gitar(2),Ukulele(1),Piano(1),Trompet(4)"));
+		this.roomList.add(new Room(2,"Hovedsal 2", 30,"Langbord(1),stikkontaker(36),Bord(4),Tavle(1)"));
+		this.roomList.add(new Room(3,"Ultimate Gaming Room", 18,"Gaming PC(18),Mousemats(18),Refrigirator(4),Gaming Chairs(18)"));
 
 		// setup appointment groups
 		final Map<String, Agenda.AppointmentGroup> lAppointmentGroupMap = new TreeMap<String, Agenda.AppointmentGroup>();
@@ -248,7 +301,7 @@ public class AgendaApplication extends Application
 
 	/**
 	 * get the calendar for the first day of the week
-	 */
+	 *
 	static private Calendar getFirstDayOfWeekCalendar(Locale locale, Calendar c)
 	{
 		// result
@@ -272,10 +325,12 @@ public class AgendaApplication extends Application
 		return primaryStage;
 	}
 
+	*/
 
 
 
-	 @Override
+	 @SuppressWarnings({ "static-access", "deprecation" })
+	@Override
 	    public void start(Stage primaryStage) {
 		 	application = this;
 		 	Button eventButton = new Button();
@@ -285,15 +340,12 @@ public class AgendaApplication extends Application
 	    	Button prev = new Button();
 	    	Button invites = new Button();
 	    	DatePicker datePick = new DatePicker();
-	    	Text dateText = new Text();
+	    	Text dateText = new Text("Velg dato:");
 	    	Calendar findDateCal = agenda.getDisplayedCalendar();
+
 
 	    	Agenda agendaNext = new Agenda();
 	    	AnchorPane soot = new AnchorPane();
-<<<<<<< HEAD
-=======
-
->>>>>>> parent of 85add19... asd
 
 
 
@@ -301,10 +353,9 @@ public class AgendaApplication extends Application
 
 		    yearText.setLayoutY(46);
 		    yearText.setFont(new Font(28));
-		   	LocalDate localDateNow = LocalDate.of(findDateCal.get(Calendar.YEAR), findDateCal.get(Calendar.MONTH), findDateCal.get(Calendar.DATE));
+		    LocalDate localDateNow = LocalDate.of(findDateCal.get(Calendar.YEAR), findDateCal.get(Calendar.MONTH), findDateCal.get(Calendar.DATE));
 
-
-	    	dateText.setText("Velg dato:");
+	    	dateText.setText("Velg dato");
 	    	dateText.setLayoutY(46);
 
 
@@ -312,7 +363,6 @@ public class AgendaApplication extends Application
 	    	datePick.setLayoutY(30);
 	    	datePick.setValue(localDateNow);
 	    	datePick.setOnAction(new EventHandler<ActionEvent>(){
-
 	    		@Override
 	    		public void handle(ActionEvent arg0){
 
@@ -408,6 +458,11 @@ public class AgendaApplication extends Application
 	    					newEventStage = new Stage();
 							newEventStage.setOnCloseRequest(newEventClosed);
 							newEventStage.setOnHidden(newEventClosed);
+							newEventStage.setTitle("Nytt Arrangement");
+							newEventStage.setResizable(false);
+							newEventStage.setAlwaysOnTop(true);
+							newEventStage.initModality(Modality.WINDOW_MODAL);
+							newEventStage.initOwner(primaryStage);
 							NEC.setMainApp(application);
 							NEC.start(newEventStage);
 
@@ -494,16 +549,14 @@ public class AgendaApplication extends Application
 	        soot.setLeftAnchor(eventButton, 40.0);
 	        soot.setLeftAnchor(delEvent, 173.0);
 	        soot.setLeftAnchor(makeGroup, 280.0);
+	        soot.setRightAnchor(datePick, 160.0);
 	        soot.setLeftAnchor(invites, 360.0);
-<<<<<<< HEAD
-	        soot.setRightAnchor(datePick, 162.0);
+	        soot.setLeftAnchor(yearText, 460.0);
 	        soot.setRightAnchor(dateText, 340.0);
-	        soot.setLeftAnchor(yearText, 445.0);
-=======
->>>>>>> parent of 85add19... asd
+
 
 	        primaryStage.setScene(new Scene(soot, 1000, 600));
-	        primaryStage.setMinWidth(1015.0);
+	        primaryStage.setMinWidth(950.0);
 	        primaryStage.setMinHeight(300);
 	        this.primaryStage = primaryStage;
 
