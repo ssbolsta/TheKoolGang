@@ -120,7 +120,10 @@ import jdk.nashorn.internal.ir.RuntimeNode.Request;
 	
 	@FXML
 	private  void handleLeggTilPerson(){
-		
+		if(personSearchField.getSelectionModel().getSelectedItem() != null){
+			personTableList.add(personSearchField.getSelectionModel().getSelectedItem());
+			nameList.remove(personSearchField.getSelectionModel().getSelectedItem());
+		}
 	}
 
 	@FXML
