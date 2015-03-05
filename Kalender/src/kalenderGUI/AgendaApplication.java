@@ -6,12 +6,17 @@ package kalenderGUI;
  */
 
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.sun.corba.se.impl.protocol.giopmsgheaders.RequestMessage;
+import org.json.simple.JSONObject;
+import connection.ServerConnection;
+import requests.*;
 import models.Event;
 import models.Person;
 import models.Room;
@@ -95,7 +100,7 @@ public class AgendaApplication extends Application
 	Agenda agenda = new Agenda();
 	Text yearText = new Text(""+ Calendar.getInstance().get(Calendar.YEAR));
 	Appointment ap;
-
+	ServerConnection scon;
 
 	private EventHandler<KeyEvent> nextWeekPressed = new EventHandler<KeyEvent>(){
 		@SuppressWarnings("deprecation")
@@ -308,6 +313,17 @@ public class AgendaApplication extends Application
 
 
 	public void addAppointment(){
+		GetEventRequest request = new GetEventRequest();
+
+		try {
+
+			JSONObject result = scon.sendRequest(request);
+			System.out.println(result.toJSONString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 
 
 
@@ -366,7 +382,16 @@ public class AgendaApplication extends Application
 	    	Text dateText = new Text("Velg dato:");
 	    	Calendar findDateCal = agenda.getDisplayedCalendar();
 
+			try {
+				scon = new ServerConnection();
 
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+
+			addAppointment();
 	    	Agenda agendaNext = new Agenda();
 	    	AnchorPane soot = new AnchorPane();
 
