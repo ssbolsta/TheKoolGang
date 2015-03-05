@@ -8,9 +8,11 @@ public class GetEventRequest implements Request {
     private int id = -1;
     private int user_member = -1;
     private int group_member = -1;
+    private int in_rooom = -1;
     private String[] date_range = new String[]{"",""};
     private int[] limit = new int[]{0,0};
     
+
     @Override
     public String toString() {
         JSONObject main = new JSONObject();
@@ -25,6 +27,7 @@ public class GetEventRequest implements Request {
         limit.add(this.limit[1]);
         
         content.put("id", id);
+        content.put("in_room", in_rooom);
         content.put("user_member", user_member);
         content.put("group_member", group_member);
         content.put("date_range", date_range);
@@ -43,6 +46,14 @@ public class GetEventRequest implements Request {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getIn_rooom() {
+        return in_rooom;
+    }
+
+    public void setIn_rooom(int in_rooom) {
+        this.in_rooom = in_rooom;
     }
 
     public int getUser_member() {
