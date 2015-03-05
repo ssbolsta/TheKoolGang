@@ -391,7 +391,7 @@ public class AgendaApplication extends Application
 			}
 
 
-
+			addAppointment();
 	    	Agenda agendaNext = new Agenda();
 	    	AnchorPane soot = new AnchorPane();
 
