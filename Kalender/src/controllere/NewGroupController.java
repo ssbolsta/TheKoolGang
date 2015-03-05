@@ -1,6 +1,6 @@
 package controllere;
 
-	import java.io.IOException;
+import java.io.IOException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +24,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -31,9 +32,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import jdk.nashorn.internal.ir.RuntimeNode.Request;
-	
-	public class NewGroupController {
+
+public class NewGroupController {
 
 	@FXML private TextField nameField;
 	@FXML private TextField spacesField;
@@ -44,6 +46,7 @@ import jdk.nashorn.internal.ir.RuntimeNode.Request;
 	@FXML private TableColumn<String,String> uidColumn;
 	@FXML private TableColumn<String,String> nameColumn;
 	@FXML private Button cancel;
+	@FXML private ListView<String> recipientList;
 
 	private ObservableList<String> personTableList = FXCollections.observableArrayList();
 	private ObservableList<String> usernameList = FXCollections.observableArrayList();
@@ -66,26 +69,27 @@ import jdk.nashorn.internal.ir.RuntimeNode.Request;
 
 	@FXML private void initialize(){
 		//uidColumn.setCellValueFactory(cellData -> cellData.getValue().getUidStringProperty());
-		//nameColumn.setCellValueFactory(cellData -> cellData.getValue().getFullNameProperty());
-		recipientTable.setItems(usernameList);
-		
+//		nameColumn.setCellValueFactory();
+		//personTableList.add("dritt");
+		recipientTable.setItems(personTableList);
+
 		try {
-			ServerConnection SC = new ServerConnection();
+			ServerConnection SC = new ServerConnection("78.91.49.227", 5432);
 			GetUserRequest getUser = new GetUserRequest();
-			JSONObject response = SC.sendRequest(getUser);
-			JSONArray arr = (JSONArray) response.get("content");
-			System.out.println(arr.toJSONString());
-			Iterator itr = arr.iterator();
+			JSONArray response = (JSONArray) SC.sendRequest(getUser);
+			System.out.println(response.toJSONString());
+			//System.out.println(arr.toJSONString());
+			Iterator itr = response.iterator();
 			JSONParser parser = new JSONParser();
 			int i = 0;
 			while(itr.hasNext()) {
 				JSONObject person;
 				try {
 					person = (JSONObject) parser.parse(itr.next().toString());
-					nameList.add(person.get("last_name") + ", " + person.get("first_name"));
+					nameList.add(person.get("lastname") + ", " + person.get("firstname"));
 					usernameList.add(person.get("username") + "");
-//					System.out.println(names.get(i));
-//					System.out.println(usernames.get(i));
+					System.out.println(person.toJSONString());
+					//					System.out.println(usernames.get(i));
 					i++;
 				} catch (ParseException e) {
 					e.printStackTrace();
@@ -93,15 +97,15 @@ import jdk.nashorn.internal.ir.RuntimeNode.Request;
 			}
 			this.personSearchField.setItems(nameList);
 			new AutoCompleteCombobox<>(this.personSearchField);
-			
-			
+
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		new AutoCompleteCombobox<>(this.personSearchField);
-		
-		
+
+
 
 		cancel.setOnKeyPressed(cancelKeyPress);
 
@@ -116,19 +120,29 @@ import jdk.nashorn.internal.ir.RuntimeNode.Request;
 
 	}
 
-	
-	
+
+
 	@FXML
 	private  void handleLeggTilPerson(){
 		if(personSearchField.getSelectionModel().getSelectedItem() != null){
+			System.out.println(personSearchField.getSelectionModel().getSelectedItem());
+			System.out.println(nameList.indexOf(personSearchField.getSelectionModel().getSelectedItem()));
+			System.out.println(recipientTable.isVisible());
 			personTableList.add(personSearchField.getSelectionModel().getSelectedItem());
 			nameList.remove(personSearchField.getSelectionModel().getSelectedItem());
+			System.out.println(personTableList.get(0));
 		}
 	}
 
 	@FXML
 	private void handleFjernPerson(){
-		
+		if(recipientTable.getSelectionModel().getSelectedItem()!= null){
+			System.out.println(recipientTable.getSelectionModel().getSelectedItem());
+			System.out.println("meg");
+			//System.out.println(recipientTable.indexOf(personSearchField.getSelectionModel().getSelectedItem()));
+			//personTableList.add(recipientTable.getSelectionModel().getSelectedItem());
+			//nameList.remove(recipientTable.getSelectionModel().getSelectedItem());
+		}
 	}
 }
 
