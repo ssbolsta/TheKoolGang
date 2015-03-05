@@ -284,18 +284,22 @@ public class AgendaApplication extends Application
 				.withSummary("A mistake")
 				.withDescription("Dette er eventent til gruppe 3. De skjønte ikke event systemet, så denne ble laget ved en feil.")
 				.withAppointmentGroup(lAppointmentGroupMap.get("group03"))
+				.withLocation("Rom 15")
 				,   new Agenda.AppointmentImpl()
 				.withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay+2, 02, 30))
 				.withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay+2, 23, 00))
 				.withSummary("Snusmumriken")
 				.withDescription("Dette er eventet til gruppe 2. De skal til Mumidalen")
 				.withAppointmentGroup(lAppointmentGroupMap.get("group02"))
+				.withLocation("Rom 6")
+
 				,   new Agenda.AppointmentImpl()
 				.withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay +1, 03, 30))
 				.withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay +1, 06, 50))
 				.withSummary("Stek")
 				.withDescription("Dette er et event for gruppe 1. De skal steke dagen lang")
 				.withAppointmentGroup(lAppointmentGroupMap.get("group01"))
+				.withLocation("Rom 4")
 
 
 
@@ -303,7 +307,11 @@ public class AgendaApplication extends Application
 	}
 
 
+	public void addAppointment(){
 
+
+
+	}
 
 
 
