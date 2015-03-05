@@ -383,7 +383,7 @@ public class AgendaApplication extends Application
 	    	Calendar findDateCal = agenda.getDisplayedCalendar();
 
 			try {
-				scon = new ServerConnection();
+				scon = new ServerConnection("78.91.49.227", 5432);
 
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -391,7 +391,7 @@ public class AgendaApplication extends Application
 			}
 
 
-			addAppointment();
+
 	    	Agenda agendaNext = new Agenda();
 	    	AnchorPane soot = new AnchorPane();
 
