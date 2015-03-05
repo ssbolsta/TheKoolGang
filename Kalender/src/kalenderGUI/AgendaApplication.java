@@ -8,13 +8,19 @@ package kalenderGUI;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
 import com.sun.corba.se.impl.protocol.giopmsgheaders.RequestMessage;
+import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
+
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
 import connection.ServerConnection;
 import requests.*;
 import models.Event;
@@ -39,9 +45,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import jfxtras.labs.scene.control.Agenda.AppointmentGroup;
 import jfxtras.labs.scene.control.ListView;
 import jfxtras.scene.control.agenda.Agenda;
 import jfxtras.scene.control.agenda.Agenda.Appointment;
+import jfxtras.scene.control.agenda.Agenda.AppointmentGroupImpl;
+import jfxtras.scene.control.agenda.Agenda.AppointmentImpl;
 
 
 public class AgendaApplication extends Application
@@ -284,7 +293,7 @@ public class AgendaApplication extends Application
 
 
 				new Agenda.AppointmentImpl()
-				.withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay,05, 00))
+				.withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay,5, 00))
 				.withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 9, 30))
 				.withSummary("A mistake")
 				.withDescription("Dette er eventent til gruppe 3. De skjønte ikke event systemet, så denne ble laget ved en feil.")
@@ -312,20 +321,64 @@ public class AgendaApplication extends Application
 	}
 
 
-	public void addAppointment(){
+	public ArrayList<AppointmentImpl> addAppointment(Calendar calendar){
+
+		String from = String.format("%04d-%02d-%02d", calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH) - calendar.get(Calendar.DAY_OF_WEEK));
+		String to = String.format("%04d-%02d-%02d", calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)+7-calendar.get(Calendar.DAY_OF_WEEK));
+
 		GetEventRequest request = new GetEventRequest();
+		request.setDate_range(from, to);
+
+		ArrayList<Agenda.AppointmentImpl> appList = new ArrayList<Agenda.AppointmentImpl>();
+		final Map<String, Agenda.AppointmentGroup> lAppointmentGroupMap = new TreeMap<String, Agenda.AppointmentGroup>();
+		lAppointmentGroupMap.put("group00", new Agenda.AppointmentGroupImpl().withStyleClass("group0"));
 
 		try {
 
-			JSONObject result = scon.sendRequest(request);
-			System.out.println(result.toJSONString());
+			JSONArray result = scon.sendRequest(request);
+			Iterator itter = result.iterator();
+			while (itter.hasNext()){
+				JSONObject o = (JSONObject) itter.next();
+
+				String[] Stime = ((String)o.get("starttime")).split(":");
+				int startTime = Integer.parseInt( Stime[0]);
+				int startMinutt = Integer.parseInt( Stime[1]);
+
+
+				String[] Etime = ((String)o.get("endtime")).split(":");
+				int endTime = Integer.parseInt( Etime[0]);
+				int endMinutt = Integer.parseInt( Etime[1]);
+
+				String[] datoEvent = ((String)o.get("eventdate")).split("-");
+				int eventYear = Integer.parseInt( datoEvent[0]);
+				int eventMonth = Integer.parseInt( datoEvent[1]);
+				int eventDay = Integer.parseInt( datoEvent[2]);
+
+				String descEvent = ((String) o.get("description"));
+				String sumEvent = ((String) o.get("name"));
+
+				System.out.println("Starttime: " + String.valueOf(startTime) + ":" + startMinutt);
+				System.out.println("Endtime: " + endTime +":"+endMinutt);
+				System.out.println("Dato: " + eventYear + "-" + eventMonth + "-" + eventDay);
+
+
+				appList.add(new Agenda.AppointmentImpl()
+				.withStartTime(new GregorianCalendar(eventYear, eventMonth, eventDay, startTime, startMinutt))
+				.withEndTime(new GregorianCalendar(eventYear, eventMonth, eventDay, endTime, endMinutt))
+				.withAppointmentGroup(lAppointmentGroupMap.get("group00"))
+				.withSummary(sumEvent)
+				.withDescription(descEvent));
+
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 
+		System.out.println(appList.toString());
 
+		return appList;
 
 	}
 
@@ -382,8 +435,10 @@ public class AgendaApplication extends Application
 	    	Text dateText = new Text("Velg dato:");
 	    	Calendar findDateCal = agenda.getDisplayedCalendar();
 
+
+
 			try {
-				scon = new ServerConnection("78.91.49.227", 5432);
+				scon = new ServerConnection("78.91.49.227", 54321);
 
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -391,7 +446,8 @@ public class AgendaApplication extends Application
 			}
 
 
-			addAppointment();
+
+
 	    	Agenda agendaNext = new Agenda();
 	    	AnchorPane soot = new AnchorPane();
 
@@ -551,13 +607,19 @@ public class AgendaApplication extends Application
 	    		@Override
 	    		public void handle(ActionEvent arg0){
 
-
+	    			agendaNext.appointments().clear();
 
 	    			Calendar nextWeek = agenda.getDisplayedCalendar();
 	    	    	nextWeek.set(nextWeek.get(Calendar.YEAR), nextWeek.get(Calendar.MONTH), nextWeek.get(Calendar.DATE)+7, nextWeek.get(Calendar.HOUR), nextWeek.get(Calendar.MINUTE));
 	    	    	agendaNext.setDisplayedCalendar(nextWeek);
-	    	    	agenda =agendaNext;
 
+	    	    	ArrayList<AppointmentImpl> applist = addAppointment(nextWeek);
+
+	    	    	for (AppointmentImpl i : applist) {
+	    	    		agendaNext.appointments().add(i);
+	    	    	}
+
+	    	    	agenda = agendaNext;
 
 
 	    	    	start(primaryStage);
