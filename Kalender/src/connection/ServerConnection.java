@@ -1,6 +1,6 @@
 package connection;
 
-<<<<<<< HEAD
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
@@ -8,10 +8,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-=======
+
 import java.io.*;
->>>>>>> origin/develop
 import java.net.Socket;
 
 import org.json.simple.JSONObject;
@@ -26,30 +24,19 @@ public class ServerConnection {
 	private BufferedReader in;
 	private Socket client;
 	
-<<<<<<< HEAD
-	private final String SERVER_IP = "78.91.49.79";
-	private final int SERVER_PORT = 5432;
-=======
-	private String SERVER_IP = "localhost";
-	private int SERVER_PORT = 5432;
->>>>>>> origin/develop
+
+	private final String SERVER_IP = "78.91.49.227";
+	private final int SERVER_PORT = 54321;
+
 	
 	public ServerConnection() throws IOException {
 		client = new Socket(SERVER_IP, SERVER_PORT);
-		
-<<<<<<< HEAD
 		out = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
-=======
-		out = new BufferedWriter (new OutputStreamWriter(client.getOutputStream()));
->>>>>>> origin/develop
 		in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 
 	}
 
     public ServerConnection(String ip, int port) throws IOException {
-        
-        SERVER_IP = ip;
-        SERVER_PORT = port;
         
         client = new Socket(SERVER_IP, SERVER_PORT);
 
@@ -63,16 +50,10 @@ public class ServerConnection {
 	}
 	
 	public JSONObject sendRequest(Request request) throws IOException {
-<<<<<<< HEAD
-		System.out.println(request.toString());
-        out.write(request.toString());
-        out.flush();
-=======
 
         out.write(request.toString());
         out.flush();
         
->>>>>>> origin/develop
         String result = in.readLine();
         JSONObject result_json;
         
