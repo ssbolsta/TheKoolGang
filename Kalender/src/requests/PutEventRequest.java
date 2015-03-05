@@ -7,8 +7,8 @@ public class PutEventRequest implements Request {
 
     private String name = "";
     private String desc = "";
+    private int in_room = -1;
     private int admin = -1;
-    private int room = -1;
     private String[] time = new String[]{"",""};
     private String date = "";
 
@@ -23,8 +23,8 @@ public class PutEventRequest implements Request {
         
         content.put("name", name);
         content.put("desc", desc);
+        content.put("in_room", in_room);
         content.put("admin", admin);
-        content.put("room", room);
         content.put("date", date);
         content.put("time", time);
 
@@ -33,6 +33,14 @@ public class PutEventRequest implements Request {
         main.put("content", content);
 
         return main.toJSONString();
+    }
+
+    public int getIn_room() {
+        return in_room;
+    }
+
+    public void setIn_room(int in_room) {
+        this.in_room = in_room;
     }
 
     public String getName() {
@@ -57,14 +65,6 @@ public class PutEventRequest implements Request {
 
     public void setAdmin(int admin) {
         this.admin = admin;
-    }
-
-    public int getRoom() {
-        return room;
-    }
-
-    public void setRoom(int room) {
-        this.room = room;
     }
 
     public String[] getTime() {
