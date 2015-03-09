@@ -353,7 +353,7 @@ public class AgendaApplication extends Application
 
 		    yearText.setLayoutY(46);
 		    yearText.setFont(new Font(28));
-		    LocalDate localDateNow = LocalDate.of(findDateCal.get(Calendar.YEAR), findDateCal.get(Calendar.MONTH), findDateCal.get(Calendar.DATE));
+		    LocalDate localDateNow = LocalDate.of((findDateCal.get(Calendar.YEAR)), findDateCal.get(Calendar.MONTH)+1, findDateCal.get(Calendar.DATE));
 
 	    	dateText.setText("Velg dato");
 	    	dateText.setLayoutY(46);
@@ -369,7 +369,7 @@ public class AgendaApplication extends Application
 
 	    			LocalDate datePickTime = datePick.getValue();
 	    			Calendar nextWeek = agenda.getDisplayedCalendar();
-	    	    	nextWeek.set(datePickTime.getYear(), datePickTime.getMonthValue(), datePickTime.getDayOfMonth(), 0, 0);
+	    	    	nextWeek.set(datePickTime.getYear(), (datePickTime.getMonthValue()-1), datePickTime.getDayOfMonth(), 0, 0);
 	    	    	agendaNext.setDisplayedCalendar(nextWeek);
 
 	    	    	agenda =agendaNext;
