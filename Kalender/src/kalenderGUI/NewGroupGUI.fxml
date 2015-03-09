@@ -11,7 +11,7 @@
    <children>
       <HBox alignment="BOTTOM_RIGHT" layoutX="236.0" layoutY="386.0" prefHeight="40.0" prefWidth="245.0" spacing="20.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Next" />
+            <Button fx:id="nextButton" mnemonicParsing="false" onAction="#createGroup" prefHeight="25.0" prefWidth="90.0" text="Next" />
             <Button fx:id="cancel" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Cancel" />
          </children>
       </HBox>

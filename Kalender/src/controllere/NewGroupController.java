@@ -1,18 +1,21 @@
 package controllere;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import org.controlsfx.dialog.Dialogs;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import requests.GetUserRequest;
+import requests.PutGroupRequest;
 import sun.security.krb5.SCDynamicStoreConfig;
 import connection.ServerConnection;
 import models.Person;
@@ -45,6 +48,7 @@ public class NewGroupController {
 	@FXML private TableColumn<String,String> nameColumn;
 	@FXML private Button cancel;
 	@FXML private ListView<String> recipientList;
+	@FXML private Button nextButton;
 
 	private ObservableList<String> personTableList = FXCollections.observableArrayList();
 	private ObservableList<String> usernameList = FXCollections.observableArrayList();
@@ -64,14 +68,36 @@ public class NewGroupController {
 	public NewGroupController(){
 	}
 
+	private boolean inputIsValid(){
+		String message = "";
+		if(nameField.getText() == null || nameField.getText().length() == 0){
+			message += "Du må taste inn et gyldig gruppenavn!\n";
+		}if(descriptionField.getText().trim().length() == 0){
+			message += "Du må legge inn en gruppebeskrivelse\n";
+		}if(recipientTable.getItems().isEmpty()){
+			message +="Gruppen må ha minst ett medlem!\n";
+		}
+		if(message==""){
+			return true;
+		}
+		else{
+			Dialogs.create().title("Ugyldige Felter").masthead("Vennligst rett ugyldige felter!").message(message).showError();
+			return false;
+		}
+	}
+
+
+
+
+
 	@FXML private void initialize(){
 		//uidColumn.setCellValueFactory(cellData -> cellData.getValue().getUidStringProperty());
-//		nameColumn.setCellValueFactory();
+		//		nameColumn.setCellValueFactory();
 		//personTableList.add("dritt");
 		recipientTable.setItems(personTableList);
 
 		try {
-			ServerConnection SC = new ServerConnection("78.91.49.227", 5432);
+			ServerConnection SC = new ServerConnection("78.91.74.198", 54321);
 			GetUserRequest getUser = new GetUserRequest();
 			JSONArray response = (JSONArray) SC.sendRequest(getUser);
 			System.out.println(response.toJSONString());
@@ -139,6 +165,14 @@ public class NewGroupController {
 			//System.out.println(recipientTable.indexOf(personSearchField.getSelectionModel().getSelectedItem()));
 			//personTableList.add(recipientTable.getSelectionModel().getSelectedItem());
 			//nameList.remove(recipientTable.getSelectionModel().getSelectedItem());
+		}
+	}
+	@FXML
+	private void createGroup(){
+		if(inputIsValid()){
+			PutGroupRequest PGR = new PutGroupRequest();
+			PGR.setName(nameField.getText());
+//			PGR.setAdmin(admin);
 		}
 	}
 }
