@@ -13,18 +13,16 @@ public class Invitation extends NotificationSuper{
 	private Event event;
 	private Group group;
 	
-	public Invitation(Person recipient, Person sentBy, Event event){
+	public Invitation(Person sentBy, Event event){
 		this.date = LocalDate.now();
 		this.time = LocalTime.now();
-		this.recipient = recipient;
 		this.sender = sentBy;
 		this.event = event;
 		this.tag = new SimpleStringProperty(sender.getFirstName() + " " + sender.getLastName() + " har invitert deg til å delta på en arrangement.");
 	}
-	public Invitation(Person recipient, Person sentBy, Group group){
+	public Invitation(Person sentBy, Group group){
 		this.date = LocalDate.now();
 		this.time = LocalTime.now();
-		this.recipient = recipient;
 		this.sender = sentBy;
 		this.group = group;
 		this.tag = new SimpleStringProperty(sender.getFirstName() + " " + sender.getLastName() + " har invitert deg til en gruppe.");

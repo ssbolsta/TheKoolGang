@@ -11,8 +11,8 @@
    <children>
       <HBox alignment="BOTTOM_RIGHT" layoutX="236.0" layoutY="386.0" prefHeight="40.0" prefWidth="245.0" spacing="20.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
          <children>
-            <Button defaultButton="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Next" />
-            <Button cancelButton="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Cancel" />
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#handleNext" prefHeight="25.0" prefWidth="90.0" text="Neste" />
+            <Button fx:id="cancel" cancelButton="true" mnemonicParsing="false" onAction="#handleClose" prefHeight="25.0" prefWidth="90.0" text="Avbryt" />
          </children>
       </HBox>
       <GridPane layoutX="14.0" layoutY="6.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="6.0">

@@ -7,12 +7,19 @@ import models.Event;
 import models.Group;
 import models.Invitation;
 import models.Person;
+import models.Room;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class InvitationsController {
 	
@@ -37,12 +44,25 @@ public class InvitationsController {
 	@FXML
 	private TableColumn<Invitation,String> timeColumn;
 	
+	@FXML private Button close;
+	
 	private ObservableList<Invitation> invitationTableList = FXCollections.observableArrayList();
+	
+	private EventHandler<KeyEvent> closeKeyPressed = new EventHandler<KeyEvent>(){
+		@Override
+		public void handle(KeyEvent arg0){
+			if(arg0.getCode().equals(KeyCode.ENTER)){
+				Stage stage = (Stage) close.getScene().getWindow();
+				stage.hide();
+				stage.close();
+			}
+		}
+	};
 	
 	@FXML
 	private void initialize(){
-		invitationTableList.add(new Invitation(new Person("Mats","Egedal",1234),new Person("Mats","Egedal",1234), new Group(1,"Balletak",new Person("hore","faen",4567))));
-		invitationTableList.add(new Invitation(new Person("Boye","Data",1236),new Person("John","Smith",1237), new Event("Harem",LocalDate.of(2015, 3,25 ),LocalTime.of(12, 0),LocalTime.of(14, 0),"Vi skal holde et stort harem på jobben. Bar eå komme, blir masse kos!",new Person("hore","faen",4567))));
+		invitationTableList.add(new Invitation(new Person("Mats","Egedal",1234), new Group(1,"Balletak",new Person("hore","faen",4567))));
+		invitationTableList.add(new Invitation(new Person("John","Smith",1237), new Event("Harem",LocalDate.of(2015, 3,25 ),LocalTime.of(12, 0),LocalTime.of(14, 0),"Vi skal holde et stort harem på jobben. Bar eå komme, blir masse kos!",new Room(5,"Knøllerom",50,"Dildoer(30)"))));
 		dateColumn.setCellValueFactory(cellData -> cellData.getValue().getDateProperty());
 		tagColumn.setCellValueFactory(cellData -> cellData.getValue().getTagProperty());
 		timeColumn.setCellValueFactory(cellData -> cellData.getValue().getTimeProperty());
@@ -74,5 +94,17 @@ public class InvitationsController {
 			desc.setText("");
 			eventDesc.setText("");
 		}
+		
+		close.setOnKeyPressed(closeKeyPressed);
+		close.setOnAction(new EventHandler<ActionEvent>(){
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				Stage stage =(Stage) close.getScene().getWindow();
+				stage.hide();
+				stage.close();
+			}
+			
+		});
 	}
 }

@@ -30,7 +30,7 @@ public class Validation {
 			throw new WrongLengthOfInput("Feil lengde");
 		}
 	}
-	
+
 	static void validateUsername(String username) throws Exception{
 		username = username.trim();
 		char[] chars = username.toCharArray();

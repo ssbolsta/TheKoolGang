@@ -9,15 +9,10 @@ import javafx.beans.property.StringProperty;
 
 public abstract class NotificationSuper {
 	
-	protected Person recipient;
 	protected LocalDate date;
 	protected LocalTime time;
-	private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-	private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
-	
-	public Person getRecipient(){
-		return recipient;
-	}
+	protected static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+	protected static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
 	
 	public LocalDate getDate(){
 		return date;

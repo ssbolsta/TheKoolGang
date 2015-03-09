@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
@@ -14,6 +15,7 @@
             <Label layoutX="48.0" layoutY="53.0" text="Brukernavn" />
             <Label layoutX="48.0" layoutY="101.0" text="Passord" />
             <Button fx:id="cancel" layoutX="48.0" layoutY="144.0" mnemonicParsing="false" text="Avbryt" />
+            <Text fx:id="errorMessage" fill="#eb6666" layoutX="167.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Feil brukernavn eller passord" visible="false" />
          </children>
       </Pane>
    </children>
