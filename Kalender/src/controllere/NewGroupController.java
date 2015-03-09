@@ -41,18 +41,20 @@ public class NewGroupController {
 	@FXML private TextField nameField;
 	@FXML private TextField spacesField;
 	@FXML private TextArea descriptionField;
-	@FXML private ComboBox<String> personSearchField;
+	@FXML private ComboBox<Person> personSearchField;
 	@FXML private ComboBox<String> groupSearchField;
-	@FXML private TableView<String> recipientTable;
-	@FXML private TableColumn<String,String> uidColumn;
-	@FXML private TableColumn<String,String> nameColumn;
+	@FXML private TableView<Person> recipientTable;
+	@FXML private TableColumn<Person,String> uidColumn;
+	@FXML private TableColumn<Person,String> nameColumn;
 	@FXML private Button cancel;
 	@FXML private ListView<String> recipientList;
 	@FXML private Button nextButton;
 
-	private ObservableList<String> personTableList = FXCollections.observableArrayList();
+	private ObservableList<Person> personTableList = FXCollections.observableArrayList();
 	private ObservableList<String> usernameList = FXCollections.observableArrayList();
 	private ObservableList<String> nameList = FXCollections.observableArrayList();
+	private ObservableList<Person> peopleList = FXCollections.observableArrayList();
+	
 
 	private EventHandler<KeyEvent> cancelKeyPress = new EventHandler<KeyEvent>(){
 		@Override
@@ -91,13 +93,12 @@ public class NewGroupController {
 
 
 	@FXML private void initialize(){
-		//uidColumn.setCellValueFactory(cellData -> cellData.getValue().getUidStringProperty());
-		//		nameColumn.setCellValueFactory();
-		//personTableList.add("dritt");
+		uidColumn.setCellValueFactory(cellData -> cellData.getValue().getUidStringProperty());
+		nameColumn.setCellValueFactory(cellData -> cellData.getValue().getFullNameProperty());
 		recipientTable.setItems(personTableList);
 
 		try {
-			ServerConnection SC = new ServerConnection("78.91.74.198", 54321);
+			ServerConnection SC = new ServerConnection("78.91.74.198", 5432);
 			GetUserRequest getUser = new GetUserRequest();
 			JSONArray response = (JSONArray) SC.sendRequest(getUser);
 			System.out.println(response.toJSONString());
@@ -107,18 +108,18 @@ public class NewGroupController {
 			int i = 0;
 			while(itr.hasNext()) {
 				JSONObject person;
-				try {
-					person = (JSONObject) parser.parse(itr.next().toString());
-					nameList.add(person.get("lastname") + ", " + person.get("firstname"));
-					usernameList.add(person.get("username") + "");
-					System.out.println(person.toJSONString());
-					//					System.out.println(usernames.get(i));
-					i++;
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
+				person = (JSONObject) itr.next();
+				Person p = new Person(person.get("firstname").toString(),person.get("lastname").toString(),Integer.parseInt(person.get("uid").toString()));
+				peopleList.add(p);
+				nameList.add(person.get("lastname") + ", " + person.get("firstname"));
+				
+//					nameList.add(person.get("lastname") + ", " + person.get("firstname"));
+//					usernameList.add(person.get("username") + "");
+//					System.out.println(person.toJSONString());
+//					//					System.out.println(usernames.get(i));
+				i++;
 			}
-			this.personSearchField.setItems(nameList);
+			this.personSearchField.setItems(peopleList);
 			new AutoCompleteCombobox<>(this.personSearchField);
 
 
@@ -147,13 +148,17 @@ public class NewGroupController {
 
 	@FXML
 	private  void handleLeggTilPerson(){
+//		if(personSearchField.getSelectionModel().getSelectedItem() != null){
+//			System.out.println(personSearchField.getSelectionModel().getSelectedItem());
+//			System.out.println(nameList.indexOf(personSearchField.getSelectionModel().getSelectedItem()));
+//			System.out.println(recipientTable.isVisible());
+//			personTableList.add(personSearchField.getSelectionModel().getSelectedItem());
+//			nameList.remove(personSearchField.getSelectionModel().getSelectedItem());
+//			System.out.println(personTableList.get(0));
+			
 		if(personSearchField.getSelectionModel().getSelectedItem() != null){
-			System.out.println(personSearchField.getSelectionModel().getSelectedItem());
-			System.out.println(nameList.indexOf(personSearchField.getSelectionModel().getSelectedItem()));
-			System.out.println(recipientTable.isVisible());
 			personTableList.add(personSearchField.getSelectionModel().getSelectedItem());
-			nameList.remove(personSearchField.getSelectionModel().getSelectedItem());
-			System.out.println(personTableList.get(0));
+			//nameList.remove(personSearchField.getSelectionModel().getSelectedItem());
 		}
 	}
 
