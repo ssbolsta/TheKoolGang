@@ -1,23 +1,17 @@
 package controllere;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 
 import org.controlsfx.dialog.Dialogs;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import requests.GetUserRequest;
 import requests.ModifyGroupRequest;
 import requests.PutGroupRequest;
-import sun.security.krb5.SCDynamicStoreConfig;
 import connection.ServerConnection;
 import models.Person;
 import javafx.collections.FXCollections;
@@ -27,7 +21,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -36,7 +29,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import kalenderGUI.AgendaApplication;
 import kalenderGUI.EventMain;
 
 public class NewGroupController {
@@ -109,7 +101,7 @@ public class NewGroupController {
 			System.out.println(response.toJSONString());
 			//System.out.println(arr.toJSONString());
 			Iterator itr = response.iterator();
-			JSONParser parser = new JSONParser();
+//			JSONParser parser = new JSONParser();
 			int i = 0;
 			while(itr.hasNext()) {
 				JSONObject person;
@@ -177,7 +169,6 @@ public class NewGroupController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
 		}
 	}
 }
