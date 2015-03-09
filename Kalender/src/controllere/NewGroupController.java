@@ -15,6 +15,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import requests.GetUserRequest;
+import requests.ModifyGroupRequest;
 import requests.PutGroupRequest;
 import sun.security.krb5.SCDynamicStoreConfig;
 import connection.ServerConnection;
@@ -35,6 +36,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import kalenderGUI.AgendaApplication;
+import kalenderGUI.EventMain;
 
 public class NewGroupController {
 
@@ -50,11 +53,13 @@ public class NewGroupController {
 	@FXML private ListView<String> recipientList;
 	@FXML private Button nextButton;
 
-	private ObservableList<Person> personTableList = FXCollections.observableArrayList();
-	private ObservableList<String> usernameList = FXCollections.observableArrayList();
-	private ObservableList<String> nameList = FXCollections.observableArrayList();
+	//	private ObservableList<String> usernameList = FXCollections.observableArrayList();
+	//	private ObservableList<String> nameList = FXCollections.observableArrayList();
+	private ObservableList<Person> chosenList = FXCollections.observableArrayList();
 	private ObservableList<Person> peopleList = FXCollections.observableArrayList();
-	
+	private HashMap<String,Person> personKeyList = new HashMap<String,Person>();
+	private EventMain mainApp;
+	private ServerConnection sc;
 
 	private EventHandler<KeyEvent> cancelKeyPress = new EventHandler<KeyEvent>(){
 		@Override
@@ -95,12 +100,12 @@ public class NewGroupController {
 	@FXML private void initialize(){
 		uidColumn.setCellValueFactory(cellData -> cellData.getValue().getUidStringProperty());
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().getFullNameProperty());
-		recipientTable.setItems(personTableList);
+		recipientTable.setItems(chosenList);
 
 		try {
-			ServerConnection SC = new ServerConnection("78.91.74.198", 5432);
+			sc = new ServerConnection("78.91.74.198", 5432);
 			GetUserRequest getUser = new GetUserRequest();
-			JSONArray response = (JSONArray) SC.sendRequest(getUser);
+			JSONArray response = (JSONArray) sc.sendRequest(getUser);
 			System.out.println(response.toJSONString());
 			//System.out.println(arr.toJSONString());
 			Iterator itr = response.iterator();
@@ -111,12 +116,7 @@ public class NewGroupController {
 				person = (JSONObject) itr.next();
 				Person p = new Person(person.get("firstname").toString(),person.get("lastname").toString(),Integer.parseInt(person.get("uid").toString()));
 				peopleList.add(p);
-				nameList.add(person.get("lastname") + ", " + person.get("firstname"));
-				
-//					nameList.add(person.get("lastname") + ", " + person.get("firstname"));
-//					usernameList.add(person.get("username") + "");
-//					System.out.println(person.toJSONString());
-//					//					System.out.println(usernames.get(i));
+				personKeyList.put(p.toString(), p);
 				i++;
 			}
 			this.personSearchField.setItems(peopleList);
@@ -148,36 +148,36 @@ public class NewGroupController {
 
 	@FXML
 	private  void handleLeggTilPerson(){
-//		if(personSearchField.getSelectionModel().getSelectedItem() != null){
-//			System.out.println(personSearchField.getSelectionModel().getSelectedItem());
-//			System.out.println(nameList.indexOf(personSearchField.getSelectionModel().getSelectedItem()));
-//			System.out.println(recipientTable.isVisible());
-//			personTableList.add(personSearchField.getSelectionModel().getSelectedItem());
-//			nameList.remove(personSearchField.getSelectionModel().getSelectedItem());
-//			System.out.println(personTableList.get(0));
-			
-		if(personSearchField.getSelectionModel().getSelectedItem() != null){
-			personTableList.add(personSearchField.getSelectionModel().getSelectedItem());
-			//nameList.remove(personSearchField.getSelectionModel().getSelectedItem());
+		if(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()) != null){
+			chosenList.add(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()));
+			peopleList.remove(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()));
 		}
 	}
 
 	@FXML
 	private void handleFjernPerson(){
-		if(recipientTable.getSelectionModel().getSelectedItem()!= null){
-			System.out.println(recipientTable.getSelectionModel().getSelectedItem());
-			System.out.println("meg");
-			//System.out.println(recipientTable.indexOf(personSearchField.getSelectionModel().getSelectedItem()));
-			//personTableList.add(recipientTable.getSelectionModel().getSelectedItem());
-			//nameList.remove(recipientTable.getSelectionModel().getSelectedItem());
+		if(recipientTable.getSelectionModel().getSelectedItem() != null){
+			peopleList.add(recipientTable.getSelectionModel().getSelectedItem().getUID()-1,(recipientTable.getSelectionModel().getSelectedItem()));
+			chosenList.remove(recipientTable.getSelectionModel().getSelectedItem());
 		}
 	}
 	@FXML
 	private void createGroup(){
 		if(inputIsValid()){
-			PutGroupRequest PGR = new PutGroupRequest();
-			PGR.setName(nameField.getText());
-//			PGR.setAdmin(admin);
+			PutGroupRequest pgr = new PutGroupRequest();
+			pgr.setName(nameField.getText());
+			pgr.setAdmin(GlobalUserID.userID);
+			ModifyGroupRequest mgr = new ModifyGroupRequest();
+			for (Person person:chosenList){
+				mgr.addMemeberToAdd(person.getUID());
+			}
+			try {
+				sc.sendRequest(pgr);
+				sc.sendRequest(mgr);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
 		}
 	}
 }

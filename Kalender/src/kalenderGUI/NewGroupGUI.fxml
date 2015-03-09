@@ -98,7 +98,7 @@
             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                <children>
                   <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Medlemmer" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="20.0" />
-                  <Button layoutX="8.0" layoutY="119.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="Fjern Person" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+                  <Button layoutX="8.0" layoutY="119.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="Fjern Person"  onAction="#handleFjernPerson" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
                </children>
             </AnchorPane>
          </children>

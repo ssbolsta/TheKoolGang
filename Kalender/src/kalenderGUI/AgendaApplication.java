@@ -12,6 +12,7 @@ import java.util.GregorianCalendar;
 import java.util.Map;
 import java.util.TreeMap;
 
+import controllere.GlobalUserID;
 import models.Event;
 import models.Person;
 import models.Room;
@@ -67,6 +68,7 @@ public class AgendaApplication extends Application
 	public void removeEvent(Event event){
 		this.eventList.remove(event);
 	}
+	
 
 	private ObservableList<Room> roomList = FXCollections.observableArrayList();
 
@@ -333,6 +335,7 @@ public class AgendaApplication extends Application
 	@Override
 	    public void start(Stage primaryStage) {
 		 	application = this;
+		 	GlobalUserID.userID = 17;
 		 	Button eventButton = new Button();
 	    	Button delEvent = new Button();
 	      	Button makeGroup = new Button();
