@@ -32,8 +32,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import javafx.util.Callback;
-import jdk.nashorn.internal.ir.RuntimeNode.Request;
 
 public class NewGroupController {
 
