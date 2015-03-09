@@ -165,7 +165,7 @@ public class NewGroupController {
 			}
 			try {
 				sc.sendRequest(pgr);
-				sc.sendRequest(mgr);
+				System.out.println(sc.sendRequest(mgr));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
