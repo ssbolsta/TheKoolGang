@@ -52,7 +52,6 @@ public class NewGroupController {
 	private ObservableList<String> usernameList = FXCollections.observableArrayList();
 	private ObservableList<String> nameList = FXCollections.observableArrayList();
 
-
 	private EventHandler<KeyEvent> cancelKeyPress = new EventHandler<KeyEvent>(){
 		@Override
 		public void handle(KeyEvent arg0){
