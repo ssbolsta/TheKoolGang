@@ -61,8 +61,8 @@ public class InvitationsController {
 	
 	@FXML
 	private void initialize(){
-		invitationTableList.add(new Invitation(new Person("Mats","Egedal",1234),new Person("Mats","Egedal",1234), new Group(1,"Balletak",new Person("hore","faen",4567))));
-		invitationTableList.add(new Invitation(new Person("Boye","Data",1236),new Person("John","Smith",1237), new Event("Harem",LocalDate.of(2015, 3,25 ),LocalTime.of(12, 0),LocalTime.of(14, 0),"Vi skal holde et stort harem på jobben. Bar eå komme, blir masse kos!",new Room(5,"Knøllerom",50,"Dildoer(30)"))));
+		invitationTableList.add(new Invitation(new Person("Mats","Egedal",1234), new Group(1,"Balletak",new Person("hore","faen",4567))));
+		invitationTableList.add(new Invitation(new Person("John","Smith",1237), new Event("Harem",LocalDate.of(2015, 3,25 ),LocalTime.of(12, 0),LocalTime.of(14, 0),"Vi skal holde et stort harem på jobben. Bar eå komme, blir masse kos!",new Room(5,"Knøllerom",50,"Dildoer(30)"))));
 		dateColumn.setCellValueFactory(cellData -> cellData.getValue().getDateProperty());
 		tagColumn.setCellValueFactory(cellData -> cellData.getValue().getTagProperty());
 		timeColumn.setCellValueFactory(cellData -> cellData.getValue().getTimeProperty());
