@@ -116,14 +116,24 @@ public class AgendaApplication extends Application
 		@Override
 		public void handle(KeyEvent arg0){
 			if(arg0.getCode().equals(KeyCode.ENTER)){
-				Agenda agendaNext = new Agenda();
-				Calendar nextWeek = agenda.getDisplayedCalendar();
 
-				nextWeek.set(nextWeek.get(Calendar.YEAR), nextWeek.get(Calendar.MONTH), nextWeek.get(Calendar.DATE)+7, nextWeek.get(Calendar.HOUR), nextWeek.get(Calendar.MINUTE));
-				agendaNext.setDisplayedCalendar(nextWeek);
-				agenda =agendaNext;
+				Agenda agendaNew= new Agenda();
+				agendaNew.appointments().clear();
 
-				start(primaryStage);
+    			Calendar nextWeek = agenda.getDisplayedCalendar();
+    	    	nextWeek.set(nextWeek.get(Calendar.YEAR), nextWeek.get(Calendar.MONTH), nextWeek.get(Calendar.DATE)+7, nextWeek.get(Calendar.HOUR), nextWeek.get(Calendar.MINUTE));
+    	    	agendaNew.setDisplayedCalendar(nextWeek);
+
+    	    	ArrayList<AppointmentImpl> applist = addAppointment(nextWeek);
+
+    	    	for (AppointmentImpl i : applist) {
+    	    		agendaNew.appointments().add(i);
+    	    	}
+
+    	    	agenda = agendaNew;
+
+
+    	    	start(primaryStage);
 
 
 
@@ -321,10 +331,14 @@ public class AgendaApplication extends Application
 	}
 
 
-	public ArrayList<AppointmentImpl> addAppointment(Calendar calendar){
+	public ArrayList<AppointmentImpl> addAppointment(Calendar calendar00){
 
-		String from = String.format("%04d-%02d-%02d", calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH) - calendar.get(Calendar.DAY_OF_WEEK));
-		String to = String.format("%04d-%02d-%02d", calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)+7-calendar.get(Calendar.DAY_OF_WEEK));
+		calendar00.set(calendar00.get(Calendar.YEAR), calendar00.get(Calendar.MONTH), calendar00.get(Calendar.DAY_OF_MONTH) - calendar00.get(Calendar.DAY_OF_WEEK));
+
+		String from = String.format("%04d-%02d-%02d", calendar00.get(Calendar.YEAR), calendar00.get(Calendar.MONTH), calendar00.get(Calendar.DAY_OF_MONTH));
+		calendar00.set(calendar00.get(Calendar.YEAR), calendar00.get(Calendar.MONTH), calendar00.get(Calendar.DAY_OF_MONTH) + 8);
+
+		String to = String.format("%04d-%02d-%02d", calendar00.get(Calendar.YEAR), calendar00.get(Calendar.MONTH), calendar00.get(Calendar.DAY_OF_MONTH));
 
 		GetEventRequest request = new GetEventRequest();
 		request.setDate_range(from, to);
@@ -438,7 +452,7 @@ public class AgendaApplication extends Application
 
 
 			try {
-				scon = new ServerConnection("78.91.49.227", 54321);
+				scon = new ServerConnection("78.91.51.221", 54321);
 
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -457,7 +471,7 @@ public class AgendaApplication extends Application
 
 		    yearText.setLayoutY(46);
 		    yearText.setFont(new Font(28));
-		    LocalDate localDateNow = LocalDate.of(findDateCal.get(Calendar.YEAR), findDateCal.get(Calendar.MONTH), findDateCal.get(Calendar.DATE));
+		    LocalDate localDateNow = LocalDate.of(findDateCal.get(Calendar.YEAR), findDateCal.get(Calendar.MONTH)+1, findDateCal.get(Calendar.DATE));
 
 	    	dateText.setText("Velg dato");
 	    	dateText.setLayoutY(46);
