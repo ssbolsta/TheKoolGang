@@ -25,9 +25,13 @@ public class ModifyEventRequest implements Request {
         JSONArray time = new JSONArray();
         JSONArray add_members = new JSONArray();
         JSONArray remove_members = new JSONArray();
+        JSONArray add_groups = new JSONArray();
+        JSONArray remove_groups = new JSONArray();
         
         add_members.addAll(this.add_members);
         remove_members.addAll(this.remove_members);
+        add_groups.addAll(this.add_groups);
+        remove_groups.addAll(this.remove_groups);
 
         time.add(this.time[0]);
         time.add(this.time[1]);
@@ -40,6 +44,8 @@ public class ModifyEventRequest implements Request {
         content.put("time", time);
         content.put("add_members", add_members);
         content.put("remove_members", remove_members);
+        content.put("add_groups", add_groups);
+        content.put("remove_groups", remove_groups);
 
         main.put("request", "event");
         main.put("type", "modify");
