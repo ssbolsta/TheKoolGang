@@ -148,14 +148,26 @@ public class AgendaApplication extends Application
 		@Override
 		public void handle(KeyEvent arg0){
 			if(arg0.getCode().equals(KeyCode.ENTER)){
-				Agenda agendaNext = new Agenda();
-				Calendar nextWeek = agenda.getDisplayedCalendar();
 
-				nextWeek.set(nextWeek.get(Calendar.YEAR), nextWeek.get(Calendar.MONTH), nextWeek.get(Calendar.DATE)-7, nextWeek.get(Calendar.HOUR), nextWeek.get(Calendar.MINUTE));
-				agendaNext.setDisplayedCalendar(nextWeek);
-				agenda =agendaNext;
+				Agenda agendaNew = new Agenda();
+				agendaNew.appointments().clear();
 
-				start(primaryStage);
+    			Calendar nextWeek = agenda.getDisplayedCalendar();
+    	    	nextWeek.set(nextWeek.get(Calendar.YEAR), nextWeek.get(Calendar.MONTH), nextWeek.get(Calendar.DATE)-7, nextWeek.get(Calendar.HOUR), nextWeek.get(Calendar.MINUTE));
+    	    	agendaNew.setDisplayedCalendar(nextWeek);
+
+    	    	ArrayList<AppointmentImpl> applist = addAppointment(nextWeek);
+
+    	    	for (AppointmentImpl i : applist) {
+    	    		agendaNew.appointments().add(i);
+    	    	}
+
+    	    	agenda = agendaNew;
+
+
+    	    	start(primaryStage);
+
+
 
 
 			}
@@ -371,9 +383,6 @@ public class AgendaApplication extends Application
 				String descEvent = ((String) o.get("description"));
 				String sumEvent = ((String) o.get("name"));
 
-				System.out.println("Starttime: " + String.valueOf(startTime) + ":" + startMinutt);
-				System.out.println("Endtime: " + endTime +":"+endMinutt);
-				System.out.println("Dato: " + eventYear + "-" + eventMonth + "-" + eventDay);
 
 
 				appList.add(new Agenda.AppointmentImpl()
@@ -390,7 +399,6 @@ public class AgendaApplication extends Application
 		}
 
 
-		System.out.println(appList.toString());
 
 		return appList;
 
@@ -565,15 +573,23 @@ public class AgendaApplication extends Application
 	    		public void handle(ActionEvent arg0){
 
 
+	    	    	agendaNext.appointments().clear();
 
 	    			Calendar nextWeek = agenda.getDisplayedCalendar();
-
 	    	    	nextWeek.set(nextWeek.get(Calendar.YEAR), nextWeek.get(Calendar.MONTH), nextWeek.get(Calendar.DATE)-7, nextWeek.get(Calendar.HOUR), nextWeek.get(Calendar.MINUTE));
 	    	    	agendaNext.setDisplayedCalendar(nextWeek);
-	    	    	agenda =agendaNext;
+
+	    	    	ArrayList<AppointmentImpl> applist = addAppointment(nextWeek);
+
+	    	    	for (AppointmentImpl i : applist) {
+	    	    		agendaNext.appointments().add(i);
+	    	    	}
+
+	    	    	agenda = agendaNext;
 
 
 	    	    	start(primaryStage);
+
 
 
 
