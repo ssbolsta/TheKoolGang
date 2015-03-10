@@ -55,7 +55,7 @@ public class EventMain extends Application {
 				JSONObject person;
 				try{
 					person = (JSONObject) parser.parse(itr.next().toString());
-					personList.add(new Person(person.get("firstname").toString(),person.get("lastname").toString(),person.get("username").toString()));
+					personList.add(new Person(person.get("firstname").toString(),person.get("lastname").toString(),person.get("username").toString(), Integer.parseInt(person.get("uid").toString())));
 				}catch(ParseException e){
 					e.printStackTrace();
 				}

@@ -106,7 +106,7 @@ public class NewGroupController {
 		recipientTable.setItems(chosenList);
 		groupColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
 		groupTable.setItems(chosenGroupList);
-		
+
 
 		try {
 			sc = new ServerConnection("78.91.51.221", 54321);
@@ -120,7 +120,7 @@ public class NewGroupController {
 				peopleList.add(p);
 				personKeyList.put(p.toString(), p);
 			}
-			
+
 			GetGroupRequest getGroup = new GetGroupRequest();
 			JSONArray response2 = sc.sendRequest(getGroup);
 			System.out.println(response2.toJSONString());
@@ -132,7 +132,7 @@ public class NewGroupController {
 				groupList.add(g);
 				groupKeyList.put(g.getName(), g);
 			}
-			
+
 			this.personSearchField.setItems(peopleList);
 			this.groupSearchField.setItems(groupList);
 			new AutoCompleteCombobox<>(this.groupSearchField);
@@ -176,7 +176,7 @@ public class NewGroupController {
 			chosenList.remove(recipientTable.getSelectionModel().getSelectedItem());
 		}
 	}
-	
+
 	@FXML
 	private void handleAddGroup(){
 		if(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()) != null){
@@ -184,7 +184,7 @@ public class NewGroupController {
 			groupList.remove(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
 		}
 	}
-	
+
 	@FXML
 	private void handleRemoveGroup(){
 		if(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()) != null){
@@ -192,7 +192,7 @@ public class NewGroupController {
 			chosenGroupList.remove(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
 		}
 	}
-	
+
 	@FXML
 	private void createGroup(){
 		if(inputIsValid()){
@@ -203,7 +203,7 @@ public class NewGroupController {
 			ggr.setName(nameField.getText());
 			ModifyGroupRequest mgr = new ModifyGroupRequest();
 			for (Person person:chosenList){
-				mgr.addMemeberToAdd(person.getUID());
+				mgr.addMemeberToAdd(person.getUid());
 			}
 			for(Group group:chosenGroupList){
 				mgr.addGroupToAdd(group.getGroupID());
