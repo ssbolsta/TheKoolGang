@@ -42,14 +42,13 @@ public class NewGroupController {
 	@FXML private ComboBox<Group> groupSearchField;
 	@FXML private TableView<Person> recipientTable;
 	@FXML private TableView<Group> groupTable;
-	@FXML private TableColumn<Person,String> uidColumn;
+	@FXML private TableColumn<Group,String> groupColumn;
+	@FXML private TableColumn<Person,String> usernameColumn;
 	@FXML private TableColumn<Person,String> nameColumn;
-	@FXML private Button cancel;
 	@FXML private ListView<String> recipientList;
+	@FXML private Button cancel;
 	@FXML private Button nextButton;
 
-	//	private ObservableList<String> usernameList = FXCollections.observableArrayList();
-	//	private ObservableList<String> nameList = FXCollections.observableArrayList();
 	private ObservableList<Group> groupList = FXCollections.observableArrayList();
 	private ObservableList<Group> chosenGroupList = FXCollections.observableArrayList();
 	private HashMap<String,Group> groupKeyList = new HashMap<String,Group>();
@@ -96,25 +95,41 @@ public class NewGroupController {
 
 
 	@FXML private void initialize(){
-		uidColumn.setCellValueFactory(cellData -> cellData.getValue().getUidStringProperty());
+		usernameColumn.setCellValueFactory(cellData -> cellData.getValue().getUsernameProperty());
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().getFullNameProperty());
 		recipientTable.setItems(chosenList);
+		groupColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
+		groupTable.setItems(chosenGroupList);
+		
 
 		try {
 			sc = new ServerConnection("78.91.51.221", 54321);
 			GetUserRequest getUser = new GetUserRequest();
 			JSONArray response = (JSONArray) sc.sendRequest(getUser);
 			Iterator itr = response.iterator();
-			int i = 0;
 			while(itr.hasNext()) {
 				JSONObject person;
 				person = (JSONObject) itr.next();
-				Person p = new Person(person.get("firstname").toString(),person.get("lastname").toString(),Integer.parseInt(person.get("uid").toString()));
+				Person p = new Person(person.get("firstname").toString(),person.get("lastname").toString(),person.get("username").toString(), Integer.parseInt(person.get("uid").toString()));
 				peopleList.add(p);
 				personKeyList.put(p.toString(), p);
-				i++;
 			}
+			
+			GetGroupRequest getGroup = new GetGroupRequest();
+			JSONArray response2 = sc.sendRequest(getGroup);
+			System.out.println(response2.toJSONString());
+			Iterator itr1 = response2.iterator();
+			while(itr1.hasNext()){
+				JSONObject group;
+				group = (JSONObject) itr1.next();
+				Group g = new Group(Integer.parseInt(group.get("gid").toString()), group.get("name").toString());
+				groupList.add(g);
+				groupKeyList.put(g.getName(), g);
+			}
+			
 			this.personSearchField.setItems(peopleList);
+			this.groupSearchField.setItems(groupList);
+			new AutoCompleteCombobox<>(this.groupSearchField);
 			new AutoCompleteCombobox<>(this.personSearchField);
 
 
@@ -122,7 +137,6 @@ public class NewGroupController {
 			e.printStackTrace();
 		}
 
-		new AutoCompleteCombobox<>(this.personSearchField);
 
 
 
@@ -152,8 +166,16 @@ public class NewGroupController {
 	@FXML
 	private void handleFjernPerson(){
 		if(recipientTable.getSelectionModel().getSelectedItem() != null){
-			peopleList.add(recipientTable.getSelectionModel().getSelectedItem().getUID()-1,(recipientTable.getSelectionModel().getSelectedItem()));
+			peopleList.add((recipientTable.getSelectionModel().getSelectedItem()));
 			chosenList.remove(recipientTable.getSelectionModel().getSelectedItem());
+		}
+	}
+	
+	@FXML
+	private void handleAddGroup(){
+		if(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()) != null){
+			chosenGroupList.add(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
+			groupList.remove(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
 		}
 	}
 	@FXML

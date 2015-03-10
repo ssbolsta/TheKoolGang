@@ -11,7 +11,7 @@
    <children>
       <HBox alignment="BOTTOM_RIGHT" layoutX="236.0" layoutY="386.0" prefHeight="40.0" prefWidth="245.0" spacing="20.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Next" />
+            <Button fx:id="nextButton" mnemonicParsing="false" onAction="#createGroup" prefHeight="25.0" prefWidth="90.0" text="Next" />
             <Button fx:id="cancel" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Cancel" />
          </children>
       </HBox>
@@ -94,11 +94,11 @@
                   <Insets />
                </GridPane.margin>
             </ComboBox>
-            <ComboBox fx:id="groupSearchField" prefHeight="25.0" prefWidth="254.0" promptText="Velg en gruppe å legge til" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <ComboBox fx:id="groupSearchField" prefHeight="25.0" prefWidth="254.0" promptText="Søk etter gruppe" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                <children>
                   <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Medlemmer" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="20.0" />
-                  <Button layoutX="8.0" layoutY="119.0" mnemonicParsing="false" onAction="#handleFjernPerson" prefHeight="25.0" prefWidth="110.0" text="Fjern Person" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+                  <Button layoutX="8.0" layoutY="119.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="Fjern Person"  onAction="#handleFjernPerson" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
                </children>
             </AnchorPane>
          </children>
