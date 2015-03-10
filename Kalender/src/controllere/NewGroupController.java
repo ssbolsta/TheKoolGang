@@ -41,6 +41,7 @@ public class NewGroupController {
 	@FXML private ComboBox<Person> personSearchField;
 	@FXML private ComboBox<Group> groupSearchField;
 	@FXML private TableView<Person> recipientTable;
+	@FXML private TableView<Group> groupTable;
 	@FXML private TableColumn<Person,String> uidColumn;
 	@FXML private TableColumn<Person,String> nameColumn;
 	@FXML private Button cancel;
@@ -51,6 +52,7 @@ public class NewGroupController {
 	//	private ObservableList<String> nameList = FXCollections.observableArrayList();
 	private ObservableList<Group> groupList = FXCollections.observableArrayList();
 	private ObservableList<Group> chosenGroupList = FXCollections.observableArrayList();
+	private HashMap<String,Group> groupKeyList = new HashMap<String,Group>();
 	private ObservableList<Person> chosenList = FXCollections.observableArrayList();
 	private ObservableList<Person> peopleList = FXCollections.observableArrayList();
 	private HashMap<String,Person> personKeyList = new HashMap<String,Person>();
@@ -77,7 +79,7 @@ public class NewGroupController {
 			message += "Du må taste inn et gyldig gruppenavn!\n";
 		}if(descriptionField.getText().trim().length() == 0){
 			message += "Du må legge inn en gruppebeskrivelse\n";
-		}if(recipientTable.getItems().isEmpty()){
+		}if(recipientTable.getItems().isEmpty()&& groupTable.getItems().isEmpty()){
 			message +="Gruppen må ha minst ett medlem!\n";
 		}
 		if(message==""){
