@@ -2,7 +2,7 @@ package requests;
 
 import org.json.simple.JSONObject;
 
-public class PutGroupRequest {
+public class PutGroupRequest implements Request {
 
     private String name = "";
     private int admin = -1;

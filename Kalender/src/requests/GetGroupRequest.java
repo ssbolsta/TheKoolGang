@@ -6,7 +6,7 @@ import org.json.simple.JSONObject;
 public class GetGroupRequest implements Request{
 
 	 private int id = -1;
-	 private int name = -1;
+	 private String name = "";
 	 private int member = -1;
 	 private int participant_of = -1;
 	 private int[] limit = new int[]{0,0};
@@ -42,11 +42,11 @@ public class GetGroupRequest implements Request{
 		this.id = id;
 	}
 
-	public int getName() {
+	public String getName() {
 		return name;
 	}
 
-	public void setName(int name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 

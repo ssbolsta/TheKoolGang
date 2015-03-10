@@ -1,5 +1,6 @@
 package connection;
 
+
 import java.io.*;
 import java.net.Socket;
 
@@ -7,6 +8,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.json.simple.parser.JSONParser;
+
 import requests.Request;
 
 public class ServerConnection {
@@ -52,9 +54,11 @@ public class ServerConnection {
 
         try {
             result_json = (JSONArray) new JSONParser().parse(result);
+
         } catch (ParseException e) {
-            System.err.println(result);
-            result_json = formatError();
+            System.out.println(result);
+            //result_json = formatError();
+            return null;
         }
 
         return result_json;
