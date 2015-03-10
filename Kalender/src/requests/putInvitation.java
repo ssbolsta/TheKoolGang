@@ -18,6 +18,7 @@ public class putInvitation implements Request {
 		main.put("type", "put");
 		content.put("eventId", eventID);
 		content.put("brukerID", brukerID);
+		content.put("description", description);
 		main.put("content",  content);
 		
 		return main.toJSONString();
