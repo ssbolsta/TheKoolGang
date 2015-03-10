@@ -76,7 +76,13 @@ public class NewGroupController {
 		String message = "";
 		if(nameField.getText() == null || nameField.getText().length() == 0){
 			message += "Du må taste inn et gyldig gruppenavn!\n";
-		}if(descriptionField.getText().trim().length() == 0){
+		}
+		for(Group group:groupList){
+			if(nameField.getText().equals(group.getName())){
+				message += "Det er allerede en gruppe med det navnet";
+			}
+		}
+		if(descriptionField.getText().trim().length() == 0){
 			message += "Du må legge inn en gruppebeskrivelse\n";
 		}if(recipientTable.getItems().isEmpty()&& groupTable.getItems().isEmpty()){
 			message +="Gruppen må ha minst ett medlem!\n";
@@ -211,9 +217,10 @@ public class NewGroupController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-//			Stage stage = (Stage) cancel.getScene().getWindow();
-//			stage.hide();
-//			stage.close();
+			Dialogs.create().title("Ny gruppe er laget").masthead("Ny gruppe").message("Du har laget en ny gruppe").showError();
+			Stage stage = (Stage) cancel.getScene().getWindow();
+			stage.hide();
+			stage.close();
 		}
 	}
 }
