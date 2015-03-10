@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class ModifyGroupRequest implements Request {
 
+    private int id = -1;
     private String name = "";
     private int admin = -1;
     private ArrayList<Integer> add_members = new ArrayList<Integer>();
@@ -29,6 +30,7 @@ public class ModifyGroupRequest implements Request {
         remove_members.addAll(this.remove_groups);
 
         content.put("name", name);
+        content.put("id", id);
         content.put("admin", admin);
         content.put("add_members", add_members);
         content.put("remove_members", remove_members);
@@ -40,6 +42,14 @@ public class ModifyGroupRequest implements Request {
         main.put("content", content);
 
         return main.toJSONString();
+    }
+
+    public int getID() {
+        return id;
+    }
+
+    public void setID(int id) {
+        this.id = id;
     }
 
     public boolean addMemeberToAdd(int pnr) {

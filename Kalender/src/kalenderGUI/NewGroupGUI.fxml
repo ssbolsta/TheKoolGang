@@ -94,7 +94,7 @@
                   <Insets />
                </GridPane.margin>
             </ComboBox>
-            <ComboBox fx:id="groupSearchField" prefHeight="25.0" prefWidth="254.0" promptText="Velg en gruppe å legge til" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <ComboBox fx:id="groupSearchField" prefHeight="25.0" prefWidth="254.0" promptText="Søk etter gruppe" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                <children>
                   <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Medlemmer" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="20.0" />

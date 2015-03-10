@@ -9,10 +9,12 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import requests.GetGroupRequest;
 import requests.GetUserRequest;
 import requests.ModifyGroupRequest;
 import requests.PutGroupRequest;
 import connection.ServerConnection;
+import models.Group;
 import models.Person;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,7 +39,7 @@ public class NewGroupController {
 	@FXML private TextField spacesField;
 	@FXML private TextArea descriptionField;
 	@FXML private ComboBox<Person> personSearchField;
-	@FXML private ComboBox<String> groupSearchField;
+	@FXML private ComboBox<Group> groupSearchField;
 	@FXML private TableView<Person> recipientTable;
 	@FXML private TableColumn<Person,String> uidColumn;
 	@FXML private TableColumn<Person,String> nameColumn;
@@ -47,6 +49,8 @@ public class NewGroupController {
 
 	//	private ObservableList<String> usernameList = FXCollections.observableArrayList();
 	//	private ObservableList<String> nameList = FXCollections.observableArrayList();
+	private ObservableList<Group> groupList = FXCollections.observableArrayList();
+	private ObservableList<Group> chosenGroupList = FXCollections.observableArrayList();
 	private ObservableList<Person> chosenList = FXCollections.observableArrayList();
 	private ObservableList<Person> peopleList = FXCollections.observableArrayList();
 	private HashMap<String,Person> personKeyList = new HashMap<String,Person>();
@@ -95,13 +99,10 @@ public class NewGroupController {
 		recipientTable.setItems(chosenList);
 
 		try {
-			sc = new ServerConnection("78.91.74.198", 5432);
+			sc = new ServerConnection("78.91.51.221", 54321);
 			GetUserRequest getUser = new GetUserRequest();
 			JSONArray response = (JSONArray) sc.sendRequest(getUser);
-			System.out.println(response.toJSONString());
-			//System.out.println(arr.toJSONString());
 			Iterator itr = response.iterator();
-//			JSONParser parser = new JSONParser();
 			int i = 0;
 			while(itr.hasNext()) {
 				JSONObject person;
@@ -159,16 +160,25 @@ public class NewGroupController {
 			PutGroupRequest pgr = new PutGroupRequest();
 			pgr.setName(nameField.getText());
 			pgr.setAdmin(GlobalUserID.userID);
+			GetGroupRequest ggr = new GetGroupRequest();
+			ggr.setName(nameField.getText());
 			ModifyGroupRequest mgr = new ModifyGroupRequest();
 			for (Person person:chosenList){
 				mgr.addMemeberToAdd(person.getUID());
+				
 			}
 			try {
 				sc.sendRequest(pgr);
-				System.out.println(sc.sendRequest(mgr));
+				JSONObject jobj = (JSONObject) sc.sendRequest(ggr).get(0);
+				int groupID = Integer.parseInt(jobj.get("gid").toString());
+				mgr.setID(groupID);
+				sc.sendRequest(mgr);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+//			Stage stage = (Stage) cancel.getScene().getWindow();
+//			stage.hide();
+//			stage.close();
 		}
 	}
 }
