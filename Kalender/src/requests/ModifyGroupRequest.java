@@ -26,8 +26,8 @@ public class ModifyGroupRequest implements Request {
 
         add_members.addAll(this.add_members);
         remove_members.addAll(this.remove_members);
-        add_members.addAll(this.add_groups);
-        remove_members.addAll(this.remove_groups);
+        add_groups.addAll(this.add_groups);
+        remove_groups.addAll(this.remove_groups);
 
         content.put("name", name);
         content.put("id", id);
