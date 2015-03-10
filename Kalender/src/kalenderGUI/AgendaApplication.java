@@ -283,63 +283,7 @@ public class AgendaApplication extends Application
 		this.roomList.add(new Room(2,"Hovedsal 2", 30,"Langbord(1),stikkontaker(36),Bord(4),Tavle(1)"));
 		this.roomList.add(new Room(3,"Ultimate Gaming Room", 18,"Gaming PC(18),Mousemats(18),Refrigirator(4),Gaming Chairs(18)"));
 
-		// setup appointment groups
-		final Map<String, Agenda.AppointmentGroup> lAppointmentGroupMap = new TreeMap<String, Agenda.AppointmentGroup>();
-		lAppointmentGroupMap.put("group00", new Agenda.AppointmentGroupImpl().withStyleClass("group0"));
-		lAppointmentGroupMap.put("group01", new Agenda.AppointmentGroupImpl().withStyleClass("group1"));
-		lAppointmentGroupMap.put("group02", new Agenda.AppointmentGroupImpl().withStyleClass("group2"));
-		lAppointmentGroupMap.put("group03", new Agenda.AppointmentGroupImpl().withStyleClass("group3"));
-		lAppointmentGroupMap.put("group04", new Agenda.AppointmentGroupImpl().withStyleClass("group4"));
-		lAppointmentGroupMap.put("group05", new Agenda.AppointmentGroupImpl().withStyleClass("group5"));
-		lAppointmentGroupMap.put("group06", new Agenda.AppointmentGroupImpl().withStyleClass("group6"));
-		lAppointmentGroupMap.put("group07", new Agenda.AppointmentGroupImpl().withStyleClass("group7"));
-		lAppointmentGroupMap.put("group08", new Agenda.AppointmentGroupImpl().withStyleClass("group8"));
-		lAppointmentGroupMap.put("group09", new Agenda.AppointmentGroupImpl().withStyleClass("group9"));
-		lAppointmentGroupMap.put("group10", new Agenda.AppointmentGroupImpl().withStyleClass("group10"));
 
-		for (String lId : lAppointmentGroupMap.keySet())
-		{
-			Agenda.AppointmentGroup lAppointmentGroup = lAppointmentGroupMap.get(lId);
-			lAppointmentGroup.setDescription(lId);
-			agenda.appointmentGroups().add(lAppointmentGroup);
-		}
-
-
-		Calendar lToday = agenda.getDisplayedCalendar();
-		int lTodayYear = lToday.get(Calendar.YEAR);
-		int lTodayMonth = lToday.get(Calendar.MONTH);
-		int lTodayDay = lToday.get(Calendar.DATE);
-
-		agenda.appointments().addAll(
-
-
-
-				new Agenda.AppointmentImpl()
-				.withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay,5, 00))
-				.withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 9, 30))
-				.withSummary("A mistake")
-				.withDescription("Dette er eventent til gruppe 3. De skjønte ikke event systemet, så denne ble laget ved en feil.")
-				.withAppointmentGroup(lAppointmentGroupMap.get("group03"))
-				.withLocation("Rom 15")
-				,   new Agenda.AppointmentImpl()
-				.withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay+2, 02, 30))
-				.withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay+2, 23, 00))
-				.withSummary("Snusmumriken")
-				.withDescription("Dette er eventet til gruppe 2. De skal til Mumidalen")
-				.withAppointmentGroup(lAppointmentGroupMap.get("group02"))
-				.withLocation("Rom 6")
-
-				,   new Agenda.AppointmentImpl()
-				.withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay +1, 03, 30))
-				.withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay +1, 06, 50))
-				.withSummary("Stek")
-				.withDescription("Dette er et event for gruppe 1. De skal steke dagen lang")
-				.withAppointmentGroup(lAppointmentGroupMap.get("group01"))
-				.withLocation("Rom 4")
-
-
-
-				);
 	}
 
 
