@@ -15,6 +15,8 @@ public class ModifyEventRequest implements Request {
     private String date = "";
     private ArrayList<Integer> add_members = new ArrayList<Integer>();
     private ArrayList<Integer> remove_members = new ArrayList<Integer>();
+    private ArrayList<Integer> add_groups = new ArrayList<Integer>();
+    private ArrayList<Integer> remove_groups = new ArrayList<Integer>();
 
     @Override
     public String toString() {
@@ -50,8 +52,16 @@ public class ModifyEventRequest implements Request {
         return add_members.add(new Integer(pnr));
     }
     
+    public boolean addGroupsToAdd(int pnr) {
+        return add_groups.add(new Integer(pnr));
+    }
+    
     public ArrayList<Integer> getMeembersToAdd() {
         return add_members;
+    }
+    
+    public ArrayList<Integer> getGroupsToAdd() {
+        return add_groups;
     }
     
     public boolean removeMemberToAdd(int pnr) {
@@ -62,12 +72,28 @@ public class ModifyEventRequest implements Request {
         return remove_members.add(new Integer(pnr));
     }
 
+    public boolean removeGroupToAdd(int pnr) {
+        return add_groups.remove(new Integer(pnr));
+    }
+
+    public boolean addGroupToRemove(int pnr) {
+        return remove_members.add(new Integer(pnr));
+    }
+
     public ArrayList<Integer> getMeembersToRemove() {
         return remove_members;
     }
 
+    public ArrayList<Integer> getGroupsToRemove() {
+        return remove_groups;
+    }
+
     public boolean removeMemberToRemove(int pnr) {
         return remove_members.remove(new Integer(pnr));
+    }
+
+    public boolean removeGroupsToRemove(int gid) {
+        return remove_groups.remove(new Integer(gid));
     }
 
     public String getName() {
