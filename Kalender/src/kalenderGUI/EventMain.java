@@ -32,19 +32,22 @@ public class EventMain extends Application {
 	
 	private ObservableList<Person> personList = FXCollections.observableArrayList();
 	private ObservableList<Person> recipientList = FXCollections.observableArrayList();
+	private ObservableList<Room> roomList	 = FXCollections.observableArrayList();
 	private String name;
 	private String desc;
 	private LocalTime fromTime;
 	private LocalTime toTime;
 	private LocalDate date;
 	private Integer spaces;
+	private ServerConnection SC;
 	
 	
 	public EventMain(){
 		try{
-			ServerConnection SC = new ServerConnection("78.91.74.198",5432);
+			SC = new ServerConnection("78.91.51.221",54321);
 			GetUserRequest getUser = new GetUserRequest();
 			JSONArray response = SC.sendRequest(getUser);
+			@SuppressWarnings("rawtypes")
 			Iterator itr = response.iterator();
 			JSONParser parser = new JSONParser();
 			while(itr.hasNext()){
@@ -202,6 +205,10 @@ public class EventMain extends Application {
 	}
 	public void setDate(LocalDate date) {
 		this.date = date;
+	}
+	
+	public ObservableList<Room>	getRoomList(){
+		return roomList;
 	}
 	
 }

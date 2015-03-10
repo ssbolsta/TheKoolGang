@@ -3,7 +3,7 @@ package models;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Person {
+public class Person{
 	
 	private final StringProperty firstName;
 	private final StringProperty lastName;
