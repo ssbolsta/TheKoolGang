@@ -11,6 +11,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import requests.GetUserRequest;
+import requests.PutEventRequest;
 import models.Person;
 import models.Room;
 import connection.ServerConnection;
@@ -25,11 +26,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class EventMain extends Application {
-	
+
 	private AnchorPane root;
 	private Stage primaryStage;
 	private AgendaApplication mainApp;
-	
+
 	private ObservableList<Person> personList = FXCollections.observableArrayList();
 	private ObservableList<Person> recipientList = FXCollections.observableArrayList();
 	private ObservableList<Room> roomList	 = FXCollections.observableArrayList();
@@ -40,8 +41,8 @@ public class EventMain extends Application {
 	private LocalDate date;
 	private Integer spaces;
 	private ServerConnection SC;
-	
-	
+
+
 	public EventMain(){
 		try{
 			SC = new ServerConnection("78.91.51.221",54321);
@@ -63,9 +64,9 @@ public class EventMain extends Application {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
+
+
+
 	@Override
 	public void start(Stage primaryStage) {
 		try{
@@ -81,13 +82,13 @@ public class EventMain extends Application {
 		}catch(IOException e){
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	public void setMainApp(AgendaApplication mainApp){
 		this.mainApp = mainApp;
 	}
-	
+
 	public void showNewEvent1(){
 		try{
 			FXMLLoader loader = new FXMLLoader();
@@ -101,7 +102,7 @@ public class EventMain extends Application {
 		}catch(IOException e){
 			e.printStackTrace();
 		}
-		
+
 	}
 	public void showNewEvent2(){
 		try{
@@ -116,9 +117,9 @@ public class EventMain extends Application {
 		}catch(IOException e){
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	public void close(){
 		this.primaryStage.close();
 		this.mainApp.setNewEventStage(null);
@@ -128,38 +129,59 @@ public class EventMain extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void createEvent(Room location){
-		
+
+		PutEventRequest putEvent = new PutEventRequest();
+
+		String eventDate = (""+ date.getYear()+ "-" + date.getMonth()+ "-" + date.getDayOfWeek());
+		String eventFromTime = ( "" +fromTime.getHour()+ ":00:00");
+		String eventToTime = ( "" +toTime.getHour()+ ":00:00");
+		int roomId = location.getRoomID();
+
+		putEvent.setAdmin(3);
+		putEvent.setDate(eventDate);
+		putEvent.setDesc(desc);
+		putEvent.setIn_room(roomId);
+		putEvent.setName(name);
+		putEvent.setTime(eventFromTime, eventToTime);
+
+		try {
+			SC.sendRequest(putEvent);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
-	
-	
-	
-	
+
+
+
+
 	public Stage getPrimaryStage(){
 		return this.primaryStage;
 	}
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
+
 	public void setSpaces(Integer spaces){
 		this.spaces = spaces;
 	}
 	public Integer getSpaces(){
 		return spaces;
 	}
-	
-	
+
+
 	public void setRecipientList(ObservableList<Person> recipientList){
 		this.recipientList = recipientList;
 	}
 	public ObservableList<Person> getRecipientList(){
 		return recipientList;
 	}
-	
-	
+
+
 	public void setPersonList(ObservableList<Person> personList){
 		this.personList = personList;
 	}
@@ -167,7 +189,7 @@ public class EventMain extends Application {
 		return personList;
 	}
 
-	
+
 	public String getName() {
 		return name;
 	}
@@ -175,7 +197,7 @@ public class EventMain extends Application {
 		this.name = name;
 	}
 
-	
+
 	public String getDesc() {
 		return desc;
 	}
@@ -183,7 +205,7 @@ public class EventMain extends Application {
 		this.desc = desc;
 	}
 
-	
+
 	public LocalTime getFromTime() {
 		return fromTime;
 	}
@@ -191,7 +213,7 @@ public class EventMain extends Application {
 		this.fromTime = fromTime;
 	}
 
-	
+
 	public LocalTime getToTime() {
 		return toTime;
 	}
@@ -199,16 +221,16 @@ public class EventMain extends Application {
 		this.toTime = toTime;
 	}
 
-	
+
 	public LocalDate getDate() {
 		return date;
 	}
 	public void setDate(LocalDate date) {
 		this.date = date;
 	}
-	
+
 	public ObservableList<Room>	getRoomList(){
 		return roomList;
 	}
-	
+
 }
