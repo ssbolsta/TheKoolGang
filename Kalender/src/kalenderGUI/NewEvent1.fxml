@@ -108,11 +108,11 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
-                  <ComboBox fx:id="fromTime" onAction="#handleFromTime" prefWidth="150.0" promptText="Fra:" />
-                  <ComboBox fx:id="toTime" prefWidth="150.0" promptText="Til:" />
+                  <ComboBox fx:id="fromTime" onAction="#handleFromTime" prefWidth="150.0" promptText="Fra:" styleClass="time-box" />
+                  <ComboBox fx:id="toTime" prefWidth="150.0" promptText="Til:" styleClass="time-box" />
                </children>
             </HBox>
-            <DatePicker fx:id="dateField" prefHeight="25.0" prefWidth="249.0" promptText="Tast inn eller velg dato" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <DatePicker fx:id="dateField" prefHeight="25.0" prefWidth="249.0" promptText="Tast inn eller velg dato" styleClass="dato-velger" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="spacesField" alignment="BOTTOM_LEFT" promptText="Antall romplasser" GridPane.columnIndex="1" GridPane.rowIndex="9">
                <GridPane.margin>
                   <Insets top="5.0" />

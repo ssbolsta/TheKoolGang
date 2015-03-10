@@ -35,7 +35,7 @@
 	-fx-opacity: 70%;
 }
 
-.combo-box .list-cell 
+.time-box .list-cell 
 {
 -fx-background: white;
 -fx-background-color: transparent;
@@ -43,23 +43,23 @@
 -fx-font-family: "Segoe UI Semibold";
 -fx-padding: 3 0 2 7;
 }
-.combo-box-popup .list-view 
+.time-box .list-view 
 {
 -fx-background-color: white;
 -fx-background-insets: 0, 1;
 }    
-.combo-box-popup .list-view .list-cell 
+.time-box .list-view .list-cell 
 {
 -fx-padding: 4 0 4 5;
 }
-.combo-box-popup .list-view .list-cell:filled:hover 
+.time-box .list-view .list-cell:filled:hover 
 {
 -fx-font-family:"Segoe UI Semibold";
 -fx-font-weight: bold;
 -fx-background-color:rgba(73,171,255,0.8); 
 }
 
-.combo-box-base  
+.time-box  
 {
 -fx-background-color: #47b5ff;
 -fx-background-radius: 5, 5, 4, 3;
@@ -67,7 +67,10 @@
 -fx-padding: 0;
 }
 
-.combo-box-base:hover{
+.time-box:hover{
 	-fx-background-color: linear-gradient(to bottom, #0666a1, #47b5ff );
 }
+
+
+
 
