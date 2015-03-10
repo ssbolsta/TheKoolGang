@@ -301,10 +301,25 @@ public class AgendaApplication extends Application
 
 		ArrayList<Agenda.AppointmentImpl> appList = new ArrayList<Agenda.AppointmentImpl>();
 		final Map<String, Agenda.AppointmentGroup> lAppointmentGroupMap = new TreeMap<String, Agenda.AppointmentGroup>();
-		lAppointmentGroupMap.put("group00", new Agenda.AppointmentGroupImpl().withStyleClass("group0"));
+		lAppointmentGroupMap.put("1", new Agenda.AppointmentGroupImpl().withStyleClass("group1"));
+		lAppointmentGroupMap.put("2", new Agenda.AppointmentGroupImpl().withStyleClass("group2"));
+		lAppointmentGroupMap.put("3", new Agenda.AppointmentGroupImpl().withStyleClass("group3"));
+		lAppointmentGroupMap.put("4", new Agenda.AppointmentGroupImpl().withStyleClass("group4"));
+		lAppointmentGroupMap.put("5", new Agenda.AppointmentGroupImpl().withStyleClass("group5"));
+		lAppointmentGroupMap.put("6", new Agenda.AppointmentGroupImpl().withStyleClass("group6"));
+		lAppointmentGroupMap.put("7", new Agenda.AppointmentGroupImpl().withStyleClass("group7"));
+		lAppointmentGroupMap.put("8", new Agenda.AppointmentGroupImpl().withStyleClass("group8"));
+		lAppointmentGroupMap.put("9", new Agenda.AppointmentGroupImpl().withStyleClass("group9"));
+		lAppointmentGroupMap.put("10", new Agenda.AppointmentGroupImpl().withStyleClass("group10"));
+		lAppointmentGroupMap.put("11", new Agenda.AppointmentGroupImpl().withStyleClass("group11"));
+		lAppointmentGroupMap.put("12", new Agenda.AppointmentGroupImpl().withStyleClass("group12"));
+		lAppointmentGroupMap.put("13", new Agenda.AppointmentGroupImpl().withStyleClass("group13"));
+		lAppointmentGroupMap.put("14", new Agenda.AppointmentGroupImpl().withStyleClass("group14"));
+		lAppointmentGroupMap.put("15", new Agenda.AppointmentGroupImpl().withStyleClass("group15"));
 
 		try {
 
+			int ran = (int) (Math.random()*(14)+1);
 			JSONArray result = scon.sendRequest(request);
 			Iterator itter = result.iterator();
 			while (itter.hasNext()){
@@ -332,7 +347,7 @@ public class AgendaApplication extends Application
 				appList.add(new Agenda.AppointmentImpl()
 				.withStartTime(new GregorianCalendar(eventYear, eventMonth, eventDay, startTime, startMinutt))
 				.withEndTime(new GregorianCalendar(eventYear, eventMonth, eventDay, endTime, endMinutt))
-				.withAppointmentGroup(lAppointmentGroupMap.get("group00"))
+				.withAppointmentGroup(lAppointmentGroupMap.get(""+ ran))
 				.withSummary(sumEvent)
 				.withDescription(descEvent));
 
