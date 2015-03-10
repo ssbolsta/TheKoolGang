@@ -41,6 +41,10 @@ public class Person{
 	}
 	
 	public String toString(){
+<<<<<<< HEAD
 		return lastName.get() + ", " + firstName.get() + " (" + username.get() + ")";
+=======
+		return lastName.get() + ", " + firstName.get();
+>>>>>>> origin/develop
 	}
 }
