@@ -1,24 +1,22 @@
 package models;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Person {
+public class Person{
 	
 	private final StringProperty firstName;
 	private final StringProperty lastName;
-	private final IntegerProperty uId;
+	private final StringProperty username;
 	
 	public Person(){
 		this(null,null,null);
 	}
 	
-	public Person( String firstName, String lastName, Integer uId){
+	public Person( String firstName, String lastName, String username){
 		this.firstName = new SimpleStringProperty(firstName);
 		this.lastName = new SimpleStringProperty(lastName);
-		this.uId = new SimpleIntegerProperty(uId);
+		this.username = new SimpleStringProperty(username);
 	}
 	public String getFirstName(){
 		return firstName.get();
@@ -26,17 +24,8 @@ public class Person {
 	public String getLastName(){
 		return lastName.get();
 	}
-	public Integer getUID(){
-		return uId.get();
-	}
-	public void setFirstName(String firstName){
-		this.firstName.set(firstName);
-	}
-	public void setLastName(String lastName){
-		this.lastName.set(lastName);
-	}
-	public void setUID(Integer uId){
-		this.uId.set(uId);
+	public String getUsername(){
+		return username.get();
 	}
 	public StringProperty getFirstNameProperty(){
 		return firstName;
@@ -44,17 +33,14 @@ public class Person {
 	public StringProperty getLastNameProperty(){
 		return lastName;
 	}
-	public IntegerProperty getUidProperty(){
-		return uId;
-	}
-	public StringProperty getUidStringProperty(){
-		return new SimpleStringProperty("#"+String.valueOf(uId.get()));
+	public StringProperty getUidProperty(){
+		return username;
 	}
 	public StringProperty getFullNameProperty(){
 		return new SimpleStringProperty(lastName.get() + ", " + firstName.get());
 	}
 	
 	public String toString(){
-		return lastName.get() + ", " + firstName.get() + " #" + uId.get();
+		return lastName.get() + ", " + firstName.get() + " (" + username.get() + ")";
 	}
 }

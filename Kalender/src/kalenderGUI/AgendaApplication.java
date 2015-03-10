@@ -270,21 +270,6 @@ public class AgendaApplication extends Application
 
 	};
 
-	@SuppressWarnings("deprecation")
-	public AgendaApplication()
-	{
-		this.personList.add(new Person("Mats","Egedal",2503));
-		this.personList.add(new Person("Rosa","Rever",1054));
-		this.personList.add(new Person("Boye","Borg",1234));
-		this.personList.add(new Person("Syver","Bolstad",3456));
-		this.personList.add(new Person("Kristian","Svoren",9467));
-		this.personList.add(new Person("Jo","Aarvaag",4567));
-		this.roomList.add(new Room(1,"IT vest 115", 7,"Gitar(2),Ukulele(1),Piano(1),Trompet(4)"));
-		this.roomList.add(new Room(2,"Hovedsal 2", 30,"Langbord(1),stikkontaker(36),Bord(4),Tavle(1)"));
-		this.roomList.add(new Room(3,"Ultimate Gaming Room", 18,"Gaming PC(18),Mousemats(18),Refrigirator(4),Gaming Chairs(18)"));
-
-
-	}
 
 
 	public ArrayList<AppointmentImpl> addAppointment(Calendar calendar00){

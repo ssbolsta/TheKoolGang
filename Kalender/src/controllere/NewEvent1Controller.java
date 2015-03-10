@@ -7,6 +7,7 @@ import java.util.HashMap;
 import org.controlsfx.dialog.Dialogs;
 
 import models.Person;
+import models.PersonComparator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -30,7 +31,7 @@ public class NewEvent1Controller {
 	@FXML private ComboBox<Person> personSearchField;
 	@FXML private ComboBox<String> groupSearchField;
 	@FXML private TableView<Person> recipientTable;
-	@FXML private TableColumn<Person,String> uidColumn;
+	@FXML private TableColumn<Person,String> usernameColumn;
 	@FXML private TableColumn<Person,String> nameColumn;
 	@FXML private Button cancel;
 	
@@ -39,11 +40,10 @@ public class NewEvent1Controller {
 	private HashMap<String,Person> personKeyList = new HashMap<String,Person>();
 	private EventMain mainApp;
 	
-	public NewEvent1Controller(){
-	}
+	
 	
 	@FXML private void initialize(){
-		uidColumn.setCellValueFactory(cellData -> cellData.getValue().getUidStringProperty());
+		usernameColumn.setCellValueFactory(cellData -> cellData.getValue().getUidProperty());
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().getFullNameProperty());
 		for (int i = 0; i < 24; i++) {
 			timeFromList.add(LocalTime.of(i, 0));
@@ -64,6 +64,8 @@ public class NewEvent1Controller {
 		this.personSearchField.setItems(mainApp.getPersonList());
 		new AutoCompleteCombobox<>(this.personSearchField);
 		new AutoCompleteCombobox<>(this.groupSearchField);
+	
+		mainApp.getPersonList().sort(new PersonComparator());
 		
 		if(mainApp.getName() != null && mainApp.getDate() != null && mainApp.getFromTime() != null && mainApp.getToTime() != null && mainApp.getDesc() != null && mainApp.getSpaces() != null){
 			nameField.setText(mainApp.getName());
@@ -72,6 +74,7 @@ public class NewEvent1Controller {
 			toTime.getSelectionModel().select(mainApp.getToTime());
 			descriptionField.setText(mainApp.getDesc());
 			spacesField.setText(mainApp.getSpaces().toString());
+			
 		}
 	}
 	
@@ -87,6 +90,7 @@ public class NewEvent1Controller {
 	private void handleFjernPerson(){
 		if(recipientTable.getSelectionModel().getSelectedItem() != null){
 			mainApp.getPersonList().add(recipientTable.getSelectionModel().getSelectedItem());
+			mainApp.getPersonList().sort(new PersonComparator());
 			mainApp.getRecipientList().remove(recipientTable.getSelectionModel().getSelectedItem());
 		}
 	}
@@ -163,7 +167,7 @@ public class NewEvent1Controller {
 			message += "Du kan ikke velge en dato tidligere enn i dag!\n";
 		}if(fromTime.getSelectionModel().getSelectedItem() == null || toTime.getSelectionModel().getSelectedItem() == null){
 			message += "Du må velge et gyldig tidsrom!\n";
-		}if(recipientTable.getItems().isEmpty()){
+		}if(mainApp.getRecipientList().isEmpty()){
 			message +="Arrangementet må ha minst 1 deltaker!\n";
 		}if(spacesField.getText() == null || spacesField.getText().length() == 0){
 			message += "Du taste inn antall plasser som trengs!\n";

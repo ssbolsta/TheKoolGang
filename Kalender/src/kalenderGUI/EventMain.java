@@ -3,9 +3,17 @@ package kalenderGUI;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import models.Event;
+import java.util.Iterator;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import requests.GetUserRequest;
 import models.Person;
 import models.Room;
+import connection.ServerConnection;
 import controllere.NewEvent1Controller;
 import controllere.NewEvent2Controller;
 import javafx.application.Application;
@@ -24,16 +32,36 @@ public class EventMain extends Application {
 	
 	private ObservableList<Person> personList = FXCollections.observableArrayList();
 	private ObservableList<Person> recipientList = FXCollections.observableArrayList();
+	private ObservableList<Room> roomList	 = FXCollections.observableArrayList();
 	private String name;
 	private String desc;
 	private LocalTime fromTime;
 	private LocalTime toTime;
 	private LocalDate date;
 	private Integer spaces;
+	private ServerConnection SC;
 	
 	
 	public EventMain(){
-		
+		try{
+			SC = new ServerConnection("78.91.51.221",54321);
+			GetUserRequest getUser = new GetUserRequest();
+			JSONArray response = SC.sendRequest(getUser);
+			@SuppressWarnings("rawtypes")
+			Iterator itr = response.iterator();
+			JSONParser parser = new JSONParser();
+			while(itr.hasNext()){
+				JSONObject person;
+				try{
+					person = (JSONObject) parser.parse(itr.next().toString());
+					personList.add(new Person(person.get("firstname").toString(),person.get("lastname").toString(),person.get("username").toString()));
+				}catch(ParseException e){
+					e.printStackTrace();
+				}
+			}
+		}catch(IOException e){
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -58,7 +86,6 @@ public class EventMain extends Application {
 	
 	public void setMainApp(AgendaApplication mainApp){
 		this.mainApp = mainApp;
-		this.personList = mainApp.getPersonList();
 	}
 	
 	public void showNewEvent1(){
@@ -103,8 +130,7 @@ public class EventMain extends Application {
 	}
 	
 	public void createEvent(Room location){
-		Event event = new Event(name,date,fromTime,toTime,desc,location);
-		this.mainApp.addEvent(event);
+		
 	}
 	
 	
@@ -182,7 +208,7 @@ public class EventMain extends Application {
 	}
 	
 	public ObservableList<Room>	getRoomList(){
-		return this.mainApp.getRoomList();
+		return roomList;
 	}
 	
 }
