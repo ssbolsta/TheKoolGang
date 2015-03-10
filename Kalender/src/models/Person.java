@@ -63,6 +63,6 @@ public class Person {
 	}
 	
 	public String toString(){
-		return lastName.get() + ", " + firstName.get() + username.get();
+		return lastName.get() + ", " + firstName.get();
 	}
 }

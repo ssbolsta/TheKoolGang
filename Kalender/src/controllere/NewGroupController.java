@@ -178,6 +178,15 @@ public class NewGroupController {
 			groupList.remove(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
 		}
 	}
+	
+	@FXML
+	private void handleRemoveGroup(){
+		if(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()) != null){
+			groupList.add(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
+			chosenGroupList.remove(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
+		}
+	}
+	
 	@FXML
 	private void createGroup(){
 		if(inputIsValid()){
@@ -189,7 +198,9 @@ public class NewGroupController {
 			ModifyGroupRequest mgr = new ModifyGroupRequest();
 			for (Person person:chosenList){
 				mgr.addMemeberToAdd(person.getUID());
-				
+			}
+			for(Group group:chosenGroupList){
+				mgr.addGroupToAdd(group.getGroupID());
 			}
 			try {
 				sc.sendRequest(pgr);
