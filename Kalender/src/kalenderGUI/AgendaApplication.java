@@ -462,6 +462,7 @@ public class AgendaApplication extends Application
 	    	datePick.setLayoutX(665);
 	    	datePick.setLayoutY(30);
 	    	datePick.setValue(localDateNow);
+	    	datePick.getStyleClass().add("date-velger");
 	    	datePick.setOnAction(new EventHandler<ActionEvent>(){
 	    		@Override
 	    		public void handle(ActionEvent arg0){
@@ -485,7 +486,7 @@ public class AgendaApplication extends Application
 	    	});
 
 
-
+	    	invites.getStyleClass().add("button-normal");
 	    	invites.setLayoutY(30);
 	    	invites.setLayoutX(360);
 	    	invites.setText("Invitasjoner");
@@ -513,8 +514,7 @@ public class AgendaApplication extends Application
 		    	});
 
 
-
-
+	    	delEvent.getStyleClass().add("button-normal");
 	    	delEvent.setText("Slett Arragement");
 	    	delEvent.setLayoutX(173);
 	    	delEvent.setLayoutY(30);
@@ -538,7 +538,7 @@ public class AgendaApplication extends Application
 	    		}
 	    	});
 
-
+	    	prev.getStyleClass().add("button-normal");
 	    	prev.setText("Forrige uke");
 	    	prev.setLayoutX(840);
 	    	prev.setLayoutY(30);
@@ -574,7 +574,7 @@ public class AgendaApplication extends Application
 
 
 
-
+	    	eventButton.getStyleClass().add("button-normal");
 	    	eventButton.setLayoutY(30);
 	    	eventButton.setLayoutX(40);
 	    	eventButton.setText("Opprett Arrangement");
@@ -605,7 +605,7 @@ public class AgendaApplication extends Application
 				}
 
 	    	});
-
+	    	next.getStyleClass().add("button-normal");
 	      	next.setText("Neste uke");
 	    	next.setLayoutX(920);
 	    	next.setLayoutY(30);
@@ -636,7 +636,7 @@ public class AgendaApplication extends Application
 	    		}
 	    	});
 
-
+	    	makeGroup.getStyleClass().add("button-normal");
 	    	makeGroup.setLayoutY(30);
 	    	makeGroup.setLayoutX(280);
 	    	makeGroup.setText("Lag gruppe");
@@ -667,7 +667,7 @@ public class AgendaApplication extends Application
 
 
 
-
+	        agenda.getStyleClass().add("agenda-style");
 	        agenda.setLayoutY(60);
 	        agenda.selectedAppointments().addListener(new ListChangeListener< Appointment >() {
 	            public void onChanged(Change<? extends Appointment> c) {
@@ -699,19 +699,20 @@ public class AgendaApplication extends Application
 
 	        soot.getChildren().add(agenda);
 	        soot.getChildren().addAll(yearText, eventButton, delEvent, makeGroup, invites, dateText, datePick, prev, next);
-	        soot.setBottomAnchor(agenda, 0.0);
+	        soot.setBottomAnchor(agenda, 8.0);
 	        soot.setTopAnchor(agenda, 60.0);
-	        soot.setRightAnchor(agenda, 0.0);
+	        soot.setRightAnchor(agenda, 14.0);
 	        soot.setLeftAnchor(agenda, 0.0);
 	        soot.setRightAnchor(next, 5.0);
 	        soot.setRightAnchor(prev, 80.0);
-	        soot.setLeftAnchor(eventButton, 40.0);
-	        soot.setLeftAnchor(delEvent, 178.0);
-	        soot.setLeftAnchor(makeGroup, 291.0);
+	        soot.setLeftAnchor(eventButton, 10.0);
+	        soot.setLeftAnchor(delEvent, 148.0);
+	        soot.setLeftAnchor(makeGroup, 261.0);
 	        soot.setRightAnchor(datePick, 160.0);
-	        soot.setLeftAnchor(invites, 373.0);
+	        soot.setLeftAnchor(invites, 343.0);
 	        soot.setLeftAnchor(yearText, 463.0);
 	        soot.setRightAnchor(dateText, 340.0);
+	        soot.getStyleClass().add("fx-background");
 
 
 
