@@ -36,6 +36,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.KeyCode;
@@ -46,6 +47,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.util.Callback;
 import jfxtras.labs.scene.control.Agenda.AppointmentGroup;
 import jfxtras.labs.scene.control.ListView;
 import jfxtras.scene.control.agenda.Agenda;
@@ -430,6 +432,33 @@ public class AgendaApplication extends Application
 	    	dateText.setLayoutY(46);
 
 
+
+    		datePick.setValue(LocalDate.now());
+
+
+
+            final Callback<DatePicker, DateCell> dateLimitFrom =
+                    new Callback<DatePicker, DateCell>() {
+                        @Override
+                        public DateCell call(final DatePicker datePicker) {
+                            return new DateCell() {
+                                @Override
+                                public void updateItem(LocalDate item, boolean empty) {
+                                    super.updateItem(item, empty);
+
+                                    if (item.isBefore(
+                                           datePick.getValue())
+                                        ) {
+
+                                            setStyle(" -fx-text-fill: #d3d3d3");
+                                    }
+                            }
+                        };
+                    }
+                };
+
+            datePick.setDayCellFactory(dateLimitFrom);
+            datePick.setShowWeekNumbers(true);
 	    	datePick.setLayoutX(665);
 	    	datePick.setLayoutY(30);
 	    	datePick.setValue(localDateNow);
@@ -677,11 +706,11 @@ public class AgendaApplication extends Application
 	        soot.setRightAnchor(next, 5.0);
 	        soot.setRightAnchor(prev, 80.0);
 	        soot.setLeftAnchor(eventButton, 40.0);
-	        soot.setLeftAnchor(delEvent, 173.0);
-	        soot.setLeftAnchor(makeGroup, 280.0);
+	        soot.setLeftAnchor(delEvent, 178.0);
+	        soot.setLeftAnchor(makeGroup, 291.0);
 	        soot.setRightAnchor(datePick, 160.0);
-	        soot.setLeftAnchor(invites, 360.0);
-	        soot.setLeftAnchor(yearText, 460.0);
+	        soot.setLeftAnchor(invites, 373.0);
+	        soot.setLeftAnchor(yearText, 463.0);
 	        soot.setRightAnchor(dateText, 340.0);
 
 
