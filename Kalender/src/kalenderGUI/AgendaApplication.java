@@ -17,6 +17,7 @@ import java.util.TreeMap;
 
 import com.sun.corba.se.impl.protocol.giopmsgheaders.RequestMessage;
 import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
+import com.sun.prism.paint.Color;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -488,6 +489,7 @@ public class AgendaApplication extends Application
 	    	delEvent.setText("Slett Arragement");
 	    	delEvent.setLayoutX(173);
 	    	delEvent.setLayoutY(30);
+
 	    	delEvent.setOnAction(new EventHandler<ActionEvent>(){
 	    		@Override
 	    		public void handle(ActionEvent arg0){
@@ -539,6 +541,8 @@ public class AgendaApplication extends Application
 
 	    		}
 	    	});
+
+
 
 
 
@@ -682,7 +686,9 @@ public class AgendaApplication extends Application
 
 
 
-	        primaryStage.setScene(new Scene(soot, 1000, 600));
+	        Scene scene = new Scene(soot, 1000, 600);
+	        scene.getStylesheets().add("kalenderGUI/NewEvent1.css");
+	        primaryStage.setScene(scene);
 	        primaryStage.setMinWidth(950.0);
 	        primaryStage.setMinHeight(300);
 	        this.primaryStage = primaryStage;
