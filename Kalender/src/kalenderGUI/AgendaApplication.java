@@ -614,7 +614,7 @@ public class AgendaApplication extends Application
 	    	makeGroup.setOnKeyPressed(newGroupPressed);
 	    	makeGroup.setOnAction(new EventHandler<ActionEvent>(){
 	    		@Override
-	    		public void handle(ActionEvent arg0) {
+	    		public void 	handle(ActionEvent arg0) {
 	    			NewGroupMain ng = new NewGroupMain();
 	    			if(newGroupStage == null){
 	    				try{
@@ -686,8 +686,9 @@ public class AgendaApplication extends Application
 
 
 
+
 	        Scene scene = new Scene(soot, 1000, 600);
-	        scene.getStylesheets().add("kalenderGUI/NewEvent1.css");
+	        scene.getStylesheets().add("kalenderGUI/AgendaApplication.css");
 	        primaryStage.setScene(scene);
 	        primaryStage.setMinWidth(950.0);
 	        primaryStage.setMinHeight(300);
