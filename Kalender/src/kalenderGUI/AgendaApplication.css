@@ -1,0 +1,26 @@
+.button {
+  -fx-background-color: #47b5ff;
+  -fx-background-color: linear-gradient(to bottom, #47b5ff, #0666a1);
+  -fx-background-radius: 9,8,5,4,3;
+  -fx-font-family: "Segoe UI Semibold";
+  -fx-text-fill: #ffffff;
+  -fx-font-size: 12px;
+}
+
+.button:focused {
+	-fx-border-radius: 5px;
+	-fx-border-color: #ff0000;
+	-fx-border-top-left-radius: 2;
+	-fx-border-top-right-radius: 2;
+	-fx-border-bottom-right-radius: 2;
+	-fx-border-bottom-left-radius: 2;
+   
+}
+
+.button:hover{
+	-fx-background-color: linear-gradient(to bottom, #0666a1, #47b5ff );
+}
+
+.button:pressed{
+	-fx-background-color: #3cb0fd;
+}
