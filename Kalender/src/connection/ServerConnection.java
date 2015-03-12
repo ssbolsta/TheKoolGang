@@ -33,6 +33,7 @@ public class ServerConnection {
         SERVER_IP = ip;
         SERVER_PORT = port;
 
+        System.out.println(ip +  port);
         client = new Socket(SERVER_IP, SERVER_PORT);
 
         out = new BufferedWriter (new OutputStreamWriter(client.getOutputStream()));

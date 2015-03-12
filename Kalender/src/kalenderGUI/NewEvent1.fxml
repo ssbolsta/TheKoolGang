@@ -132,9 +132,9 @@
                   <Font size="22.0" />
                </font>
             </Text>
-            <TableView maxWidth="158.0" prefHeight="150.0" prefWidth="126.0" GridPane.rowIndex="5">
+            <TableView fx:id="groupTable" maxWidth="158.0" prefHeight="150.0" prefWidth="126.0" GridPane.rowIndex="5">
               <columns>
-                <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="158.0" resizable="false" text="Grupper" />
+                <TableColumn fx:id="groupColumn" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="158.0" resizable="false" text="Grupper" />
               </columns>
                <GridPane.margin>
                   <Insets bottom="10.0" />
@@ -149,13 +149,13 @@
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin></ComboBox>
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="130.0" styleClass="button-normal" text="Legg Til Gruppe" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+            <Button mnemonicParsing="false" onAction="#handleAddGroup" prefHeight="26.0" prefWidth="130.0" styleClass="button-normal" text="Legg Til Gruppe" GridPane.halignment="CENTER" GridPane.rowIndex="7">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin></Button>
             <Button mnemonicParsing="false" onAction="#handleLeggTilPerson" prefHeight="26.0" prefWidth="130.0" styleClass="button-normal" text="Legg Til Person" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
             <Button mnemonicParsing="false" onAction="#handleFjernPerson" prefHeight="26.0" prefWidth="130.0" styleClass="button-normal" text="Fjern Person" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="130.0" styleClass="button-normal" text="Fjern Gruppe" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+            <Button mnemonicParsing="false" onAction="#handleRemoveGroup" prefHeight="26.0" prefWidth="130.0" styleClass="button-normal" text="Fjern Gruppe" GridPane.halignment="CENTER" GridPane.rowIndex="6">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin></Button>

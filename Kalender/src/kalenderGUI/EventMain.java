@@ -10,8 +10,11 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import requests.GetGroupRequest;
+import requests.GetRoomRequest;
 import requests.GetUserRequest;
 import requests.PutEventRequest;
+import models.Group;
 import models.Person;
 import models.Room;
 import connection.ServerConnection;
@@ -32,22 +35,25 @@ public class EventMain extends Application {
 	private AgendaApplication mainApp;
 
 	private ObservableList<Person> personList = FXCollections.observableArrayList();
+	private ObservableList<Group> groupList = FXCollections.observableArrayList();
 	private ObservableList<Person> recipientList = FXCollections.observableArrayList();
-	private ObservableList<Room> roomList	 = FXCollections.observableArrayList();
+	private ObservableList<Room> roomList = FXCollections.observableArrayList();
+	private ObservableList<Group> chosenGroupList = FXCollections.observableArrayList();
+	
 	private String name;
 	private String desc;
 	private LocalTime fromTime;
 	private LocalTime toTime;
 	private LocalDate date;
 	private Integer spaces;
-	private ServerConnection SC;
+	private ServerConnection sc;
 
 
 	public EventMain(){
 		try{
-			SC = new ServerConnection("78.91.51.221",54321);
+			sc = new ServerConnection("78.91.51.201",54321);
 			GetUserRequest getUser = new GetUserRequest();
-			JSONArray response = SC.sendRequest(getUser);
+			JSONArray response = sc.sendRequest(getUser);
 			@SuppressWarnings("rawtypes")
 			Iterator itr = response.iterator();
 			JSONParser parser = new JSONParser();
@@ -56,9 +62,30 @@ public class EventMain extends Application {
 				try{
 					person = (JSONObject) parser.parse(itr.next().toString());
 					personList.add(new Person(person.get("firstname").toString(),person.get("lastname").toString(),person.get("username").toString(), Integer.parseInt(person.get("uid").toString())));
+					
 				}catch(ParseException e){
 					e.printStackTrace();
 				}
+			}
+			GetGroupRequest getGroup = new GetGroupRequest();
+			JSONArray response1 = sc.sendRequest(getGroup);
+			System.out.println(response1.toJSONString());
+			Iterator itr1 = response1.iterator();
+			while(itr1.hasNext()){
+				JSONObject group;
+				group = (JSONObject) itr1.next();
+				Group g = new Group(Integer.parseInt(group.get("gid").toString()), group.get("name").toString());
+				groupList.add(g);
+			}
+			GetRoomRequest getRoom = new GetRoomRequest();
+			JSONArray response2 = sc.sendRequest(getRoom);
+			Iterator itr2 = response2.iterator();
+			while(itr2.hasNext()){
+				JSONObject room;
+				room = (JSONObject) itr2.next();
+				Room r = new Room(Integer.parseInt(room.get("rid").toString()), room.get("name").toString(), Integer.parseInt(room.get("capacity").toString()));
+				roomList.add(r);
+				System.out.println(r.toString());
 			}
 		}catch(IOException e){
 			e.printStackTrace();
@@ -114,6 +141,7 @@ public class EventMain extends Application {
 			controller.showData();
 			this.primaryStage.setScene(new Scene(root));
 			this.primaryStage.show();
+			
 		}catch(IOException e){
 			e.printStackTrace();
 		}
@@ -147,7 +175,7 @@ public class EventMain extends Application {
 		putEvent.setTime(eventFromTime, eventToTime);
 
 		try {
-			SC.sendRequest(putEvent);
+			sc.sendRequest(putEvent);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -188,7 +216,14 @@ public class EventMain extends Application {
 	public ObservableList<Person> getPersonList(){
 		return personList;
 	}
-
+	public ObservableList<Group> getGroupList(){
+		return groupList;
+	}
+	
+	public ObservableList<Group> getChosenGroupList(){
+		return chosenGroupList;
+	}
+	
 
 	public String getName() {
 		return name;
