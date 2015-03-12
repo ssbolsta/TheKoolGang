@@ -11,6 +11,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Map;
 import java.util.TreeMap;
+
+import controllere.GlobalUserID;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -271,6 +273,7 @@ public class AgendaApplication extends Application
 	 @SuppressWarnings({ "static-access", "deprecation" })
 	@Override
 	    public void start(Stage primaryStage) {
+		 	GlobalUserID.userID = 15;
 		 	application = this;
 		 	Button eventButton = new Button();
 	    	Button delEvent = new Button();

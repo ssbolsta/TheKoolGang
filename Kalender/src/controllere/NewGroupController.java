@@ -109,7 +109,7 @@ public class NewGroupController {
 		
 
 		try {
-			sc = new ServerConnection("78.91.51.221", 54321);
+			sc = new ServerConnection("78.91.51.201", 54321);
 			GetUserRequest getUser = new GetUserRequest();
 			JSONArray response = (JSONArray) sc.sendRequest(getUser);
 			Iterator itr = response.iterator();
@@ -203,7 +203,7 @@ public class NewGroupController {
 			ggr.setName(nameField.getText());
 			ModifyGroupRequest mgr = new ModifyGroupRequest();
 			for (Person person:chosenList){
-				mgr.addMemeberToAdd(person.getUID());
+				mgr.addMemeberToAdd(person.getUid());
 			}
 			for(Group group:chosenGroupList){
 				mgr.addGroupToAdd(group.getGroupID());
