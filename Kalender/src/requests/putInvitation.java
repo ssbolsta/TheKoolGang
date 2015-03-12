@@ -4,7 +4,7 @@ import org.json.simple.JSONObject;
 
 public class putInvitation implements Request {
 
-	private int InvitationID = -1;
+	private int invitationID = -1;
 	private int eventID = -1;
 	private int brukerID = -1;
 	private String description = "";
@@ -19,9 +19,18 @@ public class putInvitation implements Request {
 		content.put("eventId", eventID);
 		content.put("brukerID", brukerID);
 		content.put("description", description);
+		content.put("invitationID", invitationID);
 		main.put("content",  content);
 		
 		return main.toJSONString();
+	}
+
+	public int getInvitationID() {
+		return invitationID;
+	}
+
+	public void setInvitationID(int invitationID) {
+		this.invitationID = invitationID;
 	}
 
 	public int getEventID() {
