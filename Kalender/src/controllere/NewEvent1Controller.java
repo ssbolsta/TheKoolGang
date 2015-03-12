@@ -43,7 +43,7 @@ public class NewEvent1Controller {
 	
 	
 	@FXML private void initialize(){
-		usernameColumn.setCellValueFactory(cellData -> cellData.getValue().getUidProperty());
+		usernameColumn.setCellValueFactory(cellData -> cellData.getValue().getUsernameProperty());
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().getFullNameProperty());
 		for (int i = 0; i < 24; i++) {
 			timeFromList.add(LocalTime.of(i, 0));
