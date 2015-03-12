@@ -20,6 +20,7 @@ public class LoginMain extends Application {
 		try {
 			Pane pane = (Pane) FXMLLoader.load(LoginMain.class.getResource("LoginGUI.fxml"));
 			Scene scene = new Scene(pane);
+			scene.getStylesheets().add("kalenderGUI/AgendaApplication.css");
 			primaryStage.setTitle("Login");
 			primaryStage.setScene(scene);
 			primaryStage.show();

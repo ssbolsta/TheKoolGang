@@ -407,7 +407,7 @@ public class AgendaApplication extends Application
 
 
 			try {
-				scon = new ServerConnection("78.91.51.221", 54321);
+				scon = new ServerConnection("78.91.51.201", 54321);
 
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
