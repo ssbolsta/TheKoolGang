@@ -109,7 +109,7 @@ public class NewGroupController {
 		
 
 		try {
-			sc = new ServerConnection("78.91.51.221", 54321);
+			sc = new ServerConnection("78.91.51.201", 54321);
 			GetUserRequest getUser = new GetUserRequest();
 			JSONArray response = (JSONArray) sc.sendRequest(getUser);
 			Iterator itr = response.iterator();
