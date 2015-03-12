@@ -7,12 +7,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minHeight="500.0" minWidth="400.0" prefHeight="580.0" prefWidth="400.0" stylesheets="@NewEvent1.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllere.NewEvent1Controller">
+<AnchorPane minHeight="500.0" minWidth="400.0" prefHeight="600.0" prefWidth="400.0" styleClass="fx-background" stylesheets="@NewEvent1.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllere.NewEvent1Controller">
    <children>
-      <HBox alignment="BOTTOM_RIGHT" layoutX="236.0" layoutY="386.0" prefHeight="40.0" prefWidth="245.0" spacing="20.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
+      <HBox alignment="BOTTOM_CENTER" layoutX="78.0" layoutY="526.0" prefHeight="40.0" prefWidth="245.0" spacing="20.0" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="77.0">
          <children>
-            <Button defaultButton="true" mnemonicParsing="false" onAction="#handleNext" prefHeight="25.0" prefWidth="90.0" text="Neste" />
-            <Button fx:id="cancel" cancelButton="true" mnemonicParsing="false" onAction="#handleClose" prefHeight="25.0" prefWidth="90.0" text="Avbryt" />
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#handleNext" prefHeight="25.0" prefWidth="90.0" styleClass="button-normal" text="Neste" />
+            <Button fx:id="cancel" mnemonicParsing="false" onAction="#handleClose" prefHeight="25.0" prefWidth="90.0" styleClass="button-cancel" text="Avbryt" />
          </children>
       </HBox>
       <GridPane layoutX="14.0" layoutY="6.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="6.0">
@@ -21,27 +21,27 @@
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.0" minWidth="10.0" prefWidth="204.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints minHeight="0.0" prefHeight="51.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="51.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="51.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="133.0" minHeight="0.0" prefHeight="65.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="133.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="247.0" minHeight="10.0" prefHeight="159.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="42.0" minHeight="0.0" prefHeight="37.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="49.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="133.0" minHeight="0.0" prefHeight="79.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="133.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="247.0" minHeight="10.0" prefHeight="166.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="85.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="85.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="55.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField fx:id="nameField" promptText="Tast inn navn på Arrangement" GridPane.columnIndex="1" />
-            <TextArea fx:id="descriptionField" promptText="Tast inn en beskrivelse for arrangementet om ønsket" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <TextField fx:id="nameField" prefHeight="35.0" prefWidth="204.0" promptText="Tast inn navn på Arrangement" GridPane.columnIndex="1" />
+            <TextArea fx:id="descriptionField" prefHeight="60.0" prefWidth="204.0" promptText="Tast inn en beskrivelse for arrangementet om ønsket" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets top="10.0" />
                </GridPane.margin>
             </TextArea>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Navn:">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-header" text="Navn:">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -59,9 +59,9 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" GridPane.rowIndex="3">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Beskrivelse:">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-header" text="Beskrivelse:">
                      <HBox.margin>
-                        <Insets />
+                        <Insets bottom="25.0" />
                      </HBox.margin>
                      <font>
                         <Font size="16.0" />
@@ -71,7 +71,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="9">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Antall plasser:">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-header" text="Antall plasser:">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -84,7 +84,7 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" GridPane.rowIndex="1" />
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Dato:">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-header" text="Dato:">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -94,9 +94,9 @@
                   </Text>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
+            <HBox alignment="CENTER_LEFT" prefHeight="59.0" prefWidth="168.0" GridPane.rowIndex="2">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tid:">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-header" text="Tid:">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -120,36 +120,45 @@
             </TextField>
             <TableView fx:id="recipientTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
               <columns>
-                <TableColumn fx:id="nameColumn" minWidth="0.0" prefWidth="109.0" text="Navn" />
-                <TableColumn fx:id="usernameColumn" minWidth="0.0" prefWidth="94.0" text="Brukernavn" />
+                <TableColumn fx:id="nameColumn" maxWidth="1.7976931348623157E308" prefWidth="115.0" resizable="false" text="Navn" />
+                <TableColumn fx:id="usernameColumn" maxWidth="1.7976931348623157E308" prefWidth="88.0" resizable="false" text="Brukernavn" />
               </columns>
                <GridPane.margin>
                   <Insets bottom="10.0" />
                </GridPane.margin>
             </TableView>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="deltakertext" text="Deltakere:" GridPane.columnSpan="2" GridPane.rowIndex="4">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-header" text="Deltakere:" GridPane.columnSpan="2" GridPane.rowIndex="4">
                <font>
                   <Font size="22.0" />
                </font>
             </Text>
-            <TableView maxWidth="160.0" GridPane.rowIndex="5">
+            <TableView maxWidth="158.0" prefHeight="150.0" prefWidth="126.0" GridPane.rowIndex="5">
               <columns>
-                <TableColumn prefWidth="167.0" text="Grupper" />
+                <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="158.0" resizable="false" text="Grupper" />
               </columns>
                <GridPane.margin>
                   <Insets bottom="10.0" />
                </GridPane.margin>
             </TableView>
-            <ComboBox fx:id="personSearchField" prefHeight="25.0" prefWidth="160.0" promptText="Søk etter personer" GridPane.columnIndex="1" GridPane.rowIndex="8">
+            <ComboBox fx:id="personSearchField" editable="true" prefHeight="25.0" prefWidth="160.0" promptText="Søk etter personer" styleClass="search-box" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
             </ComboBox>
-            <ComboBox fx:id="groupSearchField" prefHeight="25.0" prefWidth="160.0" promptText="Søk etter gruppe" GridPane.columnSpan="2" GridPane.rowIndex="8" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="130.0" text="Legg Til Gruppe" GridPane.rowIndex="7" />
-            <Button mnemonicParsing="false" onAction="#handleLeggTilPerson" prefHeight="26.0" prefWidth="130.0" text="Legg Til Person" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <Button mnemonicParsing="false" onAction="#handleFjernPerson" prefHeight="26.0" prefWidth="130.0" text="Fjern Person" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="130.0" text="Fjern Gruppe" GridPane.rowIndex="6" />
+            <ComboBox fx:id="groupSearchField" editable="true" prefHeight="25.0" prefWidth="160.0" promptText="Søk etter gruppe" styleClass="search-box" GridPane.halignment="CENTER" GridPane.rowIndex="8">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin></ComboBox>
+            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="130.0" styleClass="button-normal" text="Legg Til Gruppe" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin></Button>
+            <Button mnemonicParsing="false" onAction="#handleLeggTilPerson" prefHeight="26.0" prefWidth="130.0" styleClass="button-normal" text="Legg Til Person" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+            <Button mnemonicParsing="false" onAction="#handleFjernPerson" prefHeight="26.0" prefWidth="130.0" styleClass="button-normal" text="Fjern Person" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="130.0" styleClass="button-normal" text="Fjern Gruppe" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin></Button>
          </children>
       </GridPane>
    </children>
