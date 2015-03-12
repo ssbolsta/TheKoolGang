@@ -1,12 +1,12 @@
 .button-normal {
-  -fx-background-color: linear-gradient(to bottom, #47b5ff, #087BC2);
+  -fx-background-color: linear-gradient(to bottom, #47b5ff, #0666a1);
   -fx-background-radius: 9,8,5,4,3;
   -fx-font-family: "Segoe UI Semibold";
   -fx-text-fill: #ffffff;
   -fx-font-size: 12px;
 }
 .button-normal:hover{
-	-fx-background-color: linear-gradient(to bottom, #087BC2, #47b5ff );
+	-fx-background-color: linear-gradient(to bottom, #0666a1, #47b5ff );
 }
 .button-normal:pressed{
 	-fx-background-color: #3cb0fd;
@@ -41,7 +41,7 @@
 
 
 .table-view:row-selection .column-header-background .nested-column-header .table-column{
-	-fx-background-color: rgba(130,130,200);
+	-fx-background-color: #47b5ff;
 }
 .table-view .column-header-background .nested-column-header .table-column .label .text{
 	-fx-font-family: "Segoe UI Semibold";
@@ -49,7 +49,7 @@
 .table-view .placeholder{
 	-fx-background: white;
 	-fx-border-width: 2px;
-	-fx-border-color: rgba(130,130,200);
+	-fx-border-color: #47b5ff;
 	-fx-border-type: solid;
 }
 
