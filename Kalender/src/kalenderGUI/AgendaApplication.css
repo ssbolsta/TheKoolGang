@@ -11,12 +11,8 @@
 	-fx-border-radius: 5px;
 	
 	-fx-border-color: #000080;
-	 -fx-background-color: linear-gradient(to bottom, #0666a1, #47b5ff);
-	-fx-border-top-left-radius: 2;
-	-fx-border-top-right-radius: 2;
-	-fx-border-bottom-right-radius: 2;
-	-fx-border-bottom-left-radius: 2;
-   
+	-fx-background-color: linear-gradient(to bottom, #0666a1, #47b5ff);
+	-fx-border-radius: 9,8,5,4,3;	
 }
 
 .button-normal:hover{
@@ -25,12 +21,13 @@
 
 .button-normal:pressed{
 	-fx-background-color: #3cb0fd;
+	
 }
 
 
 .date-velger .arrow-button{
 	 -fx-background-color: linear-gradient(to bottom, #47b5ff, #0666a1);
-
+	
 }
 
 .date-velger:focused {
