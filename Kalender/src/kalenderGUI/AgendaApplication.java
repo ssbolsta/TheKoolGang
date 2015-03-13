@@ -14,13 +14,7 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
-
-
 import controllere.GlobalUserID;
-import com.sun.corba.se.impl.protocol.giopmsgheaders.RequestMessage;
-import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
-import com.sun.prism.paint.Color;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -32,7 +26,6 @@ import models.Room;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
-import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -40,7 +33,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -52,57 +44,11 @@ import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import jfxtras.scene.control.agenda.Agenda;
 import jfxtras.scene.control.agenda.Agenda.Appointment;
-import jfxtras.scene.control.agenda.Agenda.AppointmentGroupImpl;
 import jfxtras.scene.control.agenda.Agenda.AppointmentImpl;
 
 
 public class AgendaApplication extends Application
 {
-	private ObservableList<Person> personList = FXCollections.observableArrayList();
-
-	public ObservableList<Person> getPersonList() {
-		return personList;
-	}
-	public void setPersonList(ObservableList<Person> personList) {
-		this.personList = personList;
-	}
-
-	public void addPerson(Person person){
-		this.personList.add(person);
-	}
-	public void removePerson(Person person){
-		this.personList.remove(person);
-	}
-
-	private ObservableList<Event> eventList = FXCollections.observableArrayList();
-
-	public ObservableList<Event> getEventList() {
-		return eventList;
-	}
-	public void setEventList(ObservableList<Event> eventList) {
-		this.eventList = eventList;
-	}
-	public void addEvent(Event event){
-		this.eventList.add(event);
-	}
-	public void removeEvent(Event event){
-		this.eventList.remove(event);
-	}
-
-	private ObservableList<Room> roomList = FXCollections.observableArrayList();
-
-	public ObservableList<Room> getRoomList() {
-		return roomList;
-	}
-	public void setRoomList(ObservableList<Room> roomList) {
-		this.roomList = roomList;
-	}
-	public void addRoom(Room room){
-		this.roomList.add(room);
-	}
-	public void removeRoom(Room room){
-		this.roomList.remove(room);
-	}
 
 	private AgendaApplication application;
 	private Stage newGroupStage = null;
