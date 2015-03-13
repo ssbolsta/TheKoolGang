@@ -39,7 +39,7 @@ public class EventMain extends Application {
 	private ObservableList<Person> recipientList = FXCollections.observableArrayList();
 	private ObservableList<Room> roomList = FXCollections.observableArrayList();
 	private ObservableList<Group> chosenGroupList = FXCollections.observableArrayList();
-	
+
 	private String name;
 	private String desc;
 	private LocalTime fromTime;
@@ -51,7 +51,7 @@ public class EventMain extends Application {
 
 	public EventMain(){
 		try{
-			sc = new ServerConnection("78.91.51.201",54321);
+			sc = new ServerConnection("78.91.74.40",54321);
 			GetUserRequest getUser = new GetUserRequest();
 			JSONArray response = sc.sendRequest(getUser);
 			@SuppressWarnings("rawtypes")
@@ -62,7 +62,7 @@ public class EventMain extends Application {
 				try{
 					person = (JSONObject) parser.parse(itr.next().toString());
 					personList.add(new Person(person.get("firstname").toString(),person.get("lastname").toString(),person.get("username").toString(), Integer.parseInt(person.get("uid").toString())));
-					
+
 				}catch(ParseException e){
 					e.printStackTrace();
 				}
@@ -141,7 +141,7 @@ public class EventMain extends Application {
 			controller.showData();
 			this.primaryStage.setScene(new Scene(root));
 			this.primaryStage.show();
-			
+
 		}catch(IOException e){
 			e.printStackTrace();
 		}
@@ -219,11 +219,11 @@ public class EventMain extends Application {
 	public ObservableList<Group> getGroupList(){
 		return groupList;
 	}
-	
+
 	public ObservableList<Group> getChosenGroupList(){
 		return chosenGroupList;
 	}
-	
+
 
 	public String getName() {
 		return name;
