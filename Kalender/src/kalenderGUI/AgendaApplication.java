@@ -665,8 +665,19 @@ public class AgendaApplication extends Application
 	        primaryStage.setTitle("Kalender");
 
 
+	        agenda.setOnDragDone(event -> {
+	        	agenda = agendaNext;
+	        	start(primaryStage);
+	        });
+	        agenda.setOnDragDetected(event -> {
+	        	Calendar cal;
+	        	cal = agenda.getDisplayedCalendar();
+	        	agendaNext.setDisplayedCalendar(cal);
+	            System.out.println("Drag:"+event);
 
 
+
+	        });
 	        agenda.getStyleClass().add("agenda-style");
 	        agenda.setLayoutY(60);
 	        agenda.selectedAppointments().addListener(new ListChangeListener< Appointment >() {
