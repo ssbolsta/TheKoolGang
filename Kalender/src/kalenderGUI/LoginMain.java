@@ -1,6 +1,7 @@
 package kalenderGUI;
 
 import java.util.logging.Level;
+import controllere.ConnectionForReal;
 import java.util.logging.Logger;
 
 import javafx.application.Application;
@@ -22,6 +23,7 @@ public class LoginMain extends Application {
 			Scene scene = new Scene(pane);
 			scene.getStylesheets().add("kalenderGUI/AgendaApplication.css");
 			primaryStage.setTitle("Login");
+			ConnectionForReal.setURL("http://localhost:5050/");
 			primaryStage.setScene(scene);
 			primaryStage.show();
 

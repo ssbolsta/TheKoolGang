@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
+import controllere.ConnectionForReal;
 import controllere.GlobalUserID;
 
 import org.json.simple.JSONArray;
@@ -63,7 +64,6 @@ public class AgendaApplication extends Application
 	Agenda agenda = new Agenda();
 	Text yearText = new Text(""+ Calendar.getInstance().get(Calendar.YEAR));
 	Appointment ap;
-	HTTPConnection scon;
 
 
 	private EventHandler<KeyEvent> nextWeekPressed = new EventHandler<KeyEvent>(){
@@ -273,7 +273,7 @@ public class AgendaApplication extends Application
 		JSONArray result;
 		try {
 
-			result = scon.sendGet("events/between/" + from + "/" + to);
+			result = ConnectionForReal.scon.sendGet("events/user/between/'" + from + "'/'" + to+"'");
 
 			Iterator itter = result.iterator();
 			while (itter.hasNext()){
@@ -338,16 +338,8 @@ public class AgendaApplication extends Application
 		Button invites = new Button();
 		DatePicker datePick = new DatePicker();
 		Text dateText = new Text("Velg dato:");
+		Text nameText = new Text(ConnectionForReal.name +" sin kalender");
 		Calendar findDateCal = agenda.getDisplayedCalendar();
-		scon = new HTTPConnection("http://localhost:5050/");
-		try {
-			scon.login("syver" , "passord");
-
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
 
 
 
@@ -356,7 +348,8 @@ public class AgendaApplication extends Application
 		AnchorPane soot = new AnchorPane();
 
 
-
+		nameText.setLayoutY(22);
+		nameText.setFont(new Font(20));
 
 
 		yearText.setLayoutY(46);
@@ -424,7 +417,12 @@ public class AgendaApplication extends Application
 		invites.getStyleClass().add("button-normal");
 		invites.setLayoutY(30);
 		invites.setLayoutX(360);
-		invites.setText("Invitasjoner");
+		try {
+			invites.setText("Invitasjoner (" + ((JSONObject)ConnectionForReal.scon.sendGet("invitations/count").get(0)).get("count") +")");
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		invites.setOnKeyPressed(notifyEventPressed);
 		invites.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
@@ -654,7 +652,7 @@ public class AgendaApplication extends Application
 
 
 		soot.getChildren().add(agenda);
-		soot.getChildren().addAll(yearText, eventButton, delEvent, makeGroup, invites, dateText, datePick, prev, next);
+		soot.getChildren().addAll(yearText, nameText, eventButton, delEvent, makeGroup, invites, dateText, datePick, prev, next);
 		soot.setBottomAnchor(agenda, 8.0);
 		soot.setTopAnchor(agenda, 60.0);
 		soot.setRightAnchor(agenda, 14.0);
@@ -666,6 +664,7 @@ public class AgendaApplication extends Application
 		soot.setLeftAnchor(makeGroup, 261.0);
 		soot.setRightAnchor(datePick, 160.0);
 		soot.setLeftAnchor(invites, 343.0);
+		soot.setLeftAnchor(nameText, 10.0);
 		soot.setLeftAnchor(yearText, 463.0);
 		soot.setRightAnchor(dateText, 340.0);
 		soot.getStyleClass().add("fx-background");

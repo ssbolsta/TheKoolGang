@@ -152,7 +152,7 @@ public class HTTPConnection {
 
         String json = EntityUtils.toString(response.getEntity(), "UTF-8");
 
-        return (json != "[]");
+        return (!json.equals("[]"));
     }
 
     // LOGOUT
