@@ -30,6 +30,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
 
 public class HTTPConnection {
 
@@ -59,12 +61,12 @@ public class HTTPConnection {
         httpContext.setAttribute(ClientContext.COOKIE_STORE, cookieStore);
     }
 
-    public String me() throws Exception {
+    public JSONArray me() throws Exception {
         return sendGet("");
     }
 
     // HTTP GET
-    private String sendGet(String path) throws Exception {
+    public JSONArray sendGet(String path) throws Exception {
 
         HttpGet request = new HttpGet(BASE_URL + path);
 
@@ -74,11 +76,11 @@ public class HTTPConnection {
 
         String json = EntityUtils.toString(response.getEntity(), "UTF-8");
 
-        return json;
+        return (JSONArray) new JSONParser().parse(json);
     }
 
     // HTTP POST
-    private String sendPost(String path, HashMap<String, String> param) throws Exception {
+    public JSONArray sendPost(String path, HashMap<String, String> param) throws Exception {
         HttpPost post = new HttpPost(BASE_URL + path);
 
         post.addHeader("User-Agent", USER_AGENT);
@@ -95,11 +97,11 @@ public class HTTPConnection {
 
         String json = EntityUtils.toString(response.getEntity(), "UTF-8");
 
-        return json;
+        return (JSONArray) new JSONParser().parse(json);
     }
 
     // HTTP PUT
-    private String sendPut(String path, HashMap<String, String> param) throws Exception {
+    public JSONArray sendPut(String path, HashMap<String, String> param) throws Exception {
         HttpPut put = new HttpPut(BASE_URL + path);
 
         put.addHeader("User-Agent", USER_AGENT);
@@ -116,11 +118,11 @@ public class HTTPConnection {
 
         String json = EntityUtils.toString(response.getEntity(), "UTF-8");
 
-        return json;
+        return (JSONArray) new JSONParser().parse(json);
     }
 
     // HTTP DELETE
-    private String sendDelete(String path) throws Exception {
+    public JSONArray sendDelete(String path) throws Exception {
 
         HttpDelete request = new HttpDelete(BASE_URL + path);
 
@@ -130,11 +132,11 @@ public class HTTPConnection {
 
         String json = EntityUtils.toString(response.getEntity(), "UTF-8");
 
-        return json;
+        return (JSONArray) new JSONParser().parse(json);
     }
 
     // LOGIN
-    private Boolean login(String username, String password) throws Exception {
+    public Boolean login(String username, String password) throws Exception {
 
         HttpPost post = new HttpPost(BASE_URL + "login");
 
@@ -154,7 +156,7 @@ public class HTTPConnection {
     }
 
     // LOGOUT
-    private void logout() throws Exception {
+    public void logout() throws Exception {
         sendGet("logout");
     }
 
