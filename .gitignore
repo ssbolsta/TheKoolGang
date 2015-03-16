@@ -6,6 +6,7 @@
 # Package Files #
 *.jar
 !Kalender/src/Dependencies/*
+!Kalender/src/Dependencies/ApacheHTTPClient/*
 *.war
 *.ear
 
