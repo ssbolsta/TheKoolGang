@@ -55,27 +55,27 @@ public class EventDetailsController {
 		groupColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
 		groupTable.setItems(groupList);
 		try{
-			JSONArray response1 = null;
-			Iterator itr = response1.iterator();
-			while(itr.hasNext()) {
-				JSONObject person;
-				person = (JSONObject) itr.next();
-				Person p = new Person(person.get("firstname").toString(),person.get("lastname").toString(),person.get("username").toString(), Integer.parseInt(person.get("uid").toString()));
-				peopleList.add(p);
-				personKeyList.put(p.toString(), p);
-			
-			}
-			
-			JSONArray response2 = null;
-			Iterator itr1 = response2.iterator();
-			while(itr1.hasNext()){
-				JSONObject group;
-				group = (JSONObject) itr1.next();
-				Group g = new Group(Integer.parseInt(group.get("gid").toString()), group.get("name").toString());
-				groupList.add(g);
-				groupKeyList.put(g.getName(), g);
-			}
-			
+//			JSONArray response1 = null;
+//			Iterator itr = response1.iterator();
+//			while(itr.hasNext()) {
+//				JSONObject person;
+//				person = (JSONObject) itr.next();
+//				Person p = new Person(person.get("firstname").toString(),person.get("lastname").toString(),person.get("username").toString(), Integer.parseInt(person.get("uid").toString()));
+//				peopleList.add(p);
+//				personKeyList.put(p.toString(), p);
+//			
+//			}
+//			
+//			JSONArray response2 = null;
+//			Iterator itr1 = response2.iterator();
+//			while(itr1.hasNext()){
+//				JSONObject group;
+//				group = (JSONObject) itr1.next();
+//				Group g = new Group(Integer.parseInt(group.get("gid").toString()), group.get("name").toString());
+//				groupList.add(g);
+//				groupKeyList.put(g.getName(), g);
+//			}
+//			
 			
 			sc = new ServerConnection("78.91.47.218", 54321);
 			GetEventRequest getEvent = new GetEventRequest();
