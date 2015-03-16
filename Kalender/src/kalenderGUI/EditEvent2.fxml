@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="600.0" prefWidth="400.0" styleClass="fx-background" stylesheets="@NewEvent2.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllere.EditEvent2Controller">
+   <children>
+      <HBox alignment="CENTER" layoutX="20.0" layoutY="538.0" prefHeight="58.0" prefWidth="323.0" spacing="20.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#handleCreateEvent" prefWidth="60.0" styleClass="button-normal" text="Fullfør" />
+            <Button mnemonicParsing="false" onAction="#handleBack" prefWidth="60.0" styleClass="button-normal" text="Tilbake" />
+            <Button mnemonicParsing="false" onAction="#handleCancel" prefWidth="60.0" styleClass="button-cancel" text="Avbryt" />
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </HBox>
+      <ListView fx:id="equipmentList" layoutX="60.0" layoutY="209.0" prefHeight="283.0" prefWidth="300.0" AnchorPane.bottomAnchor="95.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="200.0" />
+      <Label layoutX="60.0" layoutY="179.0" styleClass="text-header" text="Utstyr:" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="165.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="60.0" layoutY="66.0" styleClass="text-header" text="Rom:" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="45.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="roomList" editable="true" layoutX="61.0" layoutY="96.0" onAction="#handleSelection" prefHeight="25.0" prefWidth="298.0" styleClass="search-box" AnchorPane.bottomAnchor="490.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="85.0" />
+   </children>
+</AnchorPane>

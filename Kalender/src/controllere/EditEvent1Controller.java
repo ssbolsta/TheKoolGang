@@ -6,9 +6,6 @@ import java.util.HashMap;
 
 import org.controlsfx.dialog.Dialogs;
 
-import models.Group;
-import models.Person;
-import models.PersonComparator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,9 +16,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import kalenderGUI.EditEventMain;
 import kalenderGUI.EventMain;
+import models.Group;
+import models.Person;
+import models.PersonComparator;
 
-public class NewEvent1Controller {
+public class EditEvent1Controller {
+	
 	
 	@FXML private TextField nameField;
 	@FXML private TextField spacesField;
@@ -42,8 +44,7 @@ public class NewEvent1Controller {
 	private ObservableList<LocalTime> timeToList = FXCollections.observableArrayList();
 	private HashMap<String,Person> personKeyList = new HashMap<String,Person>();
 	private HashMap<String,Group> groupKeyList = new HashMap<String,Group>();
-	private EventMain mainApp;
-	
+	private EditEventMain mainApp;
 	
 	
 	@FXML private void initialize(){
@@ -171,10 +172,9 @@ public class NewEvent1Controller {
 			}else{
 				this.mainApp.setDesc(descriptionField.getText());
 			}
-			this.mainApp.showNewEvent2();
+			this.mainApp.showEditEvent2();
 		}
 	}
-	
 	
 	@FXML
 	private void handleClose(){
@@ -182,7 +182,7 @@ public class NewEvent1Controller {
 	}
 	
 	
-	public void setMainApp(EventMain mainApp){
+	public void setMainApp(EditEventMain mainApp){
 		this.mainApp = mainApp;
 	}
 	
@@ -215,4 +215,5 @@ public class NewEvent1Controller {
 			return false;
 		}
 	}
+	
 }

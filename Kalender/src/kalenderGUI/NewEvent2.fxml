@@ -7,21 +7,21 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="580.0" prefWidth="400.0" styleClass="fx-background" stylesheets="@NewEvent2.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllere.NewEvent2Controller">
+<AnchorPane prefHeight="600.0" prefWidth="400.0" styleClass="fx-background" stylesheets="@NewEvent2.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllere.NewEvent2Controller">
    <children>
       <ComboBox fx:id="roomList" editable="true" layoutX="51.0" layoutY="86.0" onAction="#handleSelection" prefHeight="25.0" prefWidth="298.0" styleClass="search-box" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="85.0" />
-      <Label layoutX="50.0" layoutY="56.0" styleClass="text-header" text="Rom:" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="55.0">
+      <Label layoutX="50.0" layoutY="56.0" styleClass="text-header" text="Rom:" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="45.0">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="50.0" layoutY="169.0" styleClass="text-header" text="Utstyr:">
+      <Label layoutX="50.0" layoutY="169.0" styleClass="text-header" text="Utstyr:" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="286.0" AnchorPane.topAnchor="165.0">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
       <ListView fx:id="equipmentList" layoutX="50.0" layoutY="199.0" prefHeight="283.0" prefWidth="300.0" AnchorPane.bottomAnchor="95.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="200.0" />
-      <HBox alignment="CENTER" layoutX="27.0" layoutY="508.0" prefHeight="58.0" prefWidth="323.0" spacing="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+      <HBox alignment="CENTER" layoutX="10.0" layoutY="528.0" prefHeight="58.0" prefWidth="323.0" spacing="20.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <children>
             <Button mnemonicParsing="false" onAction="#handleCreateEvent" prefWidth="140.0" styleClass="button-normal" text="Opprett Arrangement" />
             <Button mnemonicParsing="false" onAction="#handleBack" prefWidth="60.0" styleClass="button-normal" text="Tilbake" />
