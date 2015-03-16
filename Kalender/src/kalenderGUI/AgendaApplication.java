@@ -396,17 +396,25 @@ public class AgendaApplication extends Application
 			public void handle(ActionEvent arg0){
 
 
+				agendaNext.appointments().clear();
 				LocalDate datePickTime = datePick.getValue();
 				Calendar nextWeek = agenda.getDisplayedCalendar();
-				nextWeek.set(datePickTime.getYear(), datePickTime.getMonthValue(), datePickTime.getDayOfMonth(), 0, 0);
+				nextWeek.set(datePickTime.getYear(), datePickTime.getMonthValue()-1, datePickTime.getDayOfMonth(), 0, 0);
 				agendaNext.setDisplayedCalendar(nextWeek);
 
-				agenda =agendaNext;
 
+
+				ArrayList<AppointmentImpl> applist = addAppointment(nextWeek);
+
+				for (AppointmentImpl i : applist) {
+					agendaNext.appointments().add(i);
+
+				}
+
+				agenda = agendaNext;
 
 
 				start(primaryStage);
-				yearText.setText("" +datePickTime.getYear());
 
 
 
