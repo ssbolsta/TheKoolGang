@@ -241,10 +241,10 @@ public class AgendaApplication extends Application
 
 		calendar00.set(calendar00.get(Calendar.YEAR), calendar00.get(Calendar.MONTH), calendar00.get(Calendar.DAY_OF_MONTH) - calendar00.get(Calendar.DAY_OF_WEEK));
 
-		String from = String.format("%04d-%02d-%02d", calendar00.get(Calendar.YEAR), calendar00.get(Calendar.MONTH), calendar00.get(Calendar.DAY_OF_MONTH));
+		String from = String.format("%04d-%02d-%02d", calendar00.get(Calendar.YEAR), calendar00.get(Calendar.MONTH)+1, calendar00.get(Calendar.DAY_OF_MONTH));
 		calendar00.set(calendar00.get(Calendar.YEAR), calendar00.get(Calendar.MONTH), calendar00.get(Calendar.DAY_OF_MONTH) + 8);
 
-		String to = String.format("%04d-%02d-%02d", calendar00.get(Calendar.YEAR), calendar00.get(Calendar.MONTH), calendar00.get(Calendar.DAY_OF_MONTH));
+		String to = String.format("%04d-%02d-%02d", calendar00.get(Calendar.YEAR), calendar00.get(Calendar.MONTH)+1, calendar00.get(Calendar.DAY_OF_MONTH));
 
 		GetEventRequest request = new GetEventRequest();
 		request.setDate_range(from, to);
@@ -299,8 +299,8 @@ public class AgendaApplication extends Application
 
 
 				appList.add(new Agenda.AppointmentImpl()
-				.withStartTime(new GregorianCalendar(eventYear, eventMonth, eventDay, startTime, startMinutt))
-				.withEndTime(new GregorianCalendar(eventYear, eventMonth, eventDay, endTime, endMinutt))
+				.withStartTime(new GregorianCalendar(eventYear, eventMonth-1, eventDay, startTime, startMinutt))
+				.withEndTime(new GregorianCalendar(eventYear, eventMonth-1, eventDay, endTime, endMinutt))
 				.withAppointmentGroup(lAppointmentGroupMap.get(""+ ran))
 				.withSummary(sumEvent)
 				.withDescription(descEvent));
