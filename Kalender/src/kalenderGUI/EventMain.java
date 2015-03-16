@@ -51,7 +51,7 @@ public class EventMain extends Application {
 
 	public EventMain(){
 		try{
-			sc = new ServerConnection("78.91.74.40",54321);
+			sc = new ServerConnection("78.91.47.218",54321);
 			GetUserRequest getUser = new GetUserRequest();
 			JSONArray response = sc.sendRequest(getUser);
 			@SuppressWarnings("rawtypes")

@@ -14,7 +14,9 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
+
 import controllere.GlobalUserID;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -33,8 +35,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
+import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -58,6 +63,7 @@ public class AgendaApplication extends Application
 	Text yearText = new Text(""+ Calendar.getInstance().get(Calendar.YEAR));
 	Appointment ap;
 	ServerConnection scon;
+
 
 	private EventHandler<KeyEvent> nextWeekPressed = new EventHandler<KeyEvent>(){
 		@SuppressWarnings("deprecation")
@@ -168,6 +174,18 @@ public class AgendaApplication extends Application
 			}
 		}
 	};
+
+	private Callback<Appointment, Void> newEdit = new Callback<Appointment, Void>(){
+
+
+		@Override
+		public Void call(Appointment param) {
+			System.out.println(param.toString());
+			return null;
+		}
+
+	};
+
 
 
 	private EventHandler<KeyEvent> newEventPressed = new EventHandler<KeyEvent>(){
@@ -349,9 +367,8 @@ public class AgendaApplication extends Application
 	    	Calendar findDateCal = agenda.getDisplayedCalendar();
 
 
-
 			try {
-				scon = new ServerConnection("78.91.74.40", 54321);
+				scon = new ServerConnection("78.91.47.218", 54321);
 
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -502,6 +519,7 @@ public class AgendaApplication extends Application
 
 	    	    	for (AppointmentImpl i : applist) {
 	    	    		agendaNext.appointments().add(i);
+
 	    	    	}
 
 	    	    	agenda = agendaNext;
@@ -608,20 +626,25 @@ public class AgendaApplication extends Application
 
 	        primaryStage.setTitle("Kalender");
 
+	     // Register an event filter for a single node and a specific event type
 
-	        agenda.setOnDragDone(event -> {
-	        	agenda = agendaNext;
-	        	start(primaryStage);
-	        });
-	        agenda.setOnDragDetected(event -> {
-	        	Calendar cal;
-	        	cal = agenda.getDisplayedCalendar();
-	        	agendaNext.setDisplayedCalendar(cal);
-	            System.out.println("Drag:"+event);
+	        // Define an event filter
+	        EventHandler filter = new EventHandler<InputEvent>() {
+	            public void handle(InputEvent event) {
+	                System.out.println("Filtering out event " + event.getEventType());
+	                event.consume();
+	            }
+	        };
+
+	        // Register the same filter for two different nodes
+	        soot.addEventFilter(MouseEvent.MOUSE_DRAGGED, filter);
+
+
+	        // Register the filter for another event type
 
 
 
-	        });
+	        agenda.editAppointmentCallbackProperty().setValue(newEdit);;
 	        agenda.getStyleClass().add("agenda-style");
 	        agenda.setLayoutY(60);
 	        agenda.selectedAppointments().addListener(new ListChangeListener< Appointment >() {
@@ -641,12 +664,16 @@ public class AgendaApplication extends Application
 	                        for (Appointment a : c.getAddedSubList()) {
 
 	                        	ap = c.getAddedSubList().get(0);
-	                        	System.out.println("Avtale har blitt trykket på. ");
+
+	                        	System.out.println("Avtale har blitt trykket på. " + ap.toString());
 	                        }
+
+
 	                    }
 	                }
 	            }
 	        });
+
 
 
 
