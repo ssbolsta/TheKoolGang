@@ -1,0 +1,84 @@
+.button-normal {
+  -fx-background-color: #47b5ff;
+  -fx-background-color: linear-gradient(to bottom, #47b5ff, #0666a1);
+  -fx-background-radius: 9,8,5,4,3;
+  -fx-font-family: "Segoe UI Semibold";
+  -fx-text-fill: #ffffff;
+  -fx-font-size: 12px;
+}
+
+.button-normal:focused {
+	-fx-border-radius: 5px;
+	
+	-fx-border-color: #000080;
+	-fx-background-color: linear-gradient(to bottom, #0666a1, #47b5ff);
+	-fx-border-radius: 9,8,5,4,3;	
+}
+
+.button-normal:hover{
+	-fx-background-color: linear-gradient(to bottom, #0666a1, #47b5ff );
+}
+
+.button-normal:pressed{
+	-fx-background-color: #3cb0fd;
+	
+}
+
+
+.date-velger .arrow-button{
+	 -fx-background-color: linear-gradient(to bottom, #47b5ff, #0666a1);
+	
+}
+
+.date-velger:focused {
+	-fx-border-radius: 1px;
+	
+	-fx-border-color: #000080;
+	 -fx-background-color: linear-gradient(to bottom, #0666a1, #47b5ff);
+	-fx-border-top-left-radius: 2;
+	-fx-border-top-right-radius: 2;
+	-fx-border-bottom-right-radius: 2;
+	-fx-border-bottom-left-radius: 2;
+}
+
+.date-velger:hover {
+ -fx-background-color: linear-gradient(to bottom, #0666a1, #47b5ff);
+	
+}
+
+.fx-background{
+	-fx-background-color: #E6E6FA;
+}
+
+.agenda-style {
+	-fx-background-color: linear-gradient(to bottom, #E6E6FA,  #0666a1);
+	-fx-border-color: #E6E6FA;
+	-fx-border-top-color: #ffffff;
+	-fx-border-width: 7px;
+	-fx-border-top-left-radius: 6;
+	-fx-border-top-right-radius: 6;
+	
+}
+
+.agenda-style .increment-button ,.mylistview .decrement-button {
+    -fx-scrollbar-base-color:  #ffffff;
+    -fx-padding:4px;
+
+}
+
+
+
+
+.agenda-style .scroll-bar:horizontal .track,
+.agenda-style .scroll-bar:vertical .track{
+
+    -fx-background-color: #ffffff;
+    -fx-border-color: #ffffff;
+    -fx-background-radius: 0em;
+    -fx-border-radius:2em;
+}
+
+ 
+
+
+

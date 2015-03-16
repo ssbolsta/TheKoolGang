@@ -6,7 +6,9 @@ import java.util.HashMap;
 
 import org.controlsfx.dialog.Dialogs;
 
+import models.Group;
 import models.Person;
+import models.PersonComparator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -28,23 +30,27 @@ public class NewEvent1Controller {
 	@FXML private ComboBox<LocalTime> fromTime;
 	@FXML private ComboBox<LocalTime> toTime;
 	@FXML private ComboBox<Person> personSearchField;
-	@FXML private ComboBox<String> groupSearchField;
+	@FXML private ComboBox<Group> groupSearchField;
 	@FXML private TableView<Person> recipientTable;
-	@FXML private TableColumn<Person,String> uidColumn;
+	@FXML private TableView<Group> groupTable;
+	@FXML private TableColumn<Person,String> usernameColumn;
 	@FXML private TableColumn<Person,String> nameColumn;
+	@FXML private TableColumn<Group,String> groupColumn;
 	@FXML private Button cancel;
 	
 	private ObservableList<LocalTime> timeFromList = FXCollections.observableArrayList();
 	private ObservableList<LocalTime> timeToList = FXCollections.observableArrayList();
 	private HashMap<String,Person> personKeyList = new HashMap<String,Person>();
+	private HashMap<String,Group> groupKeyList = new HashMap<String,Group>();
 	private EventMain mainApp;
 	
-	public NewEvent1Controller(){
-	}
+	
 	
 	@FXML private void initialize(){
-		uidColumn.setCellValueFactory(cellData -> cellData.getValue().getUidStringProperty());
+		usernameColumn.setCellValueFactory(cellData -> cellData.getValue().getUsernameProperty());
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().getFullNameProperty());
+		groupColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
+		
 		for (int i = 0; i < 24; i++) {
 			timeFromList.add(LocalTime.of(i, 0));
 			if(i != 0){
@@ -58,12 +64,20 @@ public class NewEvent1Controller {
 	
 	public void showData(){
 		recipientTable.setItems(mainApp.getRecipientList());
+		groupTable.setItems(mainApp.getChosenGroupList());
 		for (Person person : mainApp.getPersonList()) {
 			personKeyList.put(person.toString(), person);
 		}
+		for(Group group:mainApp.getGroupList()){
+			groupKeyList.put(group.getName(), group);
+		}
+		
 		this.personSearchField.setItems(mainApp.getPersonList());
+		this.groupSearchField.setItems(mainApp.getGroupList());
 		new AutoCompleteCombobox<>(this.personSearchField);
 		new AutoCompleteCombobox<>(this.groupSearchField);
+	
+		mainApp.getPersonList().sort(new PersonComparator());
 		
 		if(mainApp.getName() != null && mainApp.getDate() != null && mainApp.getFromTime() != null && mainApp.getToTime() != null && mainApp.getDesc() != null && mainApp.getSpaces() != null){
 			nameField.setText(mainApp.getName());
@@ -72,6 +86,7 @@ public class NewEvent1Controller {
 			toTime.getSelectionModel().select(mainApp.getToTime());
 			descriptionField.setText(mainApp.getDesc());
 			spacesField.setText(mainApp.getSpaces().toString());
+			
 		}
 	}
 	
@@ -87,7 +102,25 @@ public class NewEvent1Controller {
 	private void handleFjernPerson(){
 		if(recipientTable.getSelectionModel().getSelectedItem() != null){
 			mainApp.getPersonList().add(recipientTable.getSelectionModel().getSelectedItem());
+			mainApp.getPersonList().sort(new PersonComparator());
 			mainApp.getRecipientList().remove(recipientTable.getSelectionModel().getSelectedItem());
+		}
+	}
+	
+	@FXML
+	private void handleAddGroup(){
+		if(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()) != null){
+			mainApp.getChosenGroupList().add(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
+			mainApp.getGroupList().remove(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
+		}
+	}
+
+	@FXML
+	private void handleRemoveGroup(){
+		System.out.println("dritt");
+		if(groupTable.getSelectionModel().getSelectedItem() != null){
+			mainApp.getGroupList().add(groupTable.getSelectionModel().getSelectedItem());
+			mainApp.getChosenGroupList().remove(groupTable.getSelectionModel().getSelectedItem());
 		}
 	}
 	@FXML
@@ -163,7 +196,7 @@ public class NewEvent1Controller {
 			message += "Du kan ikke velge en dato tidligere enn i dag!\n";
 		}if(fromTime.getSelectionModel().getSelectedItem() == null || toTime.getSelectionModel().getSelectedItem() == null){
 			message += "Du må velge et gyldig tidsrom!\n";
-		}if(recipientTable.getItems().isEmpty()){
+		}if(mainApp.getRecipientList().isEmpty()&&mainApp.getChosenGroupList().isEmpty()){
 			message +="Arrangementet må ha minst 1 deltaker!\n";
 		}if(spacesField.getText() == null || spacesField.getText().length() == 0){
 			message += "Du taste inn antall plasser som trengs!\n";

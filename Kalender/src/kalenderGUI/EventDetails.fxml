@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="500.0" prefWidth="340.0" stylesheets="@NewEvent1.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllere.EventDetailsController">
+   <children>
+      <GridPane layoutX="14.0" layoutY="14.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-header" text="Navn:">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Text>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </HBox>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" GridPane.rowIndex="1" />
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-header" text="Dato:">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Text>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="59.0" prefWidth="168.0" GridPane.rowIndex="2">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-header" text="Tid:">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Text>
+               </children>
+            </HBox>
+            <TableView fx:id="recipientTable" prefHeight="156.0" prefWidth="139.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+               <columns>
+                  <TableColumn fx:id="nameColumn" maxWidth="1.7976931348623157E308" prefWidth="115.0" resizable="false" text="Navn" />
+                  <TableColumn fx:id="usernameColumn" maxWidth="1.7976931348623157E308" minWidth="30.0" prefWidth="73.0" resizable="false" text="Brukernavn" />
+               </columns>
+               <GridPane.margin>
+                  <Insets bottom="10.0" />
+               </GridPane.margin>
+            </TableView>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-header" text="Deltakere:" GridPane.columnSpan="2" GridPane.rowIndex="6">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <TableView fx:id="groupTable" maxWidth="120.0" prefHeight="156.0" prefWidth="63.0" GridPane.rowIndex="7">
+               <columns>
+                  <TableColumn fx:id="groupColumn" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="119.0" resizable="false" text="Grupper" />
+               </columns>
+               <GridPane.margin>
+                  <Insets bottom="10.0" />
+               </GridPane.margin>
+            </TableView>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-header" text="Beskrivelse:" GridPane.rowIndex="4">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <TextFlow prefHeight="80.0" prefWidth="312.0" GridPane.columnSpan="2" GridPane.rowIndex="5">
+               <children>
+                  <Text fx:id="descriptionText" strokeType="OUTSIDE" strokeWidth="0.0" text="Her skal det stå en beskrivelse over dette arrangementet" />
+               </children>
+            </TextFlow>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-header" text="Rom:">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Text>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </HBox>
+            <Text fx:id="nameText" strokeType="OUTSIDE" strokeWidth="0.0" text="Bursdagsfest!" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+            <Text fx:id="dateText" strokeType="OUTSIDE" strokeWidth="0.0" text="25.03.2015" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <Text fx:id="timeText" strokeType="OUTSIDE" strokeWidth="0.0" text="16:00 - 18:00" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+            <Text fx:id="roomText" strokeType="OUTSIDE" strokeWidth="0.0" text="Chille rom 101" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+         </children>
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="186.0" minWidth="10.0" prefWidth="123.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.0" minWidth="10.0" prefWidth="189.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="42.0" minHeight="0.0" prefHeight="35.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="49.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="49.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="133.0" minHeight="0.0" prefHeight="35.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="133.0" minHeight="10.0" prefHeight="81.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="133.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="247.0" minHeight="10.0" prefHeight="166.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <HBox alignment="CENTER" layoutX="19.0" layoutY="452.0" prefHeight="34.0" prefWidth="312.0" spacing="20.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="452.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#handleMeldAvbud" styleClass="button-normal" text="Meld avbud" />
+            <Button mnemonicParsing="false" onAction="#handleLukk" styleClass="button-cancel" text="Lukk" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

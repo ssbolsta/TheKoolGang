@@ -23,6 +23,11 @@ public class Room {
 			this.equipment.add(string);
 		}
 	}
+	public Room(Integer roomID,String name,Integer capacity){
+		this.roomID = roomID;
+		this.name = new SimpleStringProperty(name);
+		this.capacity = new SimpleIntegerProperty(capacity);
+	}
 	
 	
 	public Integer getRoomID(){
