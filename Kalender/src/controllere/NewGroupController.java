@@ -1,6 +1,8 @@
 package controllere;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -110,7 +112,7 @@ public class NewGroupController {
 
 		try {
 
-			GetUserRequest getUser = new GetUserRequest();
+
 			JSONArray response = ConnectionForReal.scon.sendGet("users");
 			Iterator itr = response.iterator();
 			while(itr.hasNext()) {
@@ -121,8 +123,10 @@ public class NewGroupController {
 				personKeyList.put(p.toString(), p);
 			}
 
-			GetGroupRequest getGroup = new GetGroupRequest();
-			JSONArray response2 = sc.sendRequest(getGroup);
+
+			JSONArray response2;
+			response2 = ConnectionForReal.scon.sendGet("groups");
+
 			System.out.println(response2.toJSONString());
 			Iterator itr1 = response2.iterator();
 			while(itr1.hasNext()){
@@ -139,11 +143,9 @@ public class NewGroupController {
 			new AutoCompleteCombobox<>(this.personSearchField);
 
 
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-
 
 
 		cancel.setOnKeyPressed(cancelKeyPress);
@@ -156,74 +158,100 @@ public class NewGroupController {
 				stage.close();
 			}
 		});
-
 	}
 
 
-
-	@FXML
-	private  void handleLeggTilPerson(){
-		if(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()) != null){
-			chosenList.add(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()));
-			peopleList.remove(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()));
-		}
-	}
-
-	@FXML
-	private void handleFjernPerson(){
-		if(recipientTable.getSelectionModel().getSelectedItem() != null){
-			peopleList.add((recipientTable.getSelectionModel().getSelectedItem()));
-			chosenList.remove(recipientTable.getSelectionModel().getSelectedItem());
-		}
-	}
-
-	@FXML
-	private void handleAddGroup(){
-		if(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()) != null){
-			chosenGroupList.add(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
-			groupList.remove(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
-		}
-	}
-
-	@FXML
-	private void handleRemoveGroup(){
-		if(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()) != null){
-			groupList.add(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
-			chosenGroupList.remove(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
-		}
-	}
-
-	@FXML
-	private void createGroup(){
-		if(inputIsValid()){
-			PutGroupRequest pgr = new PutGroupRequest();
-			pgr.setName(nameField.getText());
-			pgr.setAdmin(GlobalUserID.userID);
-			GetGroupRequest ggr = new GetGroupRequest();
-			ggr.setName(nameField.getText());
-			ModifyGroupRequest mgr = new ModifyGroupRequest();
-			for (Person person:chosenList){
-				mgr.addMemeberToAdd(person.getUid());
+		@FXML
+		private  void handleLeggTilPerson(){
+			if(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()) != null){
+				chosenList.add(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()));
+				peopleList.remove(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()));
 			}
-			for(Group group:chosenGroupList){
-				mgr.addGroupToAdd(group.getGroupID());
+		}
+
+		@FXML
+		private void handleFjernPerson(){
+			if(recipientTable.getSelectionModel().getSelectedItem() != null){
+				peopleList.add((recipientTable.getSelectionModel().getSelectedItem()));
+				chosenList.remove(recipientTable.getSelectionModel().getSelectedItem());
 			}
-			try {
-				sc.sendRequest(pgr);
-				JSONObject jobj = (JSONObject) sc.sendRequest(ggr).get(0);
-				int groupID = Integer.parseInt(jobj.get("gid").toString());
-				mgr.setID(groupID);
-				sc.sendRequest(mgr);
-			} catch (IOException e) {
-				e.printStackTrace();
+		}
+
+		@FXML
+		private void handleAddGroup(){
+			if(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()) != null){
+				chosenGroupList.add(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
+				groupList.remove(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
 			}
-			Dialogs.create().title("Ny gruppe er laget").masthead("Ny gruppe").message("Du har laget en ny gruppe").showError();
-			Stage stage = (Stage) cancel.getScene().getWindow();
-			stage.hide();
-			stage.close();
+		}
+
+		@FXML
+		private void handleRemoveGroup(){
+			if(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()) != null){
+				groupList.add(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
+				chosenGroupList.remove(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
+			}
+		}
+
+		@FXML
+		private void createGroup(){
+			if(inputIsValid()){
+
+				ArrayList<Integer> persons = new ArrayList<Integer>();
+				ArrayList<Integer> groups = new ArrayList<Integer>();
+
+				for (Person person:chosenList){
+					persons.add(person.getUid());
+				}
+
+				for(Group group:chosenGroupList){
+					groups.add(group.getGroupID());
+				}
+				try {
+
+					HashMap<String, String > groupValue = new HashMap<String, String>();
+
+					groupValue.put("name", nameField.getText());
+					groupValue.put("grouptype", "null");
+
+					// Create the group
+					JSONObject group = (JSONObject) ConnectionForReal.scon.sendPost("groups", groupValue).get(0);
+
+					HashMap<String, String> userValues = new HashMap<String, String>();
+					userValues.put("users", joinArrayList(persons, ","));
+					userValues.put("groups", group.get("gid").toString());
+
+					HashMap<String, String> groupsValues = new HashMap<String, String>();
+					groupsValues.put("subgroups", joinArrayList(groups, ","));
+					groupsValues.put("mastergroups", group.get("gid").toString());
+
+					// Add users
+					ConnectionForReal.scon.sendPost("groups/add/users", userValues);
+					// Add groups
+					ConnectionForReal.scon.sendPost("groups/add/groups", groupsValues);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				Dialogs.create().title("Ny gruppe er laget").masthead("Ny gruppe").message("Du har laget en ny gruppe").showError();
+				Stage stage = (Stage) cancel.getScene().getWindow();
+				stage.hide();
+				stage.close();
+			}
+		}
+
+		private String joinArrayList(ArrayList<Integer> r, String delimiter) {
+			if(r == null || r.size() == 0 ){
+				return "";
+			}
+			StringBuffer sb = new StringBuffer();
+			int i, len = r.size() - 1;
+			for (i = 0; i < len; i++){
+				sb.append(r.get(i).toString() + delimiter);
+			}
+			return sb.toString() + r.get(i).toString();
 		}
 	}
-}
 
 
 
