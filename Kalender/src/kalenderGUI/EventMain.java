@@ -3,13 +3,16 @@ package kalenderGUI;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
 import models.Group;
 import models.Person;
 import models.Room;
+import models.RoomComparator;
 import controllere.ConnectionForReal;
 import controllere.NewEvent1Controller;
 import controllere.NewEvent2Controller;
@@ -123,6 +126,9 @@ public class EventMain extends Application {
 			while(itr2.hasNext()){
 				JSONObject room;
 				room = (JSONObject) itr2.next();
+				if( Integer.parseInt(room.get("capacity").toString()) < spaces){
+					continue;
+				}
 				Room r = new Room(Integer.parseInt(room.get("rid").toString()), room.get("name").toString(), Integer.parseInt(room.get("capacity").toString()));
 				roomList.add(r);
 				System.out.println(r.toString());
@@ -130,7 +136,9 @@ public class EventMain extends Application {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-
+		
+		roomList.sort(new RoomComparator());
+		
 		try{
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(EventMain.class.getResource("NewEvent2.fxml"));
@@ -158,6 +166,66 @@ public class EventMain extends Application {
 	}
 
 	public void createEvent(Room location){
+		HashMap<String,String> rompe= new HashMap<String,String>();
+		rompe.put("name", name);
+		rompe.put("description", desc);
+		rompe.put("rid", Integer.toString(location.getRoomID()));
+		rompe.put("starttime", fromTime.getHour() + ":00:00");
+		rompe.put("endtime", toTime.getHour() + ":00:00");
+		rompe.put("eventdate", date.toString());
+		
+		JSONObject homo = null;
+		
+		try {
+			homo = (JSONObject) ConnectionForReal.scon.sendPost("events", rompe).get(0);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		rompe.clear();
+		
+		String s= "";
+		
+		for (Group group : chosenGroupList) {
+			s += group.getGroupID() +",";
+		}
+		
+		if(s.length() != 0){
+			rompe.put("eid", homo.get("eid").toString());
+			rompe.put("groups", s.substring(0, s.length()-1));
+		}
+		
+		try {
+			ConnectionForReal.scon.sendPost("events/add/groups", rompe);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		rompe.clear();
+		
+		s = "";
+		
+		for (Person p : recipientList) {
+			s += p.getUid() + ",";
+		}
+		
+		if(s.length() != 0){
+			rompe.put("eid", homo.get("eid").toString());
+			rompe.put("users", s.substring(0, s.length() - 1));
+		}
+		
+		try {
+			ConnectionForReal.scon.sendPost("events/invite/users", rompe);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		
 		
 	}
 
