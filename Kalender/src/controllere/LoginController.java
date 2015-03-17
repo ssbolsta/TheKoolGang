@@ -1,5 +1,7 @@
 package controllere;
 
+import org.json.simple.JSONObject;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
@@ -10,13 +12,15 @@ public class LoginController {
 
 	@FXML Text errorMessage;
 	@FXML Button cancel;
-	private String username = "bruker";
-	private String password = "passord";
 
-	public void login(String pass, String user){
+
+	public void login(String pass, String username){
 		try{
-			Validation.validateUsername(user);
-			if(user.trim().equals(username)&&pass.equals(password)){
+			Validation.validateUsername(username);
+			if(ConnectionForReal.scon.login(username, pass)){
+				JSONObject user = (JSONObject) ConnectionForReal.scon.me().get(0);
+				ConnectionForReal.name = user.get("firstname") +" " + user.get("lastname");
+				ConnectionForReal.uid = (Integer) user.get("uid");
 				Stage newStage = new Stage();
 				AgendaApplication kalender = new AgendaApplication();
 
