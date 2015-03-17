@@ -9,6 +9,7 @@ import models.Group;
 import models.Person;
 import models.Room;
 import connection.ServerConnection;
+import controllere.ConnectionForReal;
 import controllere.EditEvent1Controller;
 import controllere.EditEvent2Controller;
 import javafx.application.Application;
@@ -44,19 +45,10 @@ public class EditEventMain extends Application{
 	
 	@Override
 	public void start(Stage primaryStage) {
-		try{
-			this.primaryStage = primaryStage;
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(EditEventMain.class.getResource("EditEvent1.fxml"));
-			root = (AnchorPane) loader.load();
-			EditEvent1Controller controller = loader.getController();
-			controller.setMainApp(this);
-			controller.showData();
-			this.primaryStage.setScene(new Scene(root));
-			this.primaryStage.show();
-		}catch(IOException e){
-			e.printStackTrace();
-		}
+		this.primaryStage = primaryStage;
+		showEditEvent1();
+		ConnectionForReal.setURL("http://78.91.44.74:5050/");
+		ConnectionForReal.scon.login("krissvor","passord");
 
 	}
 	
@@ -67,6 +59,9 @@ public class EditEventMain extends Application{
 			root = (AnchorPane) loader.load();
 			EditEvent1Controller controller = loader.getController();
 			controller.setMainApp(this);
+			
+			
+			
 			controller.showData();
 			this.primaryStage.setScene(new Scene(root));
 			this.primaryStage.show();
