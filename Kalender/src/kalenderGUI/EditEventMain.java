@@ -38,16 +38,16 @@ public class EditEventMain extends Application{
 	private Integer spaces;
 	private ServerConnection sc;
 	
-	public EditEventMain(int EventID){
-		
-	}
+//	public EditEventMain(int EventID){
+//		
+//	}
 	
 	@Override
 	public void start(Stage primaryStage) {
 		try{
 			this.primaryStage = primaryStage;
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(EventMain.class.getResource("EditEvent1.fxml"));
+			loader.setLocation(EditEventMain.class.getResource("EditEvent1.fxml"));
 			root = (AnchorPane) loader.load();
 			EditEvent1Controller controller = loader.getController();
 			controller.setMainApp(this);
