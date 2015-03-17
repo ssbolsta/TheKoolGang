@@ -346,37 +346,10 @@ public class AgendaApplication extends Application
 
 		Agenda agendaNext = new Agenda();
 		AnchorPane soot = new AnchorPane();
-
-
-<<<<<<< HEAD
-	 @SuppressWarnings({ "static-access", "deprecation" })
-	@Override
-	    public void start(Stage primaryStage) {
-		 	GlobalUserID.userID = 15;
-		 	application = this;
-		 	Button eventButton = new Button();
-	    	Button delEvent = new Button();
-	      	Button makeGroup = new Button();
-	    	Button next=new Button();
-	    	Button prev = new Button();
-	    	Button invites = new Button();
-	    	DatePicker datePick = new DatePicker();
-	    	Text dateText = new Text("Velg dato:");
-	    	Calendar findDateCal = agenda.getDisplayedCalendar();
-
-
-
-			try {
-				scon = new ServerConnection("78.91.47.218", 54321);
-
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-=======
+		
 		nameText.setLayoutY(22);
 		nameText.setFont(new Font(20));
->>>>>>> origin/develop
+
 
 
 		yearText.setLayoutY(46);

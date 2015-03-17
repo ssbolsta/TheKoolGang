@@ -55,6 +55,7 @@ public class EventDetailsController {
 		groupColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
 		groupTable.setItems(groupList);
 		try{
+			ConnectionForReal.scon.login("krissvor", "passord");
 //			JSONArray response1 = null;
 //			Iterator itr = response1.iterator();
 //			while(itr.hasNext()) {
@@ -99,7 +100,7 @@ public class EventDetailsController {
 				descriptionText.setText("Arrangementet har ikke beskrivelse");
 			}
 		}
-		catch(IOException e){
+		catch(Exception e){
 			e.printStackTrace();
 		}
 	}
