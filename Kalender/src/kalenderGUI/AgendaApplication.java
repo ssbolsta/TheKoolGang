@@ -52,7 +52,7 @@ import javafx.util.Callback;
 import jfxtras.scene.control.agenda.Agenda;
 import jfxtras.scene.control.agenda.Agenda.Appointment;
 import jfxtras.scene.control.agenda.Agenda.AppointmentImpl;
-
+import controllere.EventDetailsController;
 
 public class AgendaApplication extends Application
 {
@@ -60,6 +60,7 @@ public class AgendaApplication extends Application
 	private AgendaApplication application;
 	private Stage newGroupStage = null;
 	private Stage newEventStage = null;
+	private Stage eventDetailsStage = null;
 	Stage primaryStage;
 	Agenda agenda = new Agenda();
 	Text yearText = new Text(""+ Calendar.getInstance().get(Calendar.YEAR));
@@ -181,7 +182,27 @@ public class AgendaApplication extends Application
 
 		@Override
 		public Void call(Appointment param) {
-			System.out.println(param.toString());
+
+			EventDetailsMain ng = new EventDetailsMain(Integer.parseInt(param.getDescription()));
+			System.out.println("new Edit sier dette : ");
+
+			System.out.println(param.getDescription());
+			if(eventDetailsStage == null){
+				try{
+
+					eventDetailsStage = new Stage();
+					eventDetailsStage.setOnCloseRequest(eventDetailsClosed);
+					eventDetailsStage.setOnHidden(eventDetailsClosed);
+					eventDetailsStage.initModality(Modality.WINDOW_MODAL);
+					eventDetailsStage.initOwner(primaryStage);
+
+					ng.start(eventDetailsStage);
+				}
+				catch(Exception e){
+					System.out.println(e);
+				}
+			}
+
 			return null;
 		}
 
@@ -224,6 +245,15 @@ public class AgendaApplication extends Application
 		@Override
 		public void handle(WindowEvent event) {
 			newEventStage = null;
+		}
+
+	};
+
+	private EventHandler<WindowEvent> eventDetailsClosed = new EventHandler<WindowEvent>(){
+
+		@Override
+		public void handle(WindowEvent event) {
+			eventDetailsStage = null;
 		}
 
 	};
@@ -293,7 +323,7 @@ public class AgendaApplication extends Application
 				int eventMonth = Integer.parseInt( datoEvent[1]);
 				int eventDay = Integer.parseInt( datoEvent[2]);
 
-				String descEvent = ((String) o.get("description"));
+				String descEvent = (o.get("eid").toString());
 				String sumEvent = ((String) o.get("name"));
 
 
@@ -346,7 +376,7 @@ public class AgendaApplication extends Application
 
 		Agenda agendaNext = new Agenda();
 		AnchorPane soot = new AnchorPane();
-		
+
 		nameText.setLayoutY(22);
 		nameText.setFont(new Font(20));
 
