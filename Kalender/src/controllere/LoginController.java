@@ -20,6 +20,7 @@ public class LoginController {
 			if(ConnectionForReal.scon.login(username, pass)){
 				JSONObject user = (JSONObject) ConnectionForReal.scon.me().get(0);
 				ConnectionForReal.name = user.get("firstname") +" " + user.get("lastname");
+				ConnectionForReal.uid = (Integer) user.get("uid");
 				Stage newStage = new Stage();
 				AgendaApplication kalender = new AgendaApplication();
 

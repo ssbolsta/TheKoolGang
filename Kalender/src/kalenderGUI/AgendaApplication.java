@@ -273,7 +273,7 @@ public class AgendaApplication extends Application
 		JSONArray result;
 		try {
 
-			result = ConnectionForReal.scon.sendGet("events/user/between/'" + from + "'/'" + to+"'");
+			result = ConnectionForReal.scon.sendGet("events/user/between/" + from + "/" + to);
 
 			Iterator itter = result.iterator();
 			while (itter.hasNext()){
