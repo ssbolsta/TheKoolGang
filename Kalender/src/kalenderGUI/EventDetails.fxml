@@ -125,8 +125,8 @@
       </GridPane>
       <HBox alignment="CENTER" layoutX="19.0" layoutY="452.0" prefHeight="34.0" prefWidth="312.0" spacing="20.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="452.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#handleMeldAvbud" styleClass="button-normal" text="Meld avbud" />
-            <Button mnemonicParsing="false" onAction="#handleLukk" styleClass="button-cancel" text="Lukk" />
+            <Button fx:id="decline" mnemonicParsing="false" onAction="#handleDecline" styleClass="button-normal" text="Meld avbud" />
+            <Button fx:id="cancel" mnemonicParsing="false" onAction="#handleClose" styleClass="button-cancel" text="Lukk" />
          </children>
       </HBox>
    </children>

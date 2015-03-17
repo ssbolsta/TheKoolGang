@@ -346,10 +346,10 @@ public class AgendaApplication extends Application
 
 		Agenda agendaNext = new Agenda();
 		AnchorPane soot = new AnchorPane();
-
-
+		
 		nameText.setLayoutY(22);
 		nameText.setFont(new Font(20));
+
 
 
 		yearText.setLayoutY(46);
