@@ -58,7 +58,7 @@ public class NewGroupController {
 	private ObservableList<Person> peopleList = FXCollections.observableArrayList();
 	private HashMap<String,Person> personKeyList = new HashMap<String,Person>();
 	private EventMain mainApp;
-	private ServerConnection sc;
+
 
 	private EventHandler<KeyEvent> cancelKeyPress = new EventHandler<KeyEvent>(){
 		@Override
@@ -189,9 +189,14 @@ public class NewGroupController {
 
 		@FXML
 		private void handleRemoveGroup(){
-			if(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()) != null){
-				groupList.add(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
-				chosenGroupList.remove(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
+			System.out.println(" Knappen trykket remove ");
+			System.out.println(groupTable.getSelectionModel().getSelectedItem() );
+
+
+
+			if(groupTable.getSelectionModel().getSelectedItem() != null){
+				groupList.add(groupTable.getSelectionModel().getSelectedItem());
+				chosenGroupList.remove(groupTable.getSelectionModel().getSelectedItem());
 			}
 		}
 
