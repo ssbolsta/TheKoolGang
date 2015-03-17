@@ -56,7 +56,7 @@ public class NewGroupController {
 	private ObservableList<Person> peopleList = FXCollections.observableArrayList();
 	private HashMap<String,Person> personKeyList = new HashMap<String,Person>();
 	private EventMain mainApp;
-
+	private ServerConnection sc;
 
 	private EventHandler<KeyEvent> cancelKeyPress = new EventHandler<KeyEvent>(){
 		@Override
@@ -109,9 +109,9 @@ public class NewGroupController {
 
 
 		try {
-
+			sc = new ServerConnection("78.91.47.218", 54321);
 			GetUserRequest getUser = new GetUserRequest();
-			JSONArray response = ConnectionForReal.scon.sendGet("users");
+			JSONArray response = (JSONArray) sc.sendRequest(getUser);
 			Iterator itr = response.iterator();
 			while(itr.hasNext()) {
 				JSONObject person;
