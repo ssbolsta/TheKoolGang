@@ -7,17 +7,10 @@ import java.util.Iterator;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
-import requests.GetGroupRequest;
-import requests.GetRoomRequest;
-import requests.GetUserRequest;
-import requests.PutEventRequest;
 import models.Group;
 import models.Person;
 import models.Room;
-import connection.ServerConnection;
+import controllere.ConnectionForReal;
 import controllere.NewEvent1Controller;
 import controllere.NewEvent2Controller;
 import javafx.application.Application;
@@ -46,30 +39,29 @@ public class EventMain extends Application {
 	private LocalTime toTime;
 	private LocalDate date;
 	private Integer spaces;
-	private ServerConnection sc;
 
 
+	@SuppressWarnings("rawtypes")
 	public EventMain(){
 		try{
-			sc = new ServerConnection("78.91.47.218",54321);
-			GetUserRequest getUser = new GetUserRequest();
-			JSONArray response = sc.sendRequest(getUser);
-			@SuppressWarnings("rawtypes")
+			
+			JSONArray response = ConnectionForReal.scon.sendGet("users");
 			Iterator itr = response.iterator();
-			JSONParser parser = new JSONParser();
 			while(itr.hasNext()){
 				JSONObject person;
 				try{
-					person = (JSONObject) parser.parse(itr.next().toString());
+					person = (JSONObject) itr.next();
+					if(person.get("uid").toString().equalsIgnoreCase(Long.toString(ConnectionForReal.uid))){
+						continue;
+					}
 					personList.add(new Person(person.get("firstname").toString(),person.get("lastname").toString(),person.get("username").toString(), Integer.parseInt(person.get("uid").toString())));
 
-				}catch(ParseException e){
+				}catch(Exception e){
 					e.printStackTrace();
 				}
 			}
-			GetGroupRequest getGroup = new GetGroupRequest();
-			JSONArray response1 = sc.sendRequest(getGroup);
-			System.out.println(response1.toJSONString());
+			
+			JSONArray response1 = ConnectionForReal.scon.sendGet("groups");
 			Iterator itr1 = response1.iterator();
 			while(itr1.hasNext()){
 				JSONObject group;
@@ -77,17 +69,8 @@ public class EventMain extends Application {
 				Group g = new Group(Integer.parseInt(group.get("gid").toString()), group.get("name").toString());
 				groupList.add(g);
 			}
-			GetRoomRequest getRoom = new GetRoomRequest();
-			JSONArray response2 = sc.sendRequest(getRoom);
-			Iterator itr2 = response2.iterator();
-			while(itr2.hasNext()){
-				JSONObject room;
-				room = (JSONObject) itr2.next();
-				Room r = new Room(Integer.parseInt(room.get("rid").toString()), room.get("name").toString(), Integer.parseInt(room.get("capacity").toString()));
-				roomList.add(r);
-				System.out.println(r.toString());
-			}
-		}catch(IOException e){
+		
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
@@ -132,6 +115,22 @@ public class EventMain extends Application {
 
 	}
 	public void showNewEvent2(){
+		roomList.removeAll(roomList);
+		try{
+			JSONArray response2 = ConnectionForReal.scon.sendGet("rooms/available/" + date.toString() + "/" + fromTime.getHour() +":00:00/" + toTime.getHour() + ":00:00");
+			@SuppressWarnings("rawtypes")
+			Iterator itr2 = response2.iterator();
+			while(itr2.hasNext()){
+				JSONObject room;
+				room = (JSONObject) itr2.next();
+				Room r = new Room(Integer.parseInt(room.get("rid").toString()), room.get("name").toString(), Integer.parseInt(room.get("capacity").toString()));
+				roomList.add(r);
+				System.out.println(r.toString());
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
 		try{
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(EventMain.class.getResource("NewEvent2.fxml"));
@@ -159,28 +158,7 @@ public class EventMain extends Application {
 	}
 
 	public void createEvent(Room location){
-
-		PutEventRequest putEvent = new PutEventRequest();
-
-		String eventDate = (""+ date.getYear()+ "-" + date.getMonth()+ "-" + date.getDayOfWeek());
-		String eventFromTime = ( "" +fromTime.getHour()+ ":00:00");
-		String eventToTime = ( "" +toTime.getHour()+ ":00:00");
-		int roomId = location.getRoomID();
-
-		putEvent.setAdmin(3);
-		putEvent.setDate(eventDate);
-		putEvent.setDesc(desc);
-		putEvent.setIn_room(roomId);
-		putEvent.setName(name);
-		putEvent.setTime(eventFromTime, eventToTime);
-
-		try {
-			sc.sendRequest(putEvent);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		
 	}
 
 

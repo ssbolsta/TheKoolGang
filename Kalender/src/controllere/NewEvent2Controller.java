@@ -1,13 +1,8 @@
 package controllere;
 
 import java.util.HashMap;
-import java.util.List;
-
 import org.controlsfx.dialog.Dialogs;
-
 import models.Room;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
@@ -21,7 +16,6 @@ public class NewEvent2Controller {
 	private ListView<String> equipmentList;
 	
 	private HashMap<String,Room> roomMap = new HashMap<String,Room>();
-	private ObservableList<Room> roomListCap = FXCollections.observableArrayList();
 	private EventMain mainApp;
 	
 	
