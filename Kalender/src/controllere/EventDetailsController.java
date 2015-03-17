@@ -1,6 +1,7 @@
 package controllere;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -54,39 +55,43 @@ public class EventDetailsController {
 		recipientTable.setItems(peopleList);
 		groupColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
 		groupTable.setItems(groupList);
+	}
+	
+	public void editEvent(int eid){
 		try{
-			ConnectionForReal.scon.login("krissvor", "passord");
-//			JSONArray response1 = null;
-//			Iterator itr = response1.iterator();
-//			while(itr.hasNext()) {
-//				JSONObject person;
-//				person = (JSONObject) itr.next();
-//				Person p = new Person(person.get("firstname").toString(),person.get("lastname").toString(),person.get("username").toString(), Integer.parseInt(person.get("uid").toString()));
-//				peopleList.add(p);
-//				personKeyList.put(p.toString(), p);
-//			
-//			}
-//			
-//			JSONArray response2 = null;
-//			Iterator itr1 = response2.iterator();
-//			while(itr1.hasNext()){
-//				JSONObject group;
-//				group = (JSONObject) itr1.next();
-//				Group g = new Group(Integer.parseInt(group.get("gid").toString()), group.get("name").toString());
-//				groupList.add(g);
-//				groupKeyList.put(g.getName(), g);
-//			}
-//			
+//			ConnectionForReal.setURL("http://78.91.44.74:5050/");
+//			ConnectionForReal.scon.login("krissvor", "passord");
+			JSONArray response1 = ConnectionForReal.scon.sendGet("users/participantof/" + eid);
+			Iterator itr = response1.iterator();
+			while(itr.hasNext()) {
+				JSONObject person;
+				person = (JSONObject) itr.next();
+				Person p = new Person(person.get("firstname").toString(),person.get("lastname").toString(),person.get("username").toString(), Integer.parseInt(person.get("uid").toString()));
+				peopleList.add(p);
+				personKeyList.put(p.toString(), p);
 			
-			sc = new ServerConnection("78.91.47.218", 54321);
-			GetEventRequest getEvent = new GetEventRequest();
-			getEvent.setId(this.eventId);
-			JSONArray response = sc.sendRequest(getEvent);
+			}
+			
+			JSONArray response2 = ConnectionForReal.scon.sendGet("groups/participantof/" + eid);
+			Iterator itr1 = response2.iterator();
+			while(itr1.hasNext()){
+				JSONObject group;
+				group = (JSONObject) itr1.next();
+				Group g = new Group(Integer.parseInt(group.get("gid").toString()), group.get("name").toString());
+				groupList.add(g);
+				groupKeyList.put(g.getName(), g);
+			}
+			
+			
+			JSONArray response = ConnectionForReal.scon.sendGet("events/eid/" + eid);
 			JSONObject app = (JSONObject) response.get(0);
 			System.out.println(response);
 			String time = app.get("starttime").toString().substring(0,5) + " - " + app.get("endtime").toString().substring(0,5);
 			timeText.setText(time);
 			dateText.setText(app.get("eventdate").toString());
+			JSONArray roomResponse = ConnectionForReal.scon.sendGet("rooms/rid/" + (app.get("rid")));
+			JSONObject room= (JSONObject) roomResponse.get(0);
+			roomText.setText(room.get("name").toString());
 			if(app.get("name") != null){
 				nameText.setText(app.get("name").toString());
 			}
