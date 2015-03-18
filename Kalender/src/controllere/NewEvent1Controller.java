@@ -7,6 +7,7 @@ import java.util.HashMap;
 import org.controlsfx.dialog.Dialogs;
 
 import models.Group;
+import models.GroupComparator;
 import models.Person;
 import models.PersonComparator;
 import javafx.collections.FXCollections;
@@ -78,6 +79,7 @@ public class NewEvent1Controller {
 		new AutoCompleteCombobox<>(this.groupSearchField);
 	
 		mainApp.getPersonList().sort(new PersonComparator());
+		mainApp.getGroupList().sort(new GroupComparator());
 		
 		if(mainApp.getName() != null && mainApp.getDate() != null && mainApp.getFromTime() != null && mainApp.getToTime() != null && mainApp.getDesc() != null && mainApp.getSpaces() != null){
 			nameField.setText(mainApp.getName());
@@ -119,6 +121,7 @@ public class NewEvent1Controller {
 	private void handleRemoveGroup(){
 		if(groupTable.getSelectionModel().getSelectedItem() != null){
 			mainApp.getGroupList().add(groupTable.getSelectionModel().getSelectedItem());
+			mainApp.getGroupList().sort(new GroupComparator());
 			mainApp.getChosenGroupList().remove(groupTable.getSelectionModel().getSelectedItem());
 		}
 	}
@@ -196,8 +199,6 @@ public class NewEvent1Controller {
 			message += "Du kan ikke velge en dato tidligere enn i dag!\n";
 		}if(fromTime.getSelectionModel().getSelectedItem() == null || toTime.getSelectionModel().getSelectedItem() == null){
 			message += "Du må velge et gyldig tidsrom!\n";
-		}if(mainApp.getRecipientList().isEmpty()&&mainApp.getChosenGroupList().isEmpty()){
-			message +="Arrangementet må ha minst 1 deltaker!\n";
 		}if(spacesField.getText() == null || spacesField.getText().length() == 0){
 			message += "Du taste inn antall plasser som trengs!\n";
 		}else{

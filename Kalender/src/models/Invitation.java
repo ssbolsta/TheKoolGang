@@ -1,53 +1,46 @@
 package models;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Invitation extends NotificationSuper{
+public class Invitation{
 	
-	private final StringProperty tag;
-	private Person sender;
-	private Event event;
-	private Group group;
+	private final StringProperty description;
+	private int iid;
+	private int eid;
+	private int uid;
 	
-	public Invitation(Person sentBy, Event event){
-		this.date = LocalDate.now();
-		this.time = LocalTime.now();
-		this.sender = sentBy;
-		this.event = event;
-		this.tag = new SimpleStringProperty(sender.getFirstName() + " " + sender.getLastName() + " har invitert deg til å delta på en arrangement.");
+	
+	public Invitation(String iid, String eid, String uid, String description){
+		this.description = new SimpleStringProperty(description);
+		this.iid = Integer.parseInt(iid);
+		this.eid = Integer.parseInt(eid);
+		this.uid = Integer.parseInt(uid);
 	}
-	public Invitation(Person sentBy, Group group){
-		this.date = LocalDate.now();
-		this.time = LocalTime.now();
-		this.sender = sentBy;
-		this.group = group;
-		this.tag = new SimpleStringProperty(sender.getFirstName() + " " + sender.getLastName() + " har invitert deg til en gruppe.");
+
+	
+	
+	public StringProperty getIidStringProperty(){
+		return new SimpleStringProperty(Integer.toString(iid));
 	}
 	
-	public Event getEvent(){
-		return event;
+	public String getDescription(){
+		return description.get();
 	}
-	public Group getGroup(){
-		return group;
+	public StringProperty getDescriptionProperty(){
+		return description;
 	}
-	public Person getSender(){
-		return sender;
+
+	public int getUid() {
+		return uid;
 	}
-	public String getSenderName(){
-		return sender.getFirstName() + " " + sender.getLastName();
+
+	public int getEid() {
+		return eid;
 	}
-	public String getDesc(){
-		String desc = "";
-		return desc;
+
+	public int getIid() {
+		return iid;
 	}
-	public String getTag(){
-		return tag.get();
-	}
-	public StringProperty getTagProperty(){
-		return tag;
-	}
+
 }
