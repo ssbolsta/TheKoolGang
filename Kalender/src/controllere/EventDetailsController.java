@@ -38,16 +38,22 @@ public class EventDetailsController {
 	@FXML private Button decline;
 
 	private int eventId = 12;
+	private int eid;
 	private ServerConnection sc;
 	private ObservableList<Group> groupList = FXCollections.observableArrayList();
 	private HashMap<String,Group> groupKeyList = new HashMap<String,Group>();
 	private ObservableList<Person> peopleList = FXCollections.observableArrayList();
 	private HashMap<String,Person> personKeyList = new HashMap<String,Person>();
-	
+
 
 	//	public EventDetailsController(int eid) {
 	//		this.eventId = eid;
 	//	}
+
+	public EventDetailsController(int eid) {
+		this.eid = eid;
+	}
+
 	@FXML
 	private void initialize(){
 		usernameColumn.setCellValueFactory(cellData -> cellData.getValue().getUsernameProperty());
@@ -55,9 +61,10 @@ public class EventDetailsController {
 		recipientTable.setItems(peopleList);
 		groupColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
 		groupTable.setItems(groupList);
+		eventDetails();
 	}
-	
-	public void editEvent(int eid){
+
+	public void eventDetails(){
 		try{
 //			ConnectionForReal.setURL("http://78.91.44.74:5050/");
 //			ConnectionForReal.scon.login("krissvor", "passord");
@@ -69,9 +76,9 @@ public class EventDetailsController {
 				Person p = new Person(person.get("firstname").toString(),person.get("lastname").toString(),person.get("username").toString(), Integer.parseInt(person.get("uid").toString()));
 				peopleList.add(p);
 				personKeyList.put(p.toString(), p);
-			
+
 			}
-			
+
 			JSONArray response2 = ConnectionForReal.scon.sendGet("groups/participantof/" + eid);
 			Iterator itr1 = response2.iterator();
 			while(itr1.hasNext()){
@@ -81,8 +88,8 @@ public class EventDetailsController {
 				groupList.add(g);
 				groupKeyList.put(g.getName(), g);
 			}
-			
-			
+
+
 			JSONArray response = ConnectionForReal.scon.sendGet("events/eid/" + eid);
 			JSONObject app = (JSONObject) response.get(0);
 			System.out.println(response);
@@ -112,7 +119,7 @@ public class EventDetailsController {
 
 	@FXML
 	private void handleDecline(){
-		
+
 	}
 
 	@FXML
