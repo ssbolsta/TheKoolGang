@@ -427,7 +427,7 @@ public class AgendaApplication extends Application
 		Text velgText = new Text();
 		Text dateText = new Text("Velg dato:");
 		ComboBox<Person> choosePerson = new ComboBox<Person>();
-		Text nameText = new Text(ConnectionForReal.name +" sin kalender");
+		Text nameText = new Text("Nå vises " +ConnectionForReal.name +" sin kalender");
 		Calendar findDateCal = agenda.getDisplayedCalendar();
 		ObservableList<Person> personList = FXCollections.observableArrayList();
 		JSONArray response;
@@ -472,12 +472,10 @@ public class AgendaApplication extends Application
 			public void handle(ActionEvent arg0){
 
 				Integer iuid =  new Integer( choosePerson.getValue().getUid());
-				System.out.println(iuid);
-				ConnectionForReal.uid = iuid.longValue();
 
-
-
-				start(primaryStage);
+				//ConnectionForReal.uid = iuid.longValue();
+				System.out.println("Person :"+ choosePerson.getValue().getFirstName() + " " + choosePerson.getValue().getLastName());
+				System.out.println("Person ID: "+ iuid);
 
 
 
@@ -487,13 +485,14 @@ public class AgendaApplication extends Application
 
 
 
+
 		nameText.setLayoutY(19);
-		nameText.setFont(Font.font("Arial", FontWeight.MEDIUM, 13));
+		nameText.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 13));
 
 
 
 		yearText.setLayoutY(26);
-		yearText.setFont(Font.font("Arial", FontWeight.MEDIUM, 24));
+		yearText.setFont(Font.font("Arial", FontWeight.THIN, 24));
 
 
 		dateText.setText("Velg dato: ");
@@ -501,7 +500,6 @@ public class AgendaApplication extends Application
 
 		velgText.setText("Velg person:");
 		velgText.setLayoutY(22);
-
 
 
 
