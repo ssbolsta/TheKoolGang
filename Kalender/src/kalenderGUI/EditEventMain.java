@@ -45,20 +45,15 @@ public class EditEventMain extends Application{
 	private int eid = 13;
 	private JSONObject app;
 	
-//	public EditEventMain(int EventID){
-//		
-//	}
-	
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
-		ConnectionForReal.setURL("http://78.91.44.74:5050/");
+		ConnectionForReal.setURL("http://78.91.44.241:5050/");
 		try {
 			ConnectionForReal.scon.login("krissvor","passord");
 			app = (JSONObject) ConnectionForReal.scon.sendGet("events/eid/" + eid).get(0);
 			System.out.println(app.toJSONString());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		showEditEvent1();
@@ -150,6 +145,21 @@ public class EditEventMain extends Application{
 			root = (AnchorPane) loader.load();
 			EditEvent2Controller controller = loader.getController();
 			controller.setMainApp(this);
+			
+			try {
+				JSONArray response4 = ConnectionForReal.scon.sendGet("rooms");
+				Iterator itr4 = response4.iterator();
+				while (itr4.hasNext()){
+					JSONObject room;
+					room = (JSONObject) itr4.next();
+					Room r = new Room(Integer.parseInt(room.get("rid").toString()), room.get("name").toString(), Integer.parseInt(room.get("capacity").toString()));
+					roomList.add(r);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			
 			controller.showData();
 			this.primaryStage.setScene(new Scene(root));
 			this.primaryStage.show();
@@ -158,6 +168,11 @@ public class EditEventMain extends Application{
 			e.printStackTrace();
 		}
 
+	}
+	
+	public void editEvent(Room room){
+//		ConnectionForReal.scon.sendPut(path, param)
+		
 	}
 	
 	public void close(){
@@ -185,7 +200,7 @@ public class EditEventMain extends Application{
 	}
 	
 	public JSONObject getAppointment(){
-		return this.app;
+		return app;
 	}
 
 

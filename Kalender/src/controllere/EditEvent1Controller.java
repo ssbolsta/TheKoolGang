@@ -63,17 +63,29 @@ public class EditEvent1Controller {
 		fromTime.setItems(timeFromList);
 		toTime.setItems(timeToList);
 
-		app = mainApp.getAppointment();
-//		nameField.setText(app.get("name").toString());
-//		String dateString = app.get("eventdate").toString();
-//		LocalDate myDate = LocalDate.parse(dateString);
-//		dateField.setValue(LocalDate.parse(app.get("eventdate").toString()));
+		
+//		
 
 	}
 
 	public void showData(){
+		app = mainApp.getAppointment();
+		System.out.println(app.toJSONString());
+		if(app.get("name") != null){
+			nameField.setText(app.get("name").toString());
+		}
+		fromTime.setValue(LocalTime.parse(app.get("starttime").toString().substring(0,5)));
+		toTime.setValue(LocalTime.parse(app.get("endtime").toString().substring(0,5)));
+		dateField.setValue(LocalDate.parse(app.get("eventdate").toString()));
 		recipientTable.setItems(mainApp.getRecipientList());
 		groupTable.setItems(mainApp.getChosenGroupList());
+		try {
+			JSONObject room = (JSONObject) ConnectionForReal.scon.sendGet("rooms/rid/" + app.get("rid")).get(0);
+			spacesField.setText(room.get("capacity").toString());
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
 		for (Person person : mainApp.getPersonList()) {
 			personKeyList.put(person.toString(), person);
 		}

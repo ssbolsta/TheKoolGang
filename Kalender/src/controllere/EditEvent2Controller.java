@@ -11,6 +11,7 @@ import kalenderGUI.EditEventMain;
 import models.Room;
 
 import org.controlsfx.dialog.Dialogs;
+import org.json.simple.JSONObject;
 
 public class EditEvent2Controller {
 	
@@ -27,9 +28,18 @@ public class EditEvent2Controller {
 	
 	@FXML
 	private void initialize(){
+		
+		
 	}
 	
 	public void showData(){
+//		JSONObject app = mainApp.getAppointment();
+//		try {
+//			JSONObject room = (JSONObject) ConnectionForReal.scon.sendGet("rooms/rid/" + app.get("rid")).get(0);
+//			Room currentRoom = new Room(Integer.parseInt(room.get("rid").toString()), room.get("name").toString(), Integer.parseInt(room.get("capacity").toString()));
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		int spaces = mainApp.getSpaces();
 		int spacesAuto = 0;
 		Room auto = null;
@@ -61,9 +71,9 @@ public class EditEvent2Controller {
 	}
 	
 	@FXML
-	private void handleCreateEvent(){
+	private void handleEditEvent(){
 		if(roomMap.getOrDefault(roomList.getSelectionModel().getSelectedItem(), null) != null){
-			this.mainApp.createEvent(roomMap.get(roomList.getSelectionModel().getSelectedItem()));
+			this.mainApp.editEvent(roomMap.get(roomList.getSelectionModel().getSelectedItem()));
 			Dialogs.create().title("Arrangement Opprettet!").showInformation();
 			this.mainApp.close();
 		}else{

@@ -11,7 +11,7 @@
    <children>
       <HBox alignment="CENTER" layoutX="20.0" layoutY="538.0" prefHeight="58.0" prefWidth="323.0" spacing="20.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#handleCreateEvent" prefWidth="60.0" styleClass="button-normal" text="Fullfør" />
+            <Button mnemonicParsing="false" onAction="#handleEditEvent" prefWidth="60.0" styleClass="button-normal" text="Fullfør" />
             <Button mnemonicParsing="false" onAction="#handleBack" prefWidth="60.0" styleClass="button-normal" text="Tilbake" />
             <Button mnemonicParsing="false" onAction="#handleCancel" prefWidth="60.0" styleClass="button-cancel" text="Avbryt" />
          </children>
