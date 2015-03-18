@@ -64,11 +64,21 @@ public class InvitationsMain extends Application{
 		}
 		
 		
-		
+		try{
+			ConnectionForReal.scon.sendDelete("invitations/iid/" + inv.getIid());
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		
 	}
 	
-	public void deleteInvitation(Invitation inv){
+	public void declineInvitation(Invitation inv){
+
+		try {
+			ConnectionForReal.scon.sendDelete("invitations/iid/" + inv.getIid());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		
 	}

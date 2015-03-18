@@ -155,6 +155,7 @@ public class EventMain extends Application {
 
 	}
 
+	
 	public void close(){
 		this.primaryStage.close();
 		this.mainApp.setNewEventStage(null);
@@ -164,26 +165,27 @@ public class EventMain extends Application {
 			e.printStackTrace();
 		}
 	}
-
+	
+	
 	public void createEvent(Room location){
-		HashMap<String,String> rompe= new HashMap<String,String>();
-		rompe.put("name", name);
-		rompe.put("description", desc);
-		rompe.put("rid", Integer.toString(location.getRoomID()));
-		rompe.put("starttime", fromTime.getHour() + ":00:00");
-		rompe.put("endtime", toTime.getHour() + ":00:00");
-		rompe.put("eventdate", date.toString());
+		HashMap<String,String> request= new HashMap<String,String>();
+		request.put("name", name);
+		request.put("description", desc);
+		request.put("rid", Integer.toString(location.getRoomID()));
+		request.put("starttime", fromTime.getHour() + ":00:00");
+		request.put("endtime", toTime.getHour() + ":00:00");
+		request.put("eventdate", date.toString());
 		
-		JSONObject homo = null;
+		JSONObject valhalla = new JSONObject();
 		
 		try {
-			homo = (JSONObject) ConnectionForReal.scon.sendPost("events", rompe).get(0);
+			valhalla = (JSONObject) ConnectionForReal.scon.sendPost("events", request).get(0);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		
-		rompe.clear();
+		request.clear();
 		
 		String s= "";
 		
@@ -192,18 +194,18 @@ public class EventMain extends Application {
 		}
 		
 		if(s.length() != 0){
-			rompe.put("eid", homo.get("eid").toString());
-			rompe.put("groups", s.substring(0, s.length()-1));
+			request.put("eid", valhalla.get("eid").toString());
+			request.put("groups", s.substring(0, s.length()-1));
+			try {
+				ConnectionForReal.scon.sendPost("events/add/groups", request);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		
-		try {
-			ConnectionForReal.scon.sendPost("events/add/groups", rompe);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		
 		
-		rompe.clear();
+		request.clear();
 		
 		s = "";
 		
@@ -212,21 +214,15 @@ public class EventMain extends Application {
 		}
 		
 		if(s.length() != 0){
-			rompe.put("eid", homo.get("eid").toString());
-			rompe.put("users", s.substring(0, s.length() - 1));
+			request.put("eid", valhalla.get("eid").toString());
+			request.put("users", s.substring(0, s.length() - 1));
+			try {
+				ConnectionForReal.scon.sendPost("events/invite/users", request);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-		
-		try {
-			ConnectionForReal.scon.sendPost("events/invite/users", rompe);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		
-		
-		
-		
-		
+					
 	}
 
 
@@ -236,10 +232,12 @@ public class EventMain extends Application {
 		return this.primaryStage;
 	}
 
+	
 	public static void main(String[] args) {
 		launch(args);
 	}
 
+	
 	public void setSpaces(Integer spaces){
 		this.spaces = spaces;
 	}
@@ -262,10 +260,13 @@ public class EventMain extends Application {
 	public ObservableList<Person> getPersonList(){
 		return personList;
 	}
+	
+	
 	public ObservableList<Group> getGroupList(){
 		return groupList;
 	}
 
+	
 	public ObservableList<Group> getChosenGroupList(){
 		return chosenGroupList;
 	}
@@ -310,6 +311,7 @@ public class EventMain extends Application {
 		this.date = date;
 	}
 
+	
 	public ObservableList<Room>	getRoomList(){
 		return roomList;
 	}
