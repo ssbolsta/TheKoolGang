@@ -40,6 +40,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
+import javafx.scene.image.Image;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -210,6 +211,24 @@ public class AgendaApplication extends Application
 			return null;
 		}
 
+	};
+
+
+	private EventHandler<KeyEvent> logOutPressed = new EventHandler<KeyEvent>(){
+		@Override
+		public void handle(KeyEvent arg0) {
+			if(arg0.getCode().equals(KeyCode.ENTER)){
+				LoginMain ma = new LoginMain();
+				primaryStage.setMinHeight(200);
+				primaryStage.setMinWidth(200);
+				primaryStage.setHeight(250);
+				primaryStage.setWidth(360);
+				primaryStage.setX(500);
+				primaryStage.setY(150);
+
+				ma.start(primaryStage);
+			}
+		}
 	};
 
 
@@ -436,8 +455,8 @@ public class AgendaApplication extends Application
 
 
 
-		nameText.setLayoutY(22);
-		nameText.setFont(new Font(20));
+		nameText.setLayoutY(14);
+		nameText.setFont(new Font(14));
 
 
 
@@ -549,6 +568,7 @@ public class AgendaApplication extends Application
 		logOut.getStyleClass().add("button-normal");
 		logOut.setText("  Logg ut  ");
 		logOut.setLayoutY(4);
+		logOut.setOnKeyPressed(logOutPressed);
 
 
 		logOut.setOnAction(new EventHandler<ActionEvent>(){
@@ -787,7 +807,7 @@ public class AgendaApplication extends Application
 
 
 		soot.getChildren().add(agenda);
-		soot.getChildren().addAll( yearText, logOut, velgText, nameText, eventButton, delEvent, makeGroup, invites, dateText, datePick, prev, next, choosePerson, velgPerson);
+		soot.getChildren().addAll( yearText, velgText, nameText, eventButton, delEvent, makeGroup, invites, dateText, datePick, prev, next, choosePerson, velgPerson, logOut);
 		soot.setBottomAnchor(agenda, 8.0);
 		soot.setTopAnchor(agenda, 60.0);
 		soot.setRightAnchor(agenda, 14.0);
@@ -816,6 +836,7 @@ public class AgendaApplication extends Application
 		primaryStage.setScene(scene);
 		primaryStage.setMinWidth(950.0);
 		primaryStage.setMinHeight(300);
+		primaryStage.getIcons().add(new Image("file:resources/images/kalimage.png"));
 		this.primaryStage = primaryStage;
 
 		primaryStage.show();
