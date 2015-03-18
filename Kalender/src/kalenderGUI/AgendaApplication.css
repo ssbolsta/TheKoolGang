@@ -11,7 +11,7 @@
 	-fx-border-radius: 5px;
 	
 	-fx-border-color: #000080;
-	-fx-background-color: linear-gradient(to bottom, #0666a1, #47b5ff);
+	
 	-fx-border-radius: 9,8,5,4,3;	
 }
 
@@ -86,6 +86,15 @@
 	-fx-background-color: linear-gradient(to bottom, #47b5ff, #0666a1);
 
 }
+.search-box:focused {
+	-fx-border-radius: 5px;
+	
+	-fx-border-color: #000080;
+	
+	-fx-border-radius: 9,8,5,4,3;	
+
+}
+
 .search-box .arrow-button .arrow{
 	-fx-background-color: white;
 }

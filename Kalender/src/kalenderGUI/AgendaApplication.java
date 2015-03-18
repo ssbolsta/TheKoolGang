@@ -48,6 +48,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -69,7 +70,6 @@ public class AgendaApplication extends Application
 	Agenda agenda = new Agenda();
 	Text yearText = new Text(""+ Calendar.getInstance().get(Calendar.YEAR));
 	Appointment ap;
-	Long uidView;
 
 
 	private EventHandler<KeyEvent> nextWeekPressed = new EventHandler<KeyEvent>(){
@@ -160,7 +160,31 @@ public class AgendaApplication extends Application
 
 
 
-	private EventHandler<KeyEvent> notifyEventPressed = new EventHandler<KeyEvent>(){
+
+	private EventHandler<KeyEvent> notificEventPressed = new EventHandler<KeyEvent>(){
+		@Override
+		public void handle(KeyEvent arg0) {
+			if(arg0.getCode().equals(KeyCode.ENTER)){
+				InvitationsMain invMain = new InvitationsMain();
+				if(newEventStage == null){
+					try{
+						newEventStage = new Stage();
+						newEventStage.setOnCloseRequest(newEventClosed);
+						newEventStage.setOnHidden(newEventClosed);
+						newEventStage.initModality(Modality.WINDOW_MODAL);
+						newEventStage.initOwner(primaryStage);
+						invMain.start(newEventStage);
+					}
+					catch(Exception e){
+						System.out.println(e);
+					}
+				}
+			}
+		}
+	};
+
+
+	private EventHandler<KeyEvent> invitationsEventPressed = new EventHandler<KeyEvent>(){
 		@Override
 		public void handle(KeyEvent arg0) {
 			if(arg0.getCode().equals(KeyCode.ENTER)){
@@ -187,6 +211,8 @@ public class AgendaApplication extends Application
 
 		@Override
 		public Void call(Appointment param) {
+
+
 
 			EventDetailsMain ng = new EventDetailsMain(Integer.parseInt(param.getDescription()));
 			System.out.println("new Edit sier dette : ");
@@ -391,7 +417,9 @@ public class AgendaApplication extends Application
 		Button invites = new Button();
 		Button velgPerson = new Button();
 		Button logOut = new Button();
+		Button notific = new Button();
 		DatePicker datePick = new DatePicker();
+
 
 		Text velgText = new Text();
 		Text dateText = new Text("Velg dato:");
@@ -441,6 +469,7 @@ public class AgendaApplication extends Application
 			public void handle(ActionEvent arg0){
 
 				Integer iuid =  new Integer( choosePerson.getValue().getUid());
+				System.out.println(iuid);
 				ConnectionForReal.uid = iuid.longValue();
 
 
@@ -455,13 +484,13 @@ public class AgendaApplication extends Application
 
 
 
-		nameText.setLayoutY(14);
-		nameText.setFont(new Font(14));
+		nameText.setLayoutY(19);
+		nameText.setFont(Font.font("Arial", FontWeight.MEDIUM, 13));
 
 
 
-		yearText.setLayoutY(46);
-		yearText.setFont(new Font(28));
+		yearText.setLayoutY(26);
+		yearText.setFont(Font.font("Arial", FontWeight.MEDIUM, 24));
 
 
 		dateText.setText("Velg dato: ");
@@ -532,9 +561,29 @@ public class AgendaApplication extends Application
 			}
 		});
 
+		notific.getStyleClass().add("button-normal");
+		notific.setLayoutY(36);
+
+		try {
+			invites.setText("Notifikasjoner (" + ((JSONObject)ConnectionForReal.scon.sendGet("notifications/count").get(0)).get("count") +")");
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		notific.setOnKeyPressed(notificEventPressed);
+		notific.setOnAction(new EventHandler<ActionEvent>(){
+			@Override
+			public void handle(ActionEvent arg0) {
+				System.out.println("Her skal det poppe opp notifications. ");
+
+			}
+
+		});
+
+
 
 		invites.getStyleClass().add("button-normal");
-		invites.setLayoutY(30);
+		invites.setLayoutY(36);
 		invites.setLayoutX(360);
 		try {
 			invites.setText("Invitasjoner (" + ((JSONObject)ConnectionForReal.scon.sendGet("invitations/count").get(0)).get("count") +")");
@@ -542,7 +591,7 @@ public class AgendaApplication extends Application
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		invites.setOnKeyPressed(notifyEventPressed);
+		invites.setOnKeyPressed(invitationsEventPressed);
 		invites.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent arg0) {
@@ -597,7 +646,7 @@ public class AgendaApplication extends Application
 		delEvent.getStyleClass().add("button-normal");
 		delEvent.setText("Slett Arragement");
 		delEvent.setLayoutX(173);
-		delEvent.setLayoutY(30);
+		delEvent.setLayoutY(36);
 
 		delEvent.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
@@ -664,7 +713,7 @@ public class AgendaApplication extends Application
 
 
 		eventButton.getStyleClass().add("button-normal");
-		eventButton.setLayoutY(30);
+		eventButton.setLayoutY(36);
 		eventButton.setLayoutX(40);
 		eventButton.setText("Opprett Arrangement");
 		eventButton.setOnKeyPressed(newEventPressed);
@@ -726,7 +775,7 @@ public class AgendaApplication extends Application
 		});
 
 		makeGroup.getStyleClass().add("button-normal");
-		makeGroup.setLayoutY(30);
+		makeGroup.setLayoutY(36);
 		makeGroup.setLayoutX(280);
 		makeGroup.setText("Lag gruppe");
 		makeGroup.setOnKeyPressed(newGroupPressed);
@@ -807,7 +856,7 @@ public class AgendaApplication extends Application
 
 
 		soot.getChildren().add(agenda);
-		soot.getChildren().addAll( yearText, velgText, nameText, eventButton, delEvent, makeGroup, invites, dateText, datePick, prev, next, choosePerson, velgPerson, logOut);
+		soot.getChildren().addAll( yearText, velgText, nameText, eventButton, delEvent, makeGroup, invites, notific, dateText, datePick, prev, next, choosePerson, velgPerson, logOut);
 		soot.setBottomAnchor(agenda, 8.0);
 		soot.setTopAnchor(agenda, 60.0);
 		soot.setRightAnchor(agenda, 14.0);
@@ -819,7 +868,8 @@ public class AgendaApplication extends Application
 		soot.setLeftAnchor(makeGroup, 261.0);
 		soot.setRightAnchor(datePick, 164.0);
 		soot.setLeftAnchor(invites, 343.0);
-		soot.setLeftAnchor(nameText, 10.0);
+		soot.setLeftAnchor(notific, 445.0);
+		soot.setLeftAnchor(nameText, 18.0);
 		soot.setRightAnchor(choosePerson, 164.0);
 		soot.setRightAnchor(logOut, 5.0);
 		soot.setRightAnchor(velgText, 340.0);
