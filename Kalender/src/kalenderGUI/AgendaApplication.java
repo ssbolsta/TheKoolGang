@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
+import controllere.AutoCompleteCombobox;
 import controllere.ConnectionForReal;
 import controllere.GlobalUserID;
 
@@ -26,6 +27,7 @@ import connection.ServerConnection;
 import requests.*;
 import models.Event;
 import models.Person;
+import models.PersonComparator;
 import models.Room;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -35,6 +37,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.input.InputEvent;
@@ -65,6 +68,7 @@ public class AgendaApplication extends Application
 	Agenda agenda = new Agenda();
 	Text yearText = new Text(""+ Calendar.getInstance().get(Calendar.YEAR));
 	Appointment ap;
+	Long uidView;
 
 
 	private EventHandler<KeyEvent> nextWeekPressed = new EventHandler<KeyEvent>(){
@@ -358,7 +362,7 @@ public class AgendaApplication extends Application
 	@SuppressWarnings({ "static-access", "deprecation" })
 	@Override
 	public void start(Stage primaryStage) {
-		GlobalUserID.userID = 15;
+
 		application = this;
 		Button eventButton = new Button();
 		Button delEvent = new Button();
@@ -366,16 +370,71 @@ public class AgendaApplication extends Application
 		Button next=new Button();
 		Button prev = new Button();
 		Button invites = new Button();
+		Button velgPerson = new Button();
+		Button logOut = new Button();
 		DatePicker datePick = new DatePicker();
+
+		Text velgText = new Text();
 		Text dateText = new Text("Velg dato:");
+		ComboBox<Person> choosePerson = new ComboBox<Person>();
 		Text nameText = new Text(ConnectionForReal.name +" sin kalender");
 		Calendar findDateCal = agenda.getDisplayedCalendar();
+		ObservableList<Person> personList = FXCollections.observableArrayList();
+		JSONArray response;
 
 
-
-
+		LocalDate localDateNow = LocalDate.of(findDateCal.get(Calendar.YEAR), findDateCal.get(Calendar.MONTH)+1, findDateCal.get(Calendar.DATE));
 		Agenda agendaNext = new Agenda();
 		AnchorPane soot = new AnchorPane();
+		datePick.setValue(LocalDate.now());
+
+
+
+		try {
+			response = ConnectionForReal.scon.sendGet("users");
+			Iterator itr = response.iterator();
+			while(itr.hasNext()){
+				JSONObject person;
+				person = (JSONObject) itr.next();
+				if(person.get("uid").toString().equalsIgnoreCase(Long.toString(ConnectionForReal.uid))){
+					continue;
+				}
+				personList.add(new Person(person.get("firstname").toString(),person.get("lastname").toString(),person.get("username").toString(), Integer.parseInt(person.get("uid").toString())));
+			}
+		}
+		 catch (Exception e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		choosePerson.getStyleClass().add("search-box");
+		choosePerson.setLayoutY(4);
+		choosePerson.setItems(personList);
+		choosePerson.setMaxWidth(175);
+		choosePerson.setMaxHeight(7);
+		personList.sort(new PersonComparator());
+		new AutoCompleteCombobox<>(choosePerson);
+
+		velgPerson.setText("Se kalender");
+		velgPerson.getStyleClass().add("button-normal");
+		velgPerson.setLayoutY(4);
+		velgPerson.setOnAction(new EventHandler<ActionEvent>(){
+			@Override
+			public void handle(ActionEvent arg0){
+
+				Integer iuid =  new Integer( choosePerson.getValue().getUid());
+				ConnectionForReal.uid = iuid.longValue();
+
+
+
+				start(primaryStage);
+
+
+
+			}
+		});
+
+
+
 
 		nameText.setLayoutY(22);
 		nameText.setFont(new Font(20));
@@ -384,14 +443,15 @@ public class AgendaApplication extends Application
 
 		yearText.setLayoutY(46);
 		yearText.setFont(new Font(28));
-		LocalDate localDateNow = LocalDate.of(findDateCal.get(Calendar.YEAR), findDateCal.get(Calendar.MONTH)+1, findDateCal.get(Calendar.DATE));
-
-		dateText.setText("Velg dato");
-		dateText.setLayoutY(46);
 
 
+		dateText.setText("Velg dato: ");
+		dateText.setLayoutY(52);
 
-		datePick.setValue(LocalDate.now());
+		velgText.setText("Velg person:");
+		velgText.setLayoutY(22);
+
+
 
 
 
@@ -418,7 +478,9 @@ public class AgendaApplication extends Application
 		datePick.setDayCellFactory(dateLimitFrom);
 		datePick.setShowWeekNumbers(true);
 		datePick.setLayoutX(665);
-		datePick.setLayoutY(30);
+		datePick.setLayoutY(36);
+		datePick.setMinWidth(175);
+		datePick.setMinHeight(25);
 		datePick.setValue(localDateNow);
 		datePick.getStyleClass().add("date-velger");
 		datePick.setOnAction(new EventHandler<ActionEvent>(){
@@ -484,6 +546,33 @@ public class AgendaApplication extends Application
 
 		});
 
+		logOut.getStyleClass().add("button-normal");
+		logOut.setText("  Logg ut  ");
+		logOut.setLayoutY(4);
+
+
+		logOut.setOnAction(new EventHandler<ActionEvent>(){
+			@Override
+			public void handle(ActionEvent arg0){
+
+				LoginMain ma = new LoginMain();
+				primaryStage.setMinHeight(200);
+				primaryStage.setMinWidth(200);
+				primaryStage.setHeight(250);
+				primaryStage.setWidth(360);
+				primaryStage.setX(500);
+				primaryStage.setY(150);
+
+				ma.start(primaryStage);
+
+
+
+
+
+
+			}
+		});
+
 
 		delEvent.getStyleClass().add("button-normal");
 		delEvent.setText("Slett Arragement");
@@ -497,6 +586,14 @@ public class AgendaApplication extends Application
 					Appointment a = agenda.appointments().get(i);
 					if ( a.equals(ap)){
 						agenda.appointments().remove(i);
+						int eid = Integer.parseInt(ap.getDescription());
+						System.out.println(eid);
+						try {
+							ConnectionForReal.scon.sendDelete("events/eid/"+eid );
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 
 				}
@@ -510,9 +607,9 @@ public class AgendaApplication extends Application
 		});
 
 		prev.getStyleClass().add("button-normal");
-		prev.setText("Forrige uke");
+		prev.setText("Forrige uke ");
 		prev.setLayoutX(840);
-		prev.setLayoutY(30);
+		prev.setLayoutY(36);
 		prev.setOnKeyPressed(prevWeekPressed);
 		prev.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
@@ -580,7 +677,7 @@ public class AgendaApplication extends Application
 		next.getStyleClass().add("button-normal");
 		next.setText("Neste uke");
 		next.setLayoutX(920);
-		next.setLayoutY(30);
+		next.setLayoutY(36);
 		next.setOnKeyPressed(nextWeekPressed);
 		next.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
@@ -690,7 +787,7 @@ public class AgendaApplication extends Application
 
 
 		soot.getChildren().add(agenda);
-		soot.getChildren().addAll(yearText, nameText, eventButton, delEvent, makeGroup, invites, dateText, datePick, prev, next);
+		soot.getChildren().addAll( yearText, logOut, velgText, nameText, eventButton, delEvent, makeGroup, invites, dateText, datePick, prev, next, choosePerson, velgPerson);
 		soot.setBottomAnchor(agenda, 8.0);
 		soot.setTopAnchor(agenda, 60.0);
 		soot.setRightAnchor(agenda, 14.0);
@@ -700,9 +797,13 @@ public class AgendaApplication extends Application
 		soot.setLeftAnchor(eventButton, 10.0);
 		soot.setLeftAnchor(delEvent, 148.0);
 		soot.setLeftAnchor(makeGroup, 261.0);
-		soot.setRightAnchor(datePick, 160.0);
+		soot.setRightAnchor(datePick, 164.0);
 		soot.setLeftAnchor(invites, 343.0);
 		soot.setLeftAnchor(nameText, 10.0);
+		soot.setRightAnchor(choosePerson, 164.0);
+		soot.setRightAnchor(logOut, 5.0);
+		soot.setRightAnchor(velgText, 340.0);
+		soot.setRightAnchor(velgPerson, 80.0);
 		soot.setLeftAnchor(yearText, 463.0);
 		soot.setRightAnchor(dateText, 340.0);
 		soot.getStyleClass().add("fx-background");
