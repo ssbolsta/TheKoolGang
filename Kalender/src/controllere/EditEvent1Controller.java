@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.util.HashMap;
 
 import org.controlsfx.dialog.Dialogs;
+import org.json.simple.JSONObject;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,8 +23,8 @@ import models.Person;
 import models.PersonComparator;
 
 public class EditEvent1Controller {
-	
-	
+
+
 	@FXML private TextField nameField;
 	@FXML private TextField spacesField;
 	@FXML private TextArea descriptionField;
@@ -38,19 +39,20 @@ public class EditEvent1Controller {
 	@FXML private TableColumn<Person,String> nameColumn;
 	@FXML private TableColumn<Group,String> groupColumn;
 	@FXML private Button cancel;
-	
+
 	private ObservableList<LocalTime> timeFromList = FXCollections.observableArrayList();
 	private ObservableList<LocalTime> timeToList = FXCollections.observableArrayList();
 	private HashMap<String,Person> personKeyList = new HashMap<String,Person>();
 	private HashMap<String,Group> groupKeyList = new HashMap<String,Group>();
 	private EditEventMain mainApp;
-	
-	
+	private JSONObject app;
+
+
 	@FXML private void initialize(){
 		usernameColumn.setCellValueFactory(cellData -> cellData.getValue().getUsernameProperty());
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().getFullNameProperty());
 		groupColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
-		
+
 		for (int i = 0; i < 24; i++) {
 			timeFromList.add(LocalTime.of(i, 0));
 			if(i != 0){
@@ -60,8 +62,15 @@ public class EditEvent1Controller {
 		timeToList.add(LocalTime.of(23, 59));
 		fromTime.setItems(timeFromList);
 		toTime.setItems(timeToList);
+
+		app = mainApp.getAppointment();
+//		nameField.setText(app.get("name").toString());
+//		String dateString = app.get("eventdate").toString();
+//		LocalDate myDate = LocalDate.parse(dateString);
+//		dateField.setValue(LocalDate.parse(app.get("eventdate").toString()));
+
 	}
-	
+
 	public void showData(){
 		recipientTable.setItems(mainApp.getRecipientList());
 		groupTable.setItems(mainApp.getChosenGroupList());
@@ -71,14 +80,14 @@ public class EditEvent1Controller {
 		for(Group group:mainApp.getGroupList()){
 			groupKeyList.put(group.getName(), group);
 		}
-		
+
 		this.personSearchField.setItems(mainApp.getPersonList());
 		this.groupSearchField.setItems(mainApp.getGroupList());
 		new AutoCompleteCombobox<>(this.personSearchField);
 		new AutoCompleteCombobox<>(this.groupSearchField);
-	
+
 		mainApp.getPersonList().sort(new PersonComparator());
-		
+
 		if(mainApp.getName() != null && mainApp.getDate() != null && mainApp.getFromTime() != null && mainApp.getToTime() != null && mainApp.getDesc() != null && mainApp.getSpaces() != null){
 			nameField.setText(mainApp.getName());
 			dateField.setValue(mainApp.getDate());
@@ -86,10 +95,10 @@ public class EditEvent1Controller {
 			toTime.getSelectionModel().select(mainApp.getToTime());
 			descriptionField.setText(mainApp.getDesc());
 			spacesField.setText(mainApp.getSpaces().toString());
-			
+
 		}
 	}
-	
+
 	@FXML
 	private  void handleLeggTilPerson(){
 		if(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()) != null){
@@ -97,7 +106,7 @@ public class EditEvent1Controller {
 			mainApp.getPersonList().remove(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()));
 		}
 	}
-	
+
 	@FXML
 	private void handleFjernPerson(){
 		if(recipientTable.getSelectionModel().getSelectedItem() != null){
@@ -106,7 +115,7 @@ public class EditEvent1Controller {
 			mainApp.getRecipientList().remove(recipientTable.getSelectionModel().getSelectedItem());
 		}
 	}
-	
+
 	@FXML
 	private void handleAddGroup(){
 		if(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()) != null){
@@ -122,7 +131,7 @@ public class EditEvent1Controller {
 			mainApp.getChosenGroupList().remove(groupTable.getSelectionModel().getSelectedItem());
 		}
 	}
-	
+
 	@FXML
 	private void handleFromTime(){
 		if(toTime.getSelectionModel().getSelectedItem() != null){
@@ -156,8 +165,8 @@ public class EditEvent1Controller {
 			toTime.setItems(timeToList);
 		}
 	}
-	
-	
+
+
 	@FXML
 	private void handleNext(){
 		if(inputIsValid()){
@@ -174,17 +183,17 @@ public class EditEvent1Controller {
 			this.mainApp.showEditEvent2();
 		}
 	}
-	
+
 	@FXML
 	private void handleClose(){
 		this.mainApp.getPrimaryStage().close();
 	}
-	
-	
+
+
 	public void setMainApp(EditEventMain mainApp){
 		this.mainApp = mainApp;
 	}
-	
+
 	private boolean inputIsValid(){
 		String message = "";
 		if(nameField.getText() == null || nameField.getText().length() == 0){
@@ -206,7 +215,7 @@ public class EditEvent1Controller {
 				message += "Ikke et gyldig antall plasser!\n";
 			}
 		}
-		
+
 		if(message.length() == 0){
 			return true;
 		}else{
@@ -214,5 +223,5 @@ public class EditEvent1Controller {
 			return false;
 		}
 	}
-	
+
 }

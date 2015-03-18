@@ -3,6 +3,10 @@ package kalenderGUI;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Iterator;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import requests.ModifyEventRequest;
 import models.Group;
@@ -38,6 +42,8 @@ public class EditEventMain extends Application{
 	private LocalDate date;
 	private Integer spaces;
 	private ServerConnection sc;
+	private int eid = 13;
+	private JSONObject app;
 	
 //	public EditEventMain(int EventID){
 //		
@@ -46,26 +52,93 @@ public class EditEventMain extends Application{
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
-		showEditEvent1();
 		ConnectionForReal.setURL("http://78.91.44.74:5050/");
-		ConnectionForReal.scon.login("krissvor","passord");
+		try {
+			ConnectionForReal.scon.login("krissvor","passord");
+			app = (JSONObject) ConnectionForReal.scon.sendGet("events/eid/" + eid).get(0);
+			System.out.println(app.toJSONString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		showEditEvent1();
 
 	}
 	
 	public void showEditEvent1(){
 		try{
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(EventMain.class.getResource("EditEvent1.fxml"));
+			loader.setLocation(EditEventMain.class.getResource("EditEvent1.fxml"));
 			root = (AnchorPane) loader.load();
 			EditEvent1Controller controller = loader.getController();
 			controller.setMainApp(this);
 			
 			
 			
+//			Henter alle brukere
+			
+			JSONArray response = ConnectionForReal.scon.sendGet("users");
+			Iterator itr = response.iterator();
+			while(itr.hasNext()) {
+				JSONObject person;
+				person = (JSONObject) itr.next();
+				Person p = new Person(person.get("firstname").toString(),person.get("lastname").toString(),person.get("username").toString(), Integer.parseInt(person.get("uid").toString()));
+				personList.add(p);
+			}
+			System.out.println(personList.toString());
+			
+			
+			
+//			Henter alle brukere som er med på arrangementet
+			
+			JSONArray response1 = ConnectionForReal.scon.sendGet("users/participantof/" + eid);
+			Iterator itr1 = response1.iterator();
+			while(itr1.hasNext()) {
+				JSONObject person;
+				person = (JSONObject) itr1.next();
+				int uid = Integer.parseInt(person.get("uid").toString());
+				for(Person p : personList){
+					if(p.getUid() == uid){
+						recipientList.add(new Person(person.get("firstname").toString(),person.get("lastname").toString(),person.get("username").toString(), Integer.parseInt(person.get("uid").toString())));
+						personList.remove(p);
+						break;
+					}
+				}
+			}
+			
+			
+//			Henter alle grupper
+			
+			JSONArray response3 = ConnectionForReal.scon.sendGet("groups");
+			Iterator itr3 = response3.iterator();
+			while(itr3.hasNext()){
+				JSONObject group;
+				group = (JSONObject) itr3.next();
+				Group g = new Group(Integer.parseInt(group.get("gid").toString()), group.get("name").toString());
+				groupList.add(g);
+			}
+			
+//			Henter alle grupper som er med på arrangementet
+			JSONArray response2 = ConnectionForReal.scon.sendGet("groups/participantof/" + eid);
+			Iterator itr2 = response2.iterator();
+			while(itr2.hasNext()){
+				JSONObject group;
+				group = (JSONObject) itr2.next();
+				int gid = Integer.parseInt(group.get("gid").toString());
+				for(Group g : groupList){
+					System.out.println("1");
+					if(g.getGroupID() == gid){
+						chosenGroupList.add(new Group(Integer.parseInt(group.get("gid").toString()), group.get("name").toString()));
+						groupList.remove(g);
+						break;
+					}
+				}
+			}
+			
 			controller.showData();
 			this.primaryStage.setScene(new Scene(root));
 			this.primaryStage.show();
-		}catch(IOException e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -109,6 +182,10 @@ public class EditEventMain extends Application{
 	}
 	public Integer getSpaces(){
 		return spaces;
+	}
+	
+	public JSONObject getAppointment(){
+		return this.app;
 	}
 
 
