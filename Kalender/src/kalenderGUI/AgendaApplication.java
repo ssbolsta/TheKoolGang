@@ -70,6 +70,9 @@ public class AgendaApplication extends Application
 	Agenda agenda = new Agenda();
 	Text yearText = new Text(""+ Calendar.getInstance().get(Calendar.YEAR));
 	Appointment ap;
+	Button prev = new Button();
+	Button next=new Button();
+
 
 
 	private EventHandler<KeyEvent> nextWeekPressed = new EventHandler<KeyEvent>(){
@@ -95,6 +98,7 @@ public class AgendaApplication extends Application
 
 
 				start(primaryStage);
+				next.requestFocus();
 
 
 
@@ -127,6 +131,7 @@ public class AgendaApplication extends Application
 
 
 				start(primaryStage);
+				prev.requestFocus();
 
 
 
@@ -412,8 +417,6 @@ public class AgendaApplication extends Application
 		Button eventButton = new Button();
 		Button delEvent = new Button();
 		Button makeGroup = new Button();
-		Button next=new Button();
-		Button prev = new Button();
 		Button invites = new Button();
 		Button velgPerson = new Button();
 		Button logOut = new Button();
@@ -765,6 +768,7 @@ public class AgendaApplication extends Application
 				}
 
 				agenda = agendaNext;
+
 
 
 				start(primaryStage);
