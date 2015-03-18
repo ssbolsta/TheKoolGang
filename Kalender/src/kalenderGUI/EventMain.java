@@ -47,7 +47,8 @@ public class EventMain extends Application {
 	@SuppressWarnings("rawtypes")
 	public EventMain(){
 		try{
-			
+			ConnectionForReal.setURL("http://78.91.44.241:5050/");
+			ConnectionForReal.scon.login("krissvor","passord");
 			JSONArray response = ConnectionForReal.scon.sendGet("users");
 			Iterator itr = response.iterator();
 			while(itr.hasNext()){
@@ -63,7 +64,7 @@ public class EventMain extends Application {
 					e.printStackTrace();
 				}
 			}
-			
+
 			JSONArray response1 = ConnectionForReal.scon.sendGet("groups");
 			Iterator itr1 = response1.iterator();
 			while(itr1.hasNext()){
@@ -72,7 +73,7 @@ public class EventMain extends Application {
 				Group g = new Group(Integer.parseInt(group.get("gid").toString()), group.get("name").toString());
 				groupList.add(g);
 			}
-		
+
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -83,6 +84,7 @@ public class EventMain extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try{
+
 			this.primaryStage = primaryStage;
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(EventMain.class.getResource("NewEvent1.fxml"));
@@ -92,7 +94,7 @@ public class EventMain extends Application {
 			controller.showData();
 			this.primaryStage.setScene(new Scene(root));
 			this.primaryStage.show();
-		}catch(IOException e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -136,9 +138,9 @@ public class EventMain extends Application {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		
+
 		roomList.sort(new RoomComparator());
-		
+
 		try{
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(EventMain.class.getResource("NewEvent2.fxml"));
@@ -155,7 +157,7 @@ public class EventMain extends Application {
 
 	}
 
-	
+
 	public void close(){
 		this.primaryStage.close();
 		this.mainApp.setNewEventStage(null);
@@ -165,64 +167,65 @@ public class EventMain extends Application {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 	public void createEvent(Room location){
 		HashMap<String,String> request= new HashMap<String,String>();
 		request.put("name", name);
 		request.put("description", desc);
-		request.put("rid", Integer.toString(location.getRoomID()));
+		request.put("rid",location.getRoomID().toString());
 		request.put("starttime", fromTime.getHour() + ":00:00");
 		request.put("endtime", toTime.getHour() + ":00:00");
 		request.put("eventdate", date.toString());
-		
-		JSONObject valhalla = new JSONObject();
-		
+
+		JSONObject app;
+
 		try {
-			valhalla = (JSONObject) ConnectionForReal.scon.sendPost("events", request).get(0);
+			app = (JSONObject) ConnectionForReal.scon.sendPost("events", request).get(0);
+			System.out.println(app);
+
+
+			request.clear();
+
+			String s= "";
+
+			for (Group group : chosenGroupList) {
+				s += group.getGroupID() +",";
+			}
+
+			if(s.length() != 0){
+				request.put("eid", app.get("eid").toString());
+				request.put("groups", s.substring(0, s.length()-1));
+				try {
+					ConnectionForReal.scon.sendPost("events/add/groups", request);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+
+
+
+			request.clear();
+
+			s = "";
+
+			for (Person p : recipientList) {
+				s += p.getUid() + ",";
+			}
+
+			if(s.length() != 0){
+				request.put("eid", app.get("eid").toString());
+				request.put("users", s.substring(0, s.length() - 1));
+				try {
+					ConnectionForReal.scon.sendPost("events/invite/users", request);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
-		request.clear();
-		
-		String s= "";
-		
-		for (Group group : chosenGroupList) {
-			s += group.getGroupID() +",";
-		}
-		
-		if(s.length() != 0){
-			request.put("eid", valhalla.get("eid").toString());
-			request.put("groups", s.substring(0, s.length()-1));
-			try {
-				ConnectionForReal.scon.sendPost("events/add/groups", request);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		
-		
-		
-		request.clear();
-		
-		s = "";
-		
-		for (Person p : recipientList) {
-			s += p.getUid() + ",";
-		}
-		
-		if(s.length() != 0){
-			request.put("eid", valhalla.get("eid").toString());
-			request.put("users", s.substring(0, s.length() - 1));
-			try {
-				ConnectionForReal.scon.sendPost("events/invite/users", request);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-					
 	}
 
 
@@ -232,12 +235,12 @@ public class EventMain extends Application {
 		return this.primaryStage;
 	}
 
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}
 
-	
+
 	public void setSpaces(Integer spaces){
 		this.spaces = spaces;
 	}
@@ -260,13 +263,13 @@ public class EventMain extends Application {
 	public ObservableList<Person> getPersonList(){
 		return personList;
 	}
-	
-	
+
+
 	public ObservableList<Group> getGroupList(){
 		return groupList;
 	}
 
-	
+
 	public ObservableList<Group> getChosenGroupList(){
 		return chosenGroupList;
 	}
@@ -311,7 +314,7 @@ public class EventMain extends Application {
 		this.date = date;
 	}
 
-	
+
 	public ObservableList<Room>	getRoomList(){
 		return roomList;
 	}
