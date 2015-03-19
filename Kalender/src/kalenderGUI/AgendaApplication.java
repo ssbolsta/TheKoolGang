@@ -691,26 +691,33 @@ public class AgendaApplication extends Application
 			public void handle(ActionEvent arg0){
 				for(int i = 0, n = agenda.appointments().size(); i < n; i++) {
 					Appointment a = agenda.appointments().get(i);
+					int eid = Integer.parseInt(ap.getDescription());
 					if ( a.equals(ap)){
-
-						agenda.appointments().remove(i);
-						int eid = Integer.parseInt(ap.getDescription());
-						System.out.println(eid);
+						JSONObject eventA;
 						try {
-							ConnectionForReal.scon.sendDelete("events/eid/"+ eid);
-						} catch (Exception e) {
+							eventA = (JSONObject) ConnectionForReal.scon.sendGet("events/eid/"+ eid).get(0);
+							System.out.println(" ConnectionForReal sin UID: "+String.valueOf(ConnectionForReal.uid));
+							System.out.println("Database event admin UID: "+ eventA.get("admin"));
+							if (ConnectionForReal.uid == (long) eventA.get("admin")){
+
+								agenda.appointments().remove(i);
+
+								System.out.println(eid);
+
+								ConnectionForReal.scon.sendDelete("events/eid/"+ eid);
+							}
+							 else {
+									Dialogs.create().title("Ikke tilgang").masthead("Du er ikke admin").message("Du kan ikke slette event når du ikke er admin.").showWarning();
+
+								}
+						}catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
+
 					}
 
 				}
-
-
-
-
-
-
 			}
 		});
 
