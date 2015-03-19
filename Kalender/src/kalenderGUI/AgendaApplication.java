@@ -607,8 +607,20 @@ public class AgendaApplication extends Application
 		notific.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent arg0) {
-				System.out.println("Her skal det poppe opp notifications. ");
-
+				NotificationMain mn = new NotificationMain();
+				if(newEventStage == null){
+					try{
+						newEventStage = new Stage();
+						newEventStage.setOnCloseRequest(newEventClosed);
+						newEventStage.setOnHidden(newEventClosed);
+						newEventStage.initModality(Modality.WINDOW_MODAL);
+						newEventStage.initOwner(primaryStage);
+						mn.start(newEventStage);
+					}
+					catch(Exception e){
+						System.out.println(e);
+					}
+				}
 			}
 
 		});
