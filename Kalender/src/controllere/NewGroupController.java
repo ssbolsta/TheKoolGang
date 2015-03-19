@@ -226,9 +226,10 @@ public class NewGroupController {
 
 					// Add users
 					ConnectionForReal.scon.sendPost("groups/add/users", userValues);
-					
+
 					// Add groups
-					ConnectionForReal.scon.sendPost("groups/add/groups", groupsValues);
+					if(groups.size()<0)
+						ConnectionForReal.scon.sendPost("groups/add/groups", groupsValues);
 
 				} catch (Exception e) {
 					e.printStackTrace();

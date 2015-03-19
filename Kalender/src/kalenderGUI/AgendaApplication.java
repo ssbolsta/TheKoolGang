@@ -193,6 +193,29 @@ public class AgendaApplication extends Application
 	};
 
 
+	private EventHandler<KeyEvent> visGruppePressed = new EventHandler<KeyEvent>(){
+		@Override
+		public void handle(KeyEvent arg0) {
+			ShowGroups sg = new ShowGroups();
+			if(newGroupStage == null){
+				try{
+					newGroupStage = new Stage();
+					newGroupStage.setOnCloseRequest(newGroupClosed);
+					newGroupStage.setOnHidden(newGroupClosed);
+					newGroupStage.initModality(Modality.WINDOW_MODAL);
+					newGroupStage.initOwner(primaryStage);
+					sg.start(newGroupStage);
+				}
+				catch(Exception e){
+					System.out.println(e);
+				}
+			}
+
+		}
+	};
+
+
+
 	private EventHandler<KeyEvent> invitationsEventPressed = new EventHandler<KeyEvent>(){
 		@Override
 		public void handle(KeyEvent arg0) {
@@ -455,7 +478,7 @@ public class AgendaApplication extends Application
 		ObservableList<Person> personList = FXCollections.observableArrayList();
 		JSONArray response;
 
-		// start
+
 		Agenda agendaFirst = new Agenda();
 
 		agendaFirst.appointments().clear();
@@ -472,8 +495,6 @@ public class AgendaApplication extends Application
 		}
 
 		agenda = agendaFirst;
-
-		//slutt
 
 		LocalDate localDateNow = LocalDate.of(findDateCal.get(Calendar.YEAR), findDateCal.get(Calendar.MONTH)+1, findDateCal.get(Calendar.DATE));
 		Agenda agendaNext = new Agenda();
@@ -733,16 +754,16 @@ public class AgendaApplication extends Application
 								System.out.println(" ConnectionForReal sin UID: "+String.valueOf(ConnectionForReal.uid));
 								System.out.println("Database event admin UID: "+ eventA.get("admin"));
 								if (ConnectionForReal.uid == (long) eventA.get("admin")){
-	
+
 									agenda.appointments().remove(i);
-	
+
 									System.out.println(eid);
-	
+
 									ConnectionForReal.scon.sendDelete("events/eid/"+ eid);
 								}
 								 else {
 										Dialogs.create().title("Ikke tilgang").masthead("Du er ikke admin").message("Du kan ikke slette event når du ikke er admin.").showWarning();
-	
+
 									}
 							}catch (Exception e) {
 								// TODO Auto-generated catch block
@@ -751,7 +772,7 @@ public class AgendaApplication extends Application
 						}
 					}catch (IndexOutOfBoundsException e) {
 							continue;
-						
+
 
 					}
 
@@ -863,7 +884,7 @@ public class AgendaApplication extends Application
 		visGrupper.setLayoutY(6);
 		visGrupper.setLayoutX(280);
 		visGrupper.setText("Vis grupper");
-		visGrupper.setOnKeyPressed(newGroupPressed);
+		visGrupper.setOnKeyPressed(visGruppePressed);
 		visGrupper.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
 			public void 	handle(ActionEvent arg0) {
