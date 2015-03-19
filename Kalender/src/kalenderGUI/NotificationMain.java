@@ -22,10 +22,10 @@ public class NotificationMain extends Application{
 
 	private Stage primaryStage;
 	private AnchorPane root;
-	
+
 	private ObservableList<Notification> notifications = FXCollections.observableArrayList();
-	
-	
+
+
 	public NotificationMain(){
 		try {
 			JSONArray response = ConnectionForReal.scon.sendGet("notifications");
@@ -43,8 +43,8 @@ public class NotificationMain extends Application{
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 	@Override
 	public void start(Stage primaryStage){
 		try{
@@ -61,9 +61,9 @@ public class NotificationMain extends Application{
 		}catch(IOException e){
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	public void close(){
 		this.primaryStage.close();
 		try {
@@ -72,15 +72,15 @@ public class NotificationMain extends Application{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public ObservableList<Notification> getNotifications(){
 		return notifications;
 	}
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
-	
-	
+
+
+
 }

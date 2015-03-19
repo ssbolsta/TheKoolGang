@@ -443,6 +443,7 @@ public class AgendaApplication extends Application
 		Button velgPerson = new Button();
 		Button logOut = new Button();
 		Button notific = new Button();
+		Button visGrupper = new Button();
 		DatePicker datePick = new DatePicker();
 
 
@@ -853,6 +854,32 @@ public class AgendaApplication extends Application
 			}
 		});
 
+		visGrupper.getStyleClass().add("button-normal");
+		visGrupper.setLayoutY(6);
+		visGrupper.setLayoutX(280);
+		visGrupper.setText("Vis grupper");
+		visGrupper.setOnKeyPressed(newGroupPressed);
+		visGrupper.setOnAction(new EventHandler<ActionEvent>(){
+			@Override
+			public void 	handle(ActionEvent arg0) {
+				ShowGroups sg = new ShowGroups();
+				if(newGroupStage == null){
+					try{
+						newGroupStage = new Stage();
+						newGroupStage.setOnCloseRequest(newGroupClosed);
+						newGroupStage.setOnHidden(newGroupClosed);
+						newGroupStage.initModality(Modality.WINDOW_MODAL);
+						newGroupStage.initOwner(primaryStage);
+						sg.start(newGroupStage);
+					}
+					catch(Exception e){
+						System.out.println(e);
+					}
+				}
+
+			}
+		});
+
 		makeGroup.getStyleClass().add("button-normal");
 		makeGroup.setLayoutY(36);
 		makeGroup.setLayoutX(280);
@@ -935,7 +962,7 @@ public class AgendaApplication extends Application
 
 
 		soot.getChildren().add(agenda);
-		soot.getChildren().addAll( yearText, velgText, nameText, eventButton, delEvent, makeGroup, invites, notific, dateText, datePick, prev, next, choosePerson, velgPerson, logOut);
+		soot.getChildren().addAll( yearText, velgText, nameText, eventButton, delEvent, visGrupper, makeGroup, invites, notific, dateText, datePick, prev, next, choosePerson, velgPerson, logOut);
 		soot.setBottomAnchor(agenda, 8.0);
 		soot.setTopAnchor(agenda, 60.0);
 		soot.setRightAnchor(agenda, 14.0);
@@ -945,6 +972,7 @@ public class AgendaApplication extends Application
 		soot.setLeftAnchor(eventButton, 10.0);
 		soot.setLeftAnchor(delEvent, 148.0);
 		soot.setLeftAnchor(makeGroup, 261.0);
+		soot.setLeftAnchor(visGrupper, 261.0);
 		soot.setRightAnchor(datePick, 164.0);
 		soot.setLeftAnchor(invites, 343.0);
 		soot.setLeftAnchor(notific, 445.0);

@@ -58,4 +58,5 @@ public class NotificationController {
 	public void setMainApp(NotificationMain mainApp){
 		this.mainApp = mainApp;
 	}
+	
 }
