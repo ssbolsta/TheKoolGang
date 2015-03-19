@@ -150,6 +150,7 @@ public class EditEvent1Controller {
 		if(groupTable.getSelectionModel().getSelectedItem() != null){
 			mainApp.getGroupList().add(groupTable.getSelectionModel().getSelectedItem());
 			System.out.println("what");
+			System.out.println(groupTable.getSelectionModel().getSelectedItem().getGroupID());
 			mainApp.getRemovedGroup().add(groupTable.getSelectionModel().getSelectedItem());
 			mainApp.getChosenGroupList().remove(groupTable.getSelectionModel().getSelectedItem());
 		}

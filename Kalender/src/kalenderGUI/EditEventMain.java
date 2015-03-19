@@ -37,10 +37,10 @@ public class EditEventMain extends Application{
 	private ObservableList<Person> recipientList = FXCollections.observableArrayList();
 	private ObservableList<Room> roomList = FXCollections.observableArrayList();
 	private ObservableList<Group> chosenGroupList = FXCollections.observableArrayList();
-	private List<Person> addedPersonList;
-	private List<Person> removedPersonList;
-	private List<Group> addedGroupList;
-	private List<Group> removedGroupList;
+	private ObservableList<Person> addedPersonList = FXCollections.observableArrayList();
+	private ObservableList<Person> removedPersonList = FXCollections.observableArrayList();
+	private ObservableList<Group> addedGroupList = FXCollections.observableArrayList();
+	private ObservableList<Group> removedGroupList = FXCollections.observableArrayList();
 
 	private String name;
 	private String desc;
@@ -287,28 +287,28 @@ public class EditEventMain extends Application{
 		return recipientList;
 	}
 	
-	public void setRemovedPerson(List<Person> removedList){
+	public void setRemovedPerson(ObservableList<Person> removedList){
 		this.removedPersonList = removedList;
 	}
-	public List<Person> getRemovedPerson(){
+	public ObservableList<Person> getRemovedPerson(){
 		return this.removedPersonList;
 	}
-	public void setAddedPerson(List<Person> addedList){
+	public void setAddedPerson(ObservableList<Person> addedList){
 		this.addedPersonList = addedList;
 	}
-	public List<Person> getAddedPerson(){
+	public ObservableList<Person> getAddedPerson(){
 		return this.addedPersonList;
 	}
-	public void setRemovedGroup(List<Group> removedList){
+	public void setRemovedGroup(ObservableList<Group> removedList){
 		this.removedGroupList = removedList;
 	}
-	public List<Group> getRemovedGroup(){
+	public ObservableList<Group> getRemovedGroup(){
 		return this.removedGroupList;
 	}
-	public void setAddedGroup(List<Group> addedList){
+	public void setAddedGroup(ObservableList<Group> addedList){
 		this.addedGroupList = addedList;
 	}
-	public List<Group> getAddedGroup(){
+	public ObservableList<Group> getAddedGroup(){
 		return this.addedGroupList;
 	}
 
