@@ -478,7 +478,7 @@ public class AgendaApplication extends Application
 		ObservableList<Person> personList = FXCollections.observableArrayList();
 		JSONArray response;
 
-		// start
+
 		Agenda agendaFirst = new Agenda();
 
 		agendaFirst.appointments().clear();
@@ -495,8 +495,6 @@ public class AgendaApplication extends Application
 		}
 
 		agenda = agendaFirst;
-
-		//slutt
 
 		LocalDate localDateNow = LocalDate.of(findDateCal.get(Calendar.YEAR), findDateCal.get(Calendar.MONTH)+1, findDateCal.get(Calendar.DATE));
 		Agenda agendaNext = new Agenda();

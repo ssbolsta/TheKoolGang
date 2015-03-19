@@ -406,6 +406,25 @@ public class AgendaApplicationView extends Application
 		ObservableList<Person> personList = FXCollections.observableArrayList();
 		JSONArray response;
 
+		Agenda agendaFirst = new Agenda();
+
+		agendaFirst.appointments().clear();
+
+		Calendar nextWeek = agenda.getDisplayedCalendar();
+		nextWeek.set(nextWeek.get(Calendar.YEAR), nextWeek.get(Calendar.MONTH), nextWeek.get(Calendar.DATE), nextWeek.get(Calendar.HOUR), nextWeek.get(Calendar.MINUTE));
+		agendaFirst.setDisplayedCalendar(nextWeek);
+
+		ArrayList<AppointmentImpl> applist = addAppointment(nextWeek);
+
+		for (AppointmentImpl i : applist) {
+			agendaFirst.appointments().add(i);
+
+		}
+
+		agenda = agendaFirst;
+
+
+
 
 		LocalDate localDateNow = LocalDate.of(findDateCal.get(Calendar.YEAR), findDateCal.get(Calendar.MONTH)+1, findDateCal.get(Calendar.DATE));
 		Agenda agendaNext = new Agenda();
