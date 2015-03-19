@@ -76,7 +76,9 @@ public class InvitationsMain extends Application{
 		request.clear();
 		
 		request.put("uid", app.get("admin").toString());
-		request.put("description", ConnectionForReal.name + " har akseptert din invitasjon til\n" + app.get("name").toString());
+		request.put("description", ConnectionForReal.name + " har akseptert din invitasjon til\n" + app.get("name").toString() + " den" + app.get("eventdate"));
+		
+		System.out.println(request);
 		
 		try{
 			ConnectionForReal.scon.sendPost("notifications", request);
