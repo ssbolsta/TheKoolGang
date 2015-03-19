@@ -461,7 +461,7 @@ public class AgendaApplication extends Application
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		invites.setOnKeyPressed(notifyEventPressed);
+		invites.setOnKeyReleased(notifyEventPressed);
 		invites.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent arg0) {
@@ -513,7 +513,7 @@ public class AgendaApplication extends Application
 		prev.setText("Forrige uke");
 		prev.setLayoutX(840);
 		prev.setLayoutY(30);
-		prev.setOnKeyPressed(prevWeekPressed);
+		prev.setOnKeyReleased(prevWeekPressed);
 		prev.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent arg0){
@@ -550,7 +550,7 @@ public class AgendaApplication extends Application
 		eventButton.setLayoutY(30);
 		eventButton.setLayoutX(40);
 		eventButton.setText("Opprett Arrangement");
-		eventButton.setOnKeyPressed(newEventPressed);
+		eventButton.setOnKeyReleased(newEventPressed);
 		eventButton.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent arg0) {
@@ -612,10 +612,10 @@ public class AgendaApplication extends Application
 		makeGroup.setLayoutY(30);
 		makeGroup.setLayoutX(280);
 		makeGroup.setText("Lag gruppe");
-		makeGroup.setOnKeyPressed(newGroupPressed);
+		makeGroup.setOnKeyReleased(newGroupPressed);
 		makeGroup.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
-			public void 	handle(ActionEvent arg0) {
+			public void handle(ActionEvent arg0) {
 				NewGroupMain ng = new NewGroupMain();
 				if(newGroupStage == null){
 					try{

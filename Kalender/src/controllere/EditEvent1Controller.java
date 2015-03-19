@@ -115,6 +115,10 @@ public class EditEvent1Controller {
 	private  void handleLeggTilPerson(){
 		if(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()) != null){
 			mainApp.getRecipientList().add(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()));
+//			mainApp.getAddedPerson().add(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()));
+			if(mainApp.getRemovedPerson().contains(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()))){
+				mainApp.getRemovedPerson().remove(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()));
+			}
 			mainApp.getPersonList().remove(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()));
 		}
 	}
@@ -124,6 +128,7 @@ public class EditEvent1Controller {
 		if(recipientTable.getSelectionModel().getSelectedItem() != null){
 			mainApp.getPersonList().add(recipientTable.getSelectionModel().getSelectedItem());
 			mainApp.getPersonList().sort(new PersonComparator());
+			mainApp.getRemovedPerson().add(recipientTable.getSelectionModel().getSelectedItem());
 			mainApp.getRecipientList().remove(recipientTable.getSelectionModel().getSelectedItem());
 		}
 	}
@@ -132,6 +137,10 @@ public class EditEvent1Controller {
 	private void handleAddGroup(){
 		if(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()) != null){
 			mainApp.getChosenGroupList().add(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
+//			mainApp.getAddedGroup().add(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
+			if(mainApp.getRemovedGroup().contains(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()))){
+				mainApp.getRemovedGroup().remove(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
+			}
 			mainApp.getGroupList().remove(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
 		}
 	}
@@ -140,6 +149,8 @@ public class EditEvent1Controller {
 	private void handleRemoveGroup(){
 		if(groupTable.getSelectionModel().getSelectedItem() != null){
 			mainApp.getGroupList().add(groupTable.getSelectionModel().getSelectedItem());
+			System.out.println("what");
+			mainApp.getRemovedGroup().add(groupTable.getSelectionModel().getSelectedItem());
 			mainApp.getChosenGroupList().remove(groupTable.getSelectionModel().getSelectedItem());
 		}
 	}
