@@ -1,9 +1,4 @@
 package kalenderGUI;
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 
 import java.io.IOException;
@@ -11,7 +6,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
@@ -20,7 +14,6 @@ import controllere.AutoCompleteCombobox;
 import controllere.ConnectionForReal;
 import controllere.GlobalUserID;
 
-import org.controlsfx.dialog.Dialogs;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -35,6 +28,7 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.ListChangeListener.Change;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -61,10 +55,10 @@ import jfxtras.scene.control.agenda.Agenda.Appointment;
 import jfxtras.scene.control.agenda.Agenda.AppointmentImpl;
 import controllere.EventDetailsController;
 
-public class AgendaApplication extends Application
+public class AgendaApplicationView extends Application
 {
 
-	private AgendaApplication application;
+	private AgendaApplicationView application;
 	private Stage newGroupStage = null;
 	private Stage newEventStage = null;
 	private Stage eventDetailsStage = null;
@@ -74,6 +68,16 @@ public class AgendaApplication extends Application
 	Appointment ap;
 	Button prev = new Button();
 	Button next=new Button();
+	private int userID;
+	private String fullName;
+
+
+
+	public AgendaApplicationView(int i, String s) {
+		// TODO Auto-generated constructor stub
+		userID = i;
+		fullName = s;
+	}
 
 
 
@@ -251,46 +255,14 @@ public class AgendaApplication extends Application
 		@Override
 		public void handle(KeyEvent arg0) {
 			if(arg0.getCode().equals(KeyCode.ENTER)){
-				LoginMain ma = new LoginMain();
-				primaryStage.setMinHeight(200);
-				primaryStage.setMinWidth(200);
-				primaryStage.setHeight(250);
-				primaryStage.setWidth(360);
-				primaryStage.setX(500);
-				primaryStage.setY(150);
-
-				ma.start(primaryStage);
+				primaryStage.close();
 			}
 		}
 	};
 
 
 
-	private EventHandler<KeyEvent> newEventPressed = new EventHandler<KeyEvent>(){
-		@Override
-		public void handle(KeyEvent arg0) {
-			if(arg0.getCode().equals(KeyCode.ENTER)){
-				EventMain NEC = new EventMain();
-				if(newEventStage == null){
-					try{
-						newEventStage = new Stage();
-						newEventStage.setOnCloseRequest(newEventClosed);
-						newEventStage.setOnHidden(newEventClosed);
-						newEventStage.setTitle("Nytt Arrangement");
-						newEventStage.setResizable(false);
-						newEventStage.setAlwaysOnTop(true);
-						newEventStage.initModality(Modality.WINDOW_MODAL);
-						newEventStage.initOwner(primaryStage);
-						NEC.setMainApp(application);
-						NEC.start(newEventStage);
-					}
-					catch(Exception e){
-						System.out.println(e);
-					}
-				}
-			}
-		}
-	};
+
 
 	public void setNewEventStage(Stage newValue){
 		newEventStage = newValue;
@@ -429,10 +401,9 @@ public class AgendaApplication extends Application
 		Text velgText = new Text();
 		Text dateText = new Text("Velg dato:");
 		ComboBox<Person> choosePerson = new ComboBox<Person>();
-		Text nameText = new Text("Nå vises " +ConnectionForReal.name +" sin kalender");
+		Text nameText = new Text("Nå vises " +fullName +" sin kalender");
 		Calendar findDateCal = agenda.getDisplayedCalendar();
 		ObservableList<Person> personList = FXCollections.observableArrayList();
-		HashMap<String,Person> hashMap = new HashMap<String,Person>();
 		JSONArray response;
 
 
@@ -452,9 +423,7 @@ public class AgendaApplication extends Application
 				if(person.get("uid").toString().equalsIgnoreCase(Long.toString(ConnectionForReal.uid))){
 					continue;
 				}
-				Person p = new Person(person.get("firstname").toString(),person.get("lastname").toString(),person.get("username").toString(), Integer.parseInt(person.get("uid").toString()));
-				personList.add(p);
-				hashMap.put(p.toString(), p);
+				personList.add(new Person(person.get("firstname").toString(),person.get("lastname").toString(),person.get("username").toString(), Integer.parseInt(person.get("uid").toString())));
 			}
 		}
 		 catch (Exception e2) {
@@ -476,17 +445,12 @@ public class AgendaApplication extends Application
 			@Override
 			public void handle(ActionEvent arg0){
 
-				if(hashMap.get(choosePerson.getSelectionModel().getSelectedItem()) != null){
-					Stage secondaryStage = new Stage();
-					AgendaApplicationView agendaView = new AgendaApplicationView(hashMap.get(choosePerson.getSelectionModel().getSelectedItem()).getUid(),
-							hashMap.get(choosePerson.getSelectionModel().getSelectedItem()).getFirstName() + " " +hashMap.get(choosePerson.getSelectionModel().getSelectedItem()).getLastName());
-					agendaView.start(secondaryStage);
+				Integer iuid =  new Integer( choosePerson.getValue().getUid());
 
-				}
-				else{
-					Dialogs.create().title("Ugyldig Felt").masthead("Personen finnes ikke").message("Dette er ikke en person, vennligst rett feilen").showWarning();
-
-				}
+				//ConnectionForReal.uid = iuid.longValue();
+				System.out.println("Person :"+ choosePerson.getValue().getFirstName() + " " + choosePerson.getValue().getLastName());
+				System.out.println("Person ID: "+ iuid);
+				Stage secondaryStage = new Stage();
 
 
 
@@ -629,7 +593,7 @@ public class AgendaApplication extends Application
 		});
 
 		logOut.getStyleClass().add("button-normal");
-		logOut.setText("  Logg ut  ");
+		logOut.setText("   Lukk    ");
 		logOut.setLayoutY(4);
 		logOut.setOnKeyPressed(logOutPressed);
 
@@ -637,62 +601,16 @@ public class AgendaApplication extends Application
 		logOut.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent arg0){
-				try {
-					ConnectionForReal.scon.logout();
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				LoginMain ma = new LoginMain();
-				primaryStage.setMinHeight(200);
-				primaryStage.setMinWidth(200);
-				primaryStage.setHeight(250);
-				primaryStage.setWidth(360);
-				primaryStage.setX(500);
-				primaryStage.setY(150);
 
-				ma.start(primaryStage);
-
-
-
-
+				primaryStage.close();
 
 
 			}
 		});
 
 
-		delEvent.getStyleClass().add("button-normal");
-		delEvent.setText("Slett Arragement");
-		delEvent.setLayoutX(173);
-		delEvent.setLayoutY(36);
-
-		delEvent.setOnAction(new EventHandler<ActionEvent>(){
-			@Override
-			public void handle(ActionEvent arg0){
-				for(int i = 0, n = agenda.appointments().size(); i < n; i++) {
-					Appointment a = agenda.appointments().get(i);
-					if ( a.equals(ap)){
-						agenda.appointments().remove(i);
-						int eid = Integer.parseInt(ap.getDescription());
-						System.out.println(eid);
-						try {
-							ConnectionForReal.scon.sendDelete("events/eid/"+eid );
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-
-				}
 
 
-
-
-
-
-			}
-		});
 
 		prev.getStyleClass().add("button-normal");
 		prev.setText("Forrige uke ");
@@ -735,33 +653,8 @@ public class AgendaApplication extends Application
 		eventButton.setLayoutY(36);
 		eventButton.setLayoutX(40);
 		eventButton.setText("Opprett Arrangement");
-		eventButton.setOnKeyPressed(newEventPressed);
-		eventButton.setOnAction(new EventHandler<ActionEvent>(){
-			@Override
-			public void handle(ActionEvent arg0) {
-				EventMain NEC = new EventMain();
-				if(newEventStage == null){
-					try{
-						newEventStage = new Stage();
-						newEventStage.setOnCloseRequest(newEventClosed);
-						newEventStage.setOnHidden(newEventClosed);
-						newEventStage.setTitle("Nytt Arrangement");
-						newEventStage.setResizable(false);
-						newEventStage.setAlwaysOnTop(true);
-						newEventStage.initModality(Modality.WINDOW_MODAL);
-						newEventStage.initOwner(primaryStage);
-						NEC.setMainApp(application);
-						NEC.start(newEventStage);
 
-					}
-					catch(Exception e){
-						System.out.println(e);
-					}
-				}
 
-			}
-
-		});
 		next.getStyleClass().add("button-normal");
 		next.setText("Neste uke");
 		next.setLayoutX(920);
@@ -876,7 +769,7 @@ public class AgendaApplication extends Application
 
 
 		soot.getChildren().add(agenda);
-		soot.getChildren().addAll( yearText, velgText, nameText, eventButton, delEvent, makeGroup, invites, notific, dateText, datePick, prev, next, choosePerson, velgPerson, logOut);
+		soot.getChildren().addAll( yearText, nameText,  dateText, datePick, prev, next, logOut);
 		soot.setBottomAnchor(agenda, 8.0);
 		soot.setTopAnchor(agenda, 60.0);
 		soot.setRightAnchor(agenda, 14.0);
