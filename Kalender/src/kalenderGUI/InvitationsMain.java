@@ -21,7 +21,7 @@ import javafx.stage.Stage;
 
 public class InvitationsMain extends Application{
 
-	
+	private Stage primaryStage;
 	private AnchorPane root;
 	private ObservableList<Invitation> invitationList = FXCollections.observableArrayList(); 
 
@@ -51,50 +51,80 @@ public class InvitationsMain extends Application{
 		return invitationList;
 	}
 	
-	public void acceptInvitation(Invitation inv){
-		HashMap<String,String> rompe = new HashMap<String,String>();
-		rompe.put("eid", Integer.toString(inv.getEid()));
-		rompe.put("users", Integer.toString(inv.getUid()));
-		
+	public void close(){
+		this.primaryStage.close();
 		try {
-			ConnectionForReal.scon.sendPost("events/add/users", rompe);
+			this.finalize();
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void acceptInvitation(Invitation inv){
+		HashMap<String,String> request = new HashMap<String,String>();
+		request.put("eid", Integer.toString(inv.getEid()));
+		request.put("users", Integer.toString(inv.getUid()));
+		JSONObject app = new JSONObject();
+		try {
+			ConnectionForReal.scon.sendPost("events/add/users", request);
+			app = (JSONObject) ConnectionForReal.scon.sendGet("evnts/eid/" + Integer.toString(inv.getEid())).get(0);
+			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+		request.clear();
+		
+		request.put("uid", app.get("admin").toString());
+		request.put("description", ConnectionForReal.name + " har akseptert din invitasjon til\n" + app.get("name").toString());
 		
 		try{
+			ConnectionForReal.scon.sendPost("notifications", request);
 			ConnectionForReal.scon.sendDelete("invitations/iid/" + inv.getIid());
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		
+		this.invitationList.remove(inv);
+		
 	}
 	
 	public void declineInvitation(Invitation inv){
-
+		
+		JSONObject app = new JSONObject();
 		try {
+			app = (JSONObject) ConnectionForReal.scon.sendGet("events/eid" + Integer.toString(inv.getEid())).get(0);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		HashMap<String,String> request = new HashMap<String,String>();
+		request.put("uid", app.get("admin").toString());
+		request.put("description", ConnectionForReal.name + " har avslaatt din invitasjon til\n" + app.get("name").toString());
+		
+		try {
+			ConnectionForReal.scon.sendPost("notifications", request);
 			ConnectionForReal.scon.sendDelete("invitations/iid/" + inv.getIid());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		
+		this.invitationList.remove(inv);
 	}
 	
 	@Override
 	public void start(Stage primaryStage) {
 		try{
+			this.primaryStage = primaryStage;
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(EventMain.class.getResource("Invitations.fxml"));
 			root = (AnchorPane) loader.load();
 			InvitationsController controller = loader.getController();
 			controller.setMainApp(this);
 			controller.showData();
-			primaryStage.setTitle("Invitasjoner");
-			primaryStage.setScene(new Scene(root));
-			primaryStage.show();
+			this.primaryStage.setTitle("Invitasjoner");
+			this.primaryStage.setScene(new Scene(root));
+			this.primaryStage.show();
 		}catch(IOException e){
 			e.printStackTrace();
 		}

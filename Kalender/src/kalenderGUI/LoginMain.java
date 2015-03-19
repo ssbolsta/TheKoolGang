@@ -23,7 +23,7 @@ public class LoginMain extends Application {
 			Scene scene = new Scene(pane);
 			scene.getStylesheets().add("kalenderGUI/AgendaApplication.css");
 			primaryStage.setTitle("Login");
-			ConnectionForReal.setURL("http://78.91.44.241:5050/");
+			ConnectionForReal.setURL("http://78.91.46.78:5050/");
 			primaryStage.setScene(scene);
 			primaryStage.show();
 

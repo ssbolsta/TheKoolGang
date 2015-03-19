@@ -47,8 +47,6 @@ public class EventMain extends Application {
 	@SuppressWarnings("rawtypes")
 	public EventMain(){
 		try{
-			ConnectionForReal.setURL("http://78.91.44.241:5050/");
-			ConnectionForReal.scon.login("krissvor","passord");
 			JSONArray response = ConnectionForReal.scon.sendGet("users");
 			Iterator itr = response.iterator();
 			while(itr.hasNext()){
@@ -216,6 +214,7 @@ public class EventMain extends Application {
 			if(s.length() != 0){
 				request.put("eid", app.get("eid").toString());
 				request.put("users", s.substring(0, s.length() - 1));
+				System.out.println(request);
 				try {
 					ConnectionForReal.scon.sendPost("events/invite/users", request);
 				} catch (Exception e) {
