@@ -677,7 +677,7 @@ public class AgendaApplication extends Application
 						int eid = Integer.parseInt(ap.getDescription());
 						System.out.println(eid);
 						try {
-							ConnectionForReal.scon.sendDelete("events/eid/"+eid );
+							ConnectionForReal.scon.sendDelete("events/eid/"+ eid);
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
