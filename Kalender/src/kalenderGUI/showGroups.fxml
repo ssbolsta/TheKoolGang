@@ -6,25 +6,26 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="450.0" prefWidth="400.0" styleClass="fx-background" stylesheets="@../eclipse/workspace/TheKoolGang/Kalender/src/kalenderGUI/NewEvent1.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllere.NotificationController">
+<AnchorPane prefHeight="450.0" prefWidth="400.0" stylesheets="@NewEvent1.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllere.NotificationController">
    <children>
-      <TableView fx:id="grupperTable" layoutX="7.0" layoutY="66.0" maxWidth="390.0" prefHeight="323.0" prefWidth="390.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="56.0">
+      <TableView fx:id="groupTable" layoutX="7.0" layoutY="66.0" maxWidth="390.0" prefHeight="161.0" prefWidth="390.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="56.0">
          <columns>
-            <TableColumn fx:id="nidColumn" prefWidth="60.0" resizable="false" text="NID" />
-            <TableColumn fx:id="timeColumn" minWidth="74.0" prefWidth="74.0" resizable="false" />
-            <TableColumn fx:id="descColumn" prefWidth="266.0" resizable="false" />
+            <TableColumn fx:id="gidColumn" prefWidth="60.0" resizable="false" text="GID" />
+            <TableColumn fx:id="nameColumn" prefWidth="329.0" resizable="false" />
          </columns>
       </TableView>
-      <Label layoutX="24.0" layoutY="24.0" prefHeight="32.0" prefWidth="243.0" styleClass="text-header" text="Grupper" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="10.0">
+      <Label layoutX="24.0" layoutY="24.0" prefHeight="32.0" prefWidth="243.0" styleClass="text-header" text="Grupper" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
          <font>
             <Font size="31.0" />
          </font>
       </Label>
-      <HBox alignment="CENTER" layoutX="73.0" layoutY="393.0" prefHeight="53.0" prefWidth="206.0" spacing="10.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+      <HBox alignment="CENTER" layoutX="73.0" layoutY="393.0" prefHeight="46.0" prefWidth="380.0" spacing="10.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <children>
-            <Button fx:id="meldUt" mnemonicParsing="false" text="Meld deg ut" />
-            <Button fx:id="lukk" mnemonicParsing="false" text="Lukk" />
+            <Button mnemonicParsing="false" onAction="#handleMeldUt" text="Meld deg ut" />
+            <Button mnemonicParsing="false" onAction="#handleClose" text="Lukk" />
          </children>
       </HBox>
+      <ListView fx:id="membersList" layoutX="10.0" layoutY="236.0" prefHeight="130.0" prefWidth="390.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="250.0" />
+      <Text layoutX="14.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Medlemmer:" AnchorPane.leftAnchor="10.0" />
    </children>
 </AnchorPane>

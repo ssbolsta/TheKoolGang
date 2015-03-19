@@ -1,59 +1,55 @@
 package controllere;
 
 
-import models.Invitation;
+import models.Group;
 import javafx.fxml.FXML;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import kalenderGUI.InvitationsMain;
-import kalenderGUI.ShowGroups;
+import kalenderGUI.ShowGroupsMain;
 
 
 public class ShowGroupsController {
 
 	@FXML
-	private TableView<Invitation> invitationTable;
+	private TableView<Group> groupTable;
 	@FXML
-	private TableColumn<Invitation,String> iidColumn;
+	private TableColumn<Group,String> gidColumn;
 	@FXML
-	private TableColumn<Invitation,String> descColumn;
-
-	private ShowGroups mainApp;
+	private TableColumn<Group,String> nameColumn;
+	@FXML
+	private ListView<String> membersList;
+	
+	
+	private ShowGroupsMain mainApp;
 
 
 	@FXML
 	private void initialize(){
-		iidColumn.setCellValueFactory(CellData -> CellData.getValue().getIidStringProperty());
-		descColumn.setCellValueFactory(CellData -> CellData.getValue().getDescriptionProperty());
+		gidColumn.setCellValueFactory(cellData -> cellData.getValue().getGidStringProperty());
+		nameColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
 
 	}
 
 	public void showData(){
-		invitationTable.setItems(mainApp.getInvitationList());
+		groupTable.setItems(this.mainApp.getGroups());
+		groupTable.getSelectionModel().clearSelection();
 	}
 
 
-	public void setMainApp(ShowGroups showGroups){
+	public void setMainApp(ShowGroupsMain showGroups){
 		mainApp = showGroups;
 	}
 
 
 	@FXML
-	private void handleAccept(){
-		if(invitationTable.getSelectionModel().getSelectedItem() != null){
-			this.mainApp.acceptInvitation(invitationTable.getSelectionModel().getSelectedItem());
-		}
-	}
-
-	@FXML
-	private void handleDecline(){
-		if(invitationTable.getSelectionModel().getSelectedItem() != null){
-			this.mainApp.declineInvitation(invitationTable.getSelectionModel().getSelectedItem());
-		}
-	}
-
-	@FXML
 	private void handleCancel(){
 		this.mainApp.close();
 	}
+	
+	@FXML
+	private void handleMeldUt(){
+		
+	}
+	
 }
