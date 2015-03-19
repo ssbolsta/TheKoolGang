@@ -55,7 +55,7 @@ public class EditEventMain extends Application{
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
-		ConnectionForReal.setURL("http://78.91.46.78:5050/");
+		ConnectionForReal.setURL("http://78.91.49.239:5050/");
 		try {
 			ConnectionForReal.scon.login("krissvor","passord");
 			app = (JSONObject) ConnectionForReal.scon.sendGet("events/eid/" + eid).get(0);
@@ -227,11 +227,11 @@ public class EditEventMain extends Application{
 
 		// Add users
 		try {
-			ConnectionForReal.scon.sendPost("events/remove/groups/" , removedGroupsValues);
-			ConnectionForReal.scon.sendPost("events/remove/users/" , removedUsersValues);
+			ConnectionForReal.scon.sendPost("events/remove/groups" , removedGroupsValues);
+			ConnectionForReal.scon.sendPost("events/remove/users" , removedUsersValues);
 			
-			ConnectionForReal.scon.sendPost("events/add/users/", userValues);
-			ConnectionForReal.scon.sendPut("events/add/groups", groupsValues);		
+			ConnectionForReal.scon.sendPost("events/add/users", userValues);
+			ConnectionForReal.scon.sendPost("events/add/groups", groupsValues);		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -303,7 +303,7 @@ public class EditEventMain extends Application{
 		this.removedGroupList = removedList;
 	}
 	public ObservableList<Group> getRemovedGroup(){
-		return this.removedGroupList;
+		return removedGroupList;
 	}
 	public void setAddedGroup(ObservableList<Group> addedList){
 		this.addedGroupList = addedList;

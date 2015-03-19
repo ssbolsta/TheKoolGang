@@ -19,6 +19,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import kalenderGUI.EditEventMain;
 import models.Group;
+import models.GroupComparator;
 import models.Person;
 import models.PersonComparator;
 
@@ -89,7 +90,13 @@ public class EditEvent1Controller {
 		for (Person person : mainApp.getPersonList()) {
 			personKeyList.put(person.toString(), person);
 		}
+		for (Person person : mainApp.getRecipientList()) {
+			personKeyList.put(person.toString(), person);
+		}
 		for(Group group:mainApp.getGroupList()){
+			groupKeyList.put(group.getName(), group);
+		}
+		for(Group group:mainApp.getChosenGroupList()){
 			groupKeyList.put(group.getName(), group);
 		}
 
@@ -99,6 +106,7 @@ public class EditEvent1Controller {
 		new AutoCompleteCombobox<>(this.groupSearchField);
 
 		mainApp.getPersonList().sort(new PersonComparator());
+		mainApp.getGroupList().sort(new GroupComparator());
 
 		if(mainApp.getName() != null && mainApp.getDate() != null && mainApp.getFromTime() != null && mainApp.getToTime() != null && mainApp.getDesc() != null && mainApp.getSpaces() != null){
 			nameField.setText(mainApp.getName());
@@ -115,7 +123,6 @@ public class EditEvent1Controller {
 	private  void handleLeggTilPerson(){
 		if(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()) != null){
 			mainApp.getRecipientList().add(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()));
-//			mainApp.getAddedPerson().add(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()));
 			if(mainApp.getRemovedPerson().contains(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()))){
 				mainApp.getRemovedPerson().remove(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()));
 			}
@@ -137,7 +144,6 @@ public class EditEvent1Controller {
 	private void handleAddGroup(){
 		if(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()) != null){
 			mainApp.getChosenGroupList().add(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
-//			mainApp.getAddedGroup().add(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
 			if(mainApp.getRemovedGroup().contains(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()))){
 				mainApp.getRemovedGroup().remove(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
 			}
@@ -149,9 +155,8 @@ public class EditEvent1Controller {
 	private void handleRemoveGroup(){
 		if(groupTable.getSelectionModel().getSelectedItem() != null){
 			mainApp.getGroupList().add(groupTable.getSelectionModel().getSelectedItem());
-			System.out.println("what");
-			System.out.println(groupTable.getSelectionModel().getSelectedItem().getGroupID());
 			mainApp.getRemovedGroup().add(groupTable.getSelectionModel().getSelectedItem());
+			mainApp.getGroupList().sort(new GroupComparator());
 			mainApp.getChosenGroupList().remove(groupTable.getSelectionModel().getSelectedItem());
 		}
 	}
