@@ -37,5 +37,18 @@ public class InvitationsController {
 	}
 	
 	
+	@FXML
+	private void handleAccept(){
+		this.mainApp.acceptInvitation(invitationTable.getSelectionModel().getSelectedItem());
+	}
 	
+	@FXML 
+	private void handleDecline(){
+		this.mainApp.declineInvitation(invitationTable.getSelectionModel().getSelectedItem());
+	}
+	
+	@FXML
+	private void handleCancel(){
+		this.mainApp.close();
+	}
 }
