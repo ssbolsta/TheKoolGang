@@ -25,7 +25,7 @@
          <children>
             <Button mnemonicParsing="false" onAction="#handleCreateEvent" prefWidth="140.0" styleClass="button-normal" text="Opprett Arrangement" />
             <Button mnemonicParsing="false" onAction="#handleBack" prefWidth="60.0" styleClass="button-normal" text="Tilbake" />
-            <Button mnemonicParsing="false" onAction="#handleCancel" prefWidth="60.0" styleClass="button-cancel" text="Avbryt" />
+            <Button mnemonicParsing="false" onAction="#handleCancel" prefWidth="60.0" styleClass="button-normal" text="Avbryt" />
          </children>
          <opaqueInsets>
             <Insets />

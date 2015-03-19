@@ -35,7 +35,7 @@
 	-fx-background-color: linear-gradient(to bottom, #0666a1, #47b5ff);
 }
 .button-cancel:pressed{
-	-fx-background-color: #ff3636; 
+	-fx-background-color: #3cb0fd;
 }
 .button-cancel:focused {
 	-fx-border-radius: 5px;
