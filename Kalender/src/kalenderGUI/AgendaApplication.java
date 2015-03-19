@@ -74,6 +74,8 @@ public class AgendaApplication extends Application
 	Appointment ap;
 	Button prev = new Button();
 	Button next=new Button();
+	ComboBox<Person> choosePerson = new ComboBox<Person>();
+	HashMap<String,Person> hashMap = new HashMap<String,Person>();
 
 
 
@@ -172,7 +174,7 @@ public class AgendaApplication extends Application
 		@Override
 		public void handle(KeyEvent arg0) {
 			if(arg0.getCode().equals(KeyCode.ENTER)){
-				InvitationsMain invMain = new InvitationsMain();
+				NotificationMain mn = new NotificationMain();
 				if(newEventStage == null){
 					try{
 						newEventStage = new Stage();
@@ -180,7 +182,7 @@ public class AgendaApplication extends Application
 						newEventStage.setOnHidden(newEventClosed);
 						newEventStage.initModality(Modality.WINDOW_MODAL);
 						newEventStage.initOwner(primaryStage);
-						invMain.start(newEventStage);
+						mn.start(newEventStage);
 					}
 					catch(Exception e){
 						System.out.println(e);
@@ -265,6 +267,24 @@ public class AgendaApplication extends Application
 	};
 
 
+	private EventHandler<KeyEvent> velgPersonPressed= new EventHandler<KeyEvent>(){
+		@Override
+		public void handle(KeyEvent arg0) {
+			if(arg0.getCode().equals(KeyCode.ENTER)){
+				if(hashMap.get(choosePerson.getSelectionModel().getSelectedItem()) != null){
+					Stage secondaryStage = new Stage();
+					AgendaApplicationView agendaView = new AgendaApplicationView(hashMap.get(choosePerson.getSelectionModel().getSelectedItem()).getUid(),
+							hashMap.get(choosePerson.getSelectionModel().getSelectedItem()).getFirstName() + " " +hashMap.get(choosePerson.getSelectionModel().getSelectedItem()).getLastName());
+					agendaView.start(secondaryStage);
+
+				}
+				else{
+					Dialogs.create().title("Ugyldig Felt").masthead("Personen finnes ikke").message("Dette er ikke en person, vennligst rett feilen").showWarning();
+
+				}
+			}
+		}
+	};
 
 	private EventHandler<KeyEvent> newEventPressed = new EventHandler<KeyEvent>(){
 		@Override
@@ -428,11 +448,10 @@ public class AgendaApplication extends Application
 
 		Text velgText = new Text();
 		Text dateText = new Text("Velg dato:");
-		ComboBox<Person> choosePerson = new ComboBox<Person>();
+
 		Text nameText = new Text("Nå vises " +ConnectionForReal.name +" sin kalender");
 		Calendar findDateCal = agenda.getDisplayedCalendar();
 		ObservableList<Person> personList = FXCollections.observableArrayList();
-		HashMap<String,Person> hashMap = new HashMap<String,Person>();
 		JSONArray response;
 
 		// start
@@ -491,6 +510,7 @@ public class AgendaApplication extends Application
 		velgPerson.setText("Se kalender");
 		velgPerson.getStyleClass().add("button-normal");
 		velgPerson.setLayoutY(4);
+		velgPerson.setOnKeyPressed(velgPersonPressed);
 		velgPerson.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent arg0){
