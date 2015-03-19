@@ -14,7 +14,7 @@ public class Notification {
 	
 	public Notification(String nid, String uid,String description, String time){
 		this.description = new SimpleStringProperty(description);
-		this.time = new SimpleStringProperty(time);
+		this.time = new SimpleStringProperty(time.substring(0,10) + "\n" + time.substring(11));
 		this.nid = Integer.parseInt(nid);
 		this.uid = Integer.parseInt(uid);
 	}

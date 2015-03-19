@@ -10,7 +10,7 @@ public class NotificationController {
 	
 	
 	@FXML
-	private TableView<Notification> notificationList;
+	private TableView<Notification> notificationTable;
 	@FXML
 	private TableColumn<Notification,String> nidColumn;
 	@FXML
@@ -31,12 +31,23 @@ public class NotificationController {
 	}
 	
 	public void showData(){
-		notificationList.setItems(this.mainApp.getNotifications());
+		notificationTable.setItems(this.mainApp.getNotifications());
 	}
 	
 	@FXML
 	private void handleOK(){
 		
+		if (notificationTable.getSelectionModel().getSelectedItem() != null) {
+			try {
+				
+				ConnectionForReal.scon.sendDelete("notifications/nid/" + notificationTable.getSelectionModel().getSelectedItem().getNid());
+				
+				this.mainApp.getNotifications().remove(notificationTable.getSelectionModel().getSelectedItem());
+				
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	@FXML

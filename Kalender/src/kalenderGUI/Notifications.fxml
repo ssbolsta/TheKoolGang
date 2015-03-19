@@ -8,11 +8,11 @@
 
 <AnchorPane prefHeight="450.0" prefWidth="400.0" styleClass="fx-background" stylesheets="@NewEvent1.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllere.NotificationController">
    <children>
-      <TableView fx:id="invitationTable" layoutX="7.0" layoutY="66.0" maxWidth="373.0" prefHeight="323.0" prefWidth="373.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="56.0">
+      <TableView fx:id="notificationTable" layoutX="7.0" layoutY="66.0" maxWidth="390.0" prefHeight="323.0" prefWidth="390.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="56.0">
          <columns>
-            <TableColumn fx:id="nidColumn" prefWidth="58.0" resizable="false" text="NID" />
-            <TableColumn fx:id="timeColumn" prefWidth="83.0" />
-            <TableColumn fx:id="descColumn" prefWidth="248.0" resizable="false" />
+            <TableColumn fx:id="nidColumn" prefWidth="60.0" resizable="false" text="NID" />
+            <TableColumn fx:id="timeColumn" minWidth="74.0" prefWidth="74.0" resizable="false" />
+            <TableColumn fx:id="descColumn" prefWidth="266.0" resizable="false" />
          </columns>
       </TableView>
       <Label layoutX="24.0" layoutY="24.0" prefHeight="32.0" prefWidth="243.0" styleClass="text-header" text="Notifikasjoner" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="10.0">
