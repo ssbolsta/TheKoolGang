@@ -1,12 +1,15 @@
 package kalenderGUI;
 
 import java.util.logging.Level;
+
 import controllere.ConnectionForReal;
+
 import java.util.logging.Logger;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -25,6 +28,7 @@ public class LoginMain extends Application {
 			primaryStage.setTitle("Login");
 			ConnectionForReal.setURL("http://78.91.46.78:5050/");
 			primaryStage.setScene(scene);
+			primaryStage.getIcons().add(new Image("file:resources/images/kalimage.png"));
 			primaryStage.show();
 
 		}
