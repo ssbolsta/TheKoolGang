@@ -435,6 +435,25 @@ public class AgendaApplication extends Application
 		HashMap<String,Person> hashMap = new HashMap<String,Person>();
 		JSONArray response;
 
+		// start
+		Agenda agendaFirst = new Agenda();
+
+		agendaFirst.appointments().clear();
+
+		Calendar nextWeek = agenda.getDisplayedCalendar();
+		nextWeek.set(nextWeek.get(Calendar.YEAR), nextWeek.get(Calendar.MONTH), nextWeek.get(Calendar.DATE), nextWeek.get(Calendar.HOUR), nextWeek.get(Calendar.MINUTE));
+		agendaFirst.setDisplayedCalendar(nextWeek);
+
+		ArrayList<AppointmentImpl> applist = addAppointment(nextWeek);
+
+		for (AppointmentImpl i : applist) {
+			agendaFirst.appointments().add(i);
+
+		}
+
+		agenda = agendaFirst;
+
+		//slutt
 
 		LocalDate localDateNow = LocalDate.of(findDateCal.get(Calendar.YEAR), findDateCal.get(Calendar.MONTH)+1, findDateCal.get(Calendar.DATE));
 		Agenda agendaNext = new Agenda();
@@ -673,6 +692,7 @@ public class AgendaApplication extends Application
 				for(int i = 0, n = agenda.appointments().size(); i < n; i++) {
 					Appointment a = agenda.appointments().get(i);
 					if ( a.equals(ap)){
+
 						agenda.appointments().remove(i);
 						int eid = Integer.parseInt(ap.getDescription());
 						System.out.println(eid);
