@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="480.0" prefWidth="400.0" stylesheets="@NewEvent1.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllere.ShowGroupsController">
+   <children>
+      <TableView fx:id="groupTable" layoutX="7.0" layoutY="66.0" maxWidth="390.0" prefHeight="161.0" prefWidth="390.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="56.0">
+         <columns>
+            <TableColumn fx:id="gidColumn" prefWidth="60.0" resizable="false" text="GID" />
+            <TableColumn fx:id="nameColumn" prefWidth="329.0" resizable="false" />
+         </columns>
+      </TableView>
+      <Label layoutX="24.0" layoutY="24.0" prefHeight="32.0" prefWidth="243.0" styleClass="text-header" text="Grupper" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Label>
+      <HBox alignment="CENTER" layoutX="73.0" layoutY="393.0" prefHeight="46.0" prefWidth="380.0" spacing="10.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="440.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#handleMeld" styleClass="button-normal" text="Meld deg ut" />
+            <Button mnemonicParsing="false" onAction="#handleCancel" styleClass="button-normal" text="Lukk" />
+         </children>
+      </HBox>
+      <ListView fx:id="membersList" layoutX="10.0" layoutY="236.0" prefHeight="130.0" prefWidth="390.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="250.0" />
+      <Text layoutX="14.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Medlemmer:" AnchorPane.leftAnchor="10.0" />
+      <HBox alignment="CENTER" layoutX="100.0" layoutY="340.0" prefHeight="100.0" prefWidth="200.0" spacing="30.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="385.0">
+         <children>
+            <ComboBox fx:id="searchBox" editable="true" prefWidth="150.0" promptText="søk etter ansatte" styleClass="search-box" />
+            <Button mnemonicParsing="false" onAction="#handleAddMember" styleClass="button-normal" text="Legg til som medlem" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

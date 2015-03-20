@@ -1,4 +1,5 @@
 .button-normal {
+  -fx-background-color: #47b5ff;
   -fx-background-color: linear-gradient(to bottom, #47b5ff, #0666a1);
   -fx-background-radius: 9,8,5,4,3;
   -fx-font-family: "Segoe UI Semibold";
@@ -11,22 +12,39 @@
 .button-normal:pressed{
 	-fx-background-color: #3cb0fd;
 }
+.button-normal:focused {
+	-fx-border-radius: 5px;
+	
+	-fx-border-color: #000080;
+	
+	-fx-border-radius: 9,8,5,4,3;	
+}
+
 
 
 
 .button-cancel{
-	-fx-font-family: "Segoe UI Semibold";
-	-fx-text-fill: white;
-	-fx-background-radius: 9,8,5,4,3;
-	-fx-font-size: 12px;
-	-fx-background-color: linear-gradient(to bottom, #ff3838, #f20000);
+  -fx-background-color: #47b5ff;
+  -fx-background-color: linear-gradient(to bottom, #47b5ff, #0666a1);
+  -fx-background-radius: 9,8,5,4,3;
+  -fx-font-family: "Segoe UI Semibold";
+  -fx-text-fill: #ffffff;
+  -fx-font-size: 12px;
 }
 .button-cancel:hover{
-	-fx-background-color: linear-gradient(to bottom, #f20000, #ff3838);
+	-fx-background-color: linear-gradient(to bottom, #0666a1, #47b5ff);
 }
 .button-cancel:pressed{
-	-fx-background-color: #ff3636; 
+	-fx-background-color: #3cb0fd;
 }
+.button-cancel:focused {
+	-fx-border-radius: 5px;
+	
+	-fx-border-color: #000080;
+	
+	-fx-border-radius: 9,8,5,4,3;	
+}
+
 
 
 

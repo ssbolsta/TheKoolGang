@@ -1,14 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllere.NotificationController">
+<AnchorPane prefHeight="450.0" prefWidth="400.0" styleClass="fx-background" stylesheets="@NewEvent1.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllere.NotificationController">
    <children>
-      <ListView fx:id="notificationList" layoutX="14.0" layoutY="14.0" prefHeight="336.0" prefWidth="578.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
-      <Button layoutX="545.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleClose" text="Lukk" />
-      <Button defaultButton="true" layoutX="476.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleDelete" text="Fjern" />
+      <TableView fx:id="notificationTable" layoutX="7.0" layoutY="66.0" maxWidth="390.0" prefHeight="323.0" prefWidth="390.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="56.0">
+         <columns>
+            <TableColumn fx:id="nidColumn" prefWidth="60.0" resizable="false" text="NID" />
+            <TableColumn fx:id="timeColumn" minWidth="74.0" prefWidth="74.0" resizable="false" />
+            <TableColumn fx:id="descColumn" prefWidth="266.0" resizable="false" />
+         </columns>
+      </TableView>
+      <Label layoutX="24.0" layoutY="24.0" prefHeight="32.0" prefWidth="243.0" styleClass="text-header" text="Notifikasjoner" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="10.0">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Label>
+      <HBox alignment="CENTER" layoutX="73.0" layoutY="393.0" prefHeight="53.0" prefWidth="206.0" spacing="10.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#handleOK" styleClass="button-normal" text="OK (fjerner notifikasjon)" />
+            <Button mnemonicParsing="false" onAction="#handleClose" styleClass="button-cancel" text="Lukk" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

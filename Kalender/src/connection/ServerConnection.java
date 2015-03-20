@@ -65,7 +65,8 @@ public class ServerConnection {
         return result_json;
     }
 
-    private JSONArray formatError() {
+    @SuppressWarnings({ "unused", "unchecked" })
+	private JSONArray formatError() {
         JSONArray response = new JSONArray();
         JSONObject error = new JSONObject();
         error.put("response", "error");

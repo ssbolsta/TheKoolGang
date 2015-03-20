@@ -1,16 +1,13 @@
 package controllere;
 
-import java.io.IOException;
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 
+import org.controlsfx.dialog.Dialogs;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import requests.GetEventRequest;
-import connection.ServerConnection;
 import models.Group;
 import models.Person;
 import javafx.collections.FXCollections;
@@ -35,20 +32,15 @@ public class EventDetailsController {
 	@FXML private TableView<Group> groupTable;
 	@FXML private TableColumn<Group,String> groupColumn;
 	@FXML private Button cancel;
-	@FXML private Button decline;
 
-	private int eventId = 12;
 	private int eid;
-	private ServerConnection sc;
+	private int uid;
 	private ObservableList<Group> groupList = FXCollections.observableArrayList();
 	private HashMap<String,Group> groupKeyList = new HashMap<String,Group>();
 	private ObservableList<Person> peopleList = FXCollections.observableArrayList();
 	private HashMap<String,Person> personKeyList = new HashMap<String,Person>();
 
 
-	//	public EventDetailsController(int eid) {
-	//		this.eventId = eid;
-	//	}
 
 	public EventDetailsController(int eid) {
 		this.eid = eid;
@@ -64,10 +56,10 @@ public class EventDetailsController {
 		eventDetails();
 	}
 
+	@SuppressWarnings("rawtypes")
 	public void eventDetails(){
 		try{
-//			ConnectionForReal.setURL("http://78.91.44.74:5050/");
-//			ConnectionForReal.scon.login("krissvor", "passord");
+			
 			JSONArray response1 = ConnectionForReal.scon.sendGet("users/participantof/" + eid);
 			Iterator itr = response1.iterator();
 			while(itr.hasNext()) {
@@ -89,10 +81,10 @@ public class EventDetailsController {
 				groupKeyList.put(g.getName(), g);
 			}
 
-
+			
+			
 			JSONArray response = ConnectionForReal.scon.sendGet("events/eid/" + eid);
 			JSONObject app = (JSONObject) response.get(0);
-			System.out.println(response);
 			String time = app.get("starttime").toString().substring(0,5) + " - " + app.get("endtime").toString().substring(0,5);
 			timeText.setText(time);
 			dateText.setText(app.get("eventdate").toString());
@@ -111,6 +103,11 @@ public class EventDetailsController {
 			else{
 				descriptionText.setText("Arrangementet har ikke beskrivelse");
 			}
+			
+			
+			this.uid = Integer.parseInt(app.get("admin").toString());
+			
+			
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -119,7 +116,27 @@ public class EventDetailsController {
 
 	@FXML
 	private void handleDecline(){
-
+		if(this.uid != ConnectionForReal.uid){
+			HashMap<String,String> hashMap = new HashMap<String,String>();
+			
+			hashMap.put("eid", Integer.toString(eid));
+			hashMap.put("users", Long.toString(ConnectionForReal.uid));
+			
+			
+			try{
+				ConnectionForReal.scon.sendPost("events/remove/users", hashMap);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			
+		}else{
+			Dialogs.create().title("Advarsel").masthead("Kan ikke melde avbud på eget arrangement!").message("Dersom du ønsker å slette arrangementet, vennligst bruk slett arrangement knapp ved hovedskjerm").showWarning();
+		}
+		
+		
+		
+		handleClose();
+		
 	}
 
 	@FXML

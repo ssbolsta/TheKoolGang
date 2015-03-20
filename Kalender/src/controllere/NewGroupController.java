@@ -1,23 +1,17 @@
 package controllere;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 
 import org.controlsfx.dialog.Dialogs;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
-import requests.GetGroupRequest;
-import requests.GetUserRequest;
-import requests.ModifyGroupRequest;
-import requests.PutGroupRequest;
-import connection.ServerConnection;
 import models.Group;
+import models.GroupComparator;
 import models.Person;
+import models.PersonComparator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -33,7 +27,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import kalenderGUI.EventMain;
 
 public class NewGroupController {
 
@@ -57,7 +50,6 @@ public class NewGroupController {
 	private ObservableList<Person> chosenList = FXCollections.observableArrayList();
 	private ObservableList<Person> peopleList = FXCollections.observableArrayList();
 	private HashMap<String,Person> personKeyList = new HashMap<String,Person>();
-	private EventMain mainApp;
 
 
 	private EventHandler<KeyEvent> cancelKeyPress = new EventHandler<KeyEvent>(){
@@ -102,6 +94,7 @@ public class NewGroupController {
 
 
 
+	@SuppressWarnings("rawtypes")
 	@FXML private void initialize(){
 		usernameColumn.setCellValueFactory(cellData -> cellData.getValue().getUsernameProperty());
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().getFullNameProperty());
@@ -141,6 +134,8 @@ public class NewGroupController {
 
 			this.personSearchField.setItems(peopleList);
 			this.groupSearchField.setItems(groupList);
+			peopleList.sort(new PersonComparator());
+			groupList.sort(new GroupComparator());
 			new AutoCompleteCombobox<>(this.groupSearchField);
 			new AutoCompleteCombobox<>(this.personSearchField);
 
@@ -176,6 +171,7 @@ public class NewGroupController {
 			if(recipientTable.getSelectionModel().getSelectedItem() != null){
 				peopleList.add((recipientTable.getSelectionModel().getSelectedItem()));
 				chosenList.remove(recipientTable.getSelectionModel().getSelectedItem());
+				peopleList.sort(new PersonComparator());
 			}
 		}
 
@@ -189,14 +185,10 @@ public class NewGroupController {
 
 		@FXML
 		private void handleRemoveGroup(){
-			System.out.println(" Knappen trykket remove ");
-			System.out.println(groupTable.getSelectionModel().getSelectedItem() );
-
-
-
 			if(groupTable.getSelectionModel().getSelectedItem() != null){
 				groupList.add(groupTable.getSelectionModel().getSelectedItem());
 				chosenGroupList.remove(groupTable.getSelectionModel().getSelectedItem());
+				groupList.sort(new GroupComparator());
 			}
 		}
 
@@ -234,13 +226,15 @@ public class NewGroupController {
 
 					// Add users
 					ConnectionForReal.scon.sendPost("groups/add/users", userValues);
+
 					// Add groups
-					ConnectionForReal.scon.sendPost("groups/add/groups", groupsValues);
+					if(groups.size()<0)
+						ConnectionForReal.scon.sendPost("groups/add/groups", groupsValues);
 
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				Dialogs.create().title("Ny gruppe er laget").masthead("Ny gruppe").message("Du har laget en ny gruppe").showError();
+				Dialogs.create().title("Ny gruppe er laget").masthead("Ny gruppe").message("Du har laget en ny gruppe").showInformation();
 				Stage stage = (Stage) cancel.getScene().getWindow();
 				stage.hide();
 				stage.close();

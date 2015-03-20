@@ -7,12 +7,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minHeight="500.0" minWidth="400.0" prefHeight="580.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllere.NewGroupController">
+<AnchorPane minHeight="500.0" minWidth="400.0" prefHeight="580.0" prefWidth="400.0" styleClass="fx-background" stylesheets="@NewEvent1.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllere.NewGroupController">
    <children>
       <HBox alignment="BOTTOM_RIGHT" layoutX="236.0" layoutY="386.0" prefHeight="40.0" prefWidth="245.0" spacing="20.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
          <children>
-            <Button fx:id="nextButton" mnemonicParsing="false" onAction="#createGroup" prefHeight="25.0" prefWidth="90.0" text="Next" />
-            <Button fx:id="cancel" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Cancel" />
+            <Button fx:id="nextButton" mnemonicParsing="false" onAction="#createGroup" prefHeight="25.0" prefWidth="90.0" styleClass="button-normal" text="Fullfør" />
+            <Button fx:id="cancel" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" styleClass="button-cancel" text="Avbryt" />
          </children>
       </HBox>
       <GridPane layoutX="14.0" layoutY="6.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="6.0">
@@ -38,7 +38,7 @@
             </TextArea>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Navn på gruppe">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-header" text="Navn på gruppe:">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -53,7 +53,7 @@
             </HBox>
             <HBox GridPane.rowIndex="1">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Beskrivelse:">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-header" text="Beskrivelse:">
                      <HBox.margin>
                         <Insets top="10.0" />
                      </HBox.margin>
@@ -62,7 +62,7 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4" />
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="6" />
-            <ComboBox fx:id="personSearchField" prefHeight="25.0" prefWidth="160.0" promptText="Søk etter person" GridPane.columnIndex="1" GridPane.rowIndex="6">
+            <ComboBox fx:id="personSearchField" editable="true" prefHeight="25.0" prefWidth="160.0" promptText="Søk etter person" styleClass="search-box" GridPane.columnIndex="1" GridPane.rowIndex="6">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
@@ -74,7 +74,7 @@
                   <TableColumn fx:id="usernameColumn" minWidth="0.0" prefWidth="94.0" text="Brukernavn" />
                </columns>
             </TableView>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Medlemmer" GridPane.rowIndex="2">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-header" text="Medlemmer:" GridPane.rowIndex="2">
                <font>
                   <Font size="22.0" />
                </font>
@@ -84,11 +84,11 @@
                   <TableColumn fx:id="groupColumn" prefWidth="167.0" text="Grupper" />
                </columns>
             </TableView>
-            <Button mnemonicParsing="false" onAction="#handleLeggTilPerson" prefHeight="25.0" prefWidth="110.0" text="Legg Til Person" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <Button mnemonicParsing="false" onAction="#handleFjernPerson" prefHeight="25.0" prefWidth="110.0" text="Fjern Person" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Button mnemonicParsing="false" onAction="#handleAddGroup" prefHeight="25.0" prefWidth="110.0" text="Legg Til Gruppe" GridPane.rowIndex="5" />
-            <ComboBox fx:id="groupSearchField" prefHeight="25.0" prefWidth="160.0" promptText="Søk etter gruppe" GridPane.rowIndex="6" />
-            <Button mnemonicParsing="false" onAction="#handleRemoveGroup" prefWidth="110.0" text="Fjern Gruppe" GridPane.rowIndex="4" />
+            <Button mnemonicParsing="false" onAction="#handleLeggTilPerson" prefHeight="25.0" prefWidth="110.0" styleClass="button-normal" text="Legg Til Person" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Button mnemonicParsing="false" onAction="#handleFjernPerson" prefHeight="25.0" prefWidth="110.0" styleClass="button-normal" text="Fjern Person" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Button mnemonicParsing="false" onAction="#handleAddGroup" prefHeight="25.0" prefWidth="110.0" styleClass="button-normal" text="Legg Til Gruppe" GridPane.rowIndex="5" />
+            <ComboBox fx:id="groupSearchField" editable="true" prefHeight="25.0" prefWidth="160.0" promptText="Søk etter gruppe" styleClass="search-box" GridPane.rowIndex="6" />
+            <Button mnemonicParsing="false" onAction="#handleRemoveGroup" prefWidth="110.0" styleClass="button-normal" text="Fjern Gruppe" GridPane.rowIndex="4" />
          </children>
       </GridPane>
    </children>

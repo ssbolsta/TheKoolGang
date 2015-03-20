@@ -11,10 +11,10 @@
          <children>
             <TextField fx:id="username" layoutX="167.0" layoutY="49.0" />
             <PasswordField fx:id="password" layoutX="167.0" layoutY="97.0" />
-            <Button fx:id="login" layoutX="167.0" layoutY="144.0" mnemonicParsing="false" styleClass="button-normal" stylesheets="@AgendaApplication.css" text="Logg inn" />
             <Label layoutX="48.0" layoutY="53.0" text="Brukernavn" />
             <Label layoutX="48.0" layoutY="101.0" text="Passord" />
             <Button fx:id="cancel" layoutX="48.0" layoutY="144.0" mnemonicParsing="false" styleClass="button-normal" stylesheets="@AgendaApplication.css" text="Avbryt" />
+            <Button fx:id="login" layoutX="167.0" layoutY="144.0" mnemonicParsing="false" styleClass="button-normal" stylesheets="@AgendaApplication.css" text="Logg inn" />
             <Text fx:id="errorMessage" fill="#eb6666" layoutX="167.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Feil brukernavn eller passord" visible="false" />
          </children>
       </Pane>

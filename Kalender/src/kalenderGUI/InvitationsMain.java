@@ -63,11 +63,11 @@ public class InvitationsMain extends Application{
 	public void acceptInvitation(Invitation inv){
 		HashMap<String,String> request = new HashMap<String,String>();
 		request.put("eid", Integer.toString(inv.getEid()));
-		request.put("users", Integer.toString(inv.getUid()));
+		request.put("uid", Integer.toString(inv.getUid()));
 		JSONObject app = new JSONObject();
 		try {
-			ConnectionForReal.scon.sendPost("events/add/users", request);
-			app = (JSONObject) ConnectionForReal.scon.sendGet("evnts/eid/" + Integer.toString(inv.getEid())).get(0);
+			ConnectionForReal.scon.sendPost("events/add/user", request);
+			app = (JSONObject) ConnectionForReal.scon.sendGet("events/eid/" + Integer.toString(inv.getEid())).get(0);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -76,7 +76,9 @@ public class InvitationsMain extends Application{
 		request.clear();
 		
 		request.put("uid", app.get("admin").toString());
-		request.put("description", ConnectionForReal.name + " har akseptert din invitasjon til\n" + app.get("name").toString());
+		request.put("description", ConnectionForReal.name + " har akseptert din invitasjon til\n" + app.get("name").toString() + " den " + app.get("eventdate"));
+		
+		System.out.println(request);
 		
 		try{
 			ConnectionForReal.scon.sendPost("notifications", request);

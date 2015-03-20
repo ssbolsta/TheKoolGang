@@ -1,24 +1,49 @@
 package models;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeParseException;
 
-public class Notification extends NotificationSuper{
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
+public class Notification {
 	
-	private String description;
+	private StringProperty description;
+	private StringProperty time;
+	private int nid;
+	private int uid;
 	
-	public Notification(String description,String date,String time){
-		this.description = description;
-		try{
-			this.date = (LocalDate) DATE_FORMATTER.parse(date,LocalDate::from);
-			this.time = (LocalTime) TIME_FORMATTER.parse(time,LocalTime::from);
-			
-		}catch(DateTimeParseException e){
-			e.printStackTrace();
-		}
+	
+	public Notification(String nid, String uid,String description, String time){
+		this.description = new SimpleStringProperty(description);
+		this.time = new SimpleStringProperty(time.substring(0,10) + "\n" + time.substring(11));
+		this.nid = Integer.parseInt(nid);
+		this.uid = Integer.parseInt(uid);
 	}
+	
 	public String getDescription(){
+		return description.get();
+	}
+	
+	public StringProperty getDescriptionProperty(){
 		return description;
+	}
+	
+	public String getTime(){
+		return time.get();
+	}
+	
+	public StringProperty getTimeProperty(){
+		return time; 
+	}
+	
+	public int getNid(){
+		return nid;
+	}
+	
+	public StringProperty getNidStringProperty(){
+		return new SimpleStringProperty(Integer.toString(nid));
+	}
+	
+	public int getUid(){
+		return uid;
 	}
 }
