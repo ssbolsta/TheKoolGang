@@ -19,6 +19,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import kalenderGUI.EditEventMain;
 import models.Group;
+import models.GroupComparator;
 import models.Person;
 import models.PersonComparator;
 
@@ -63,8 +64,8 @@ public class EditEvent1Controller {
 		fromTime.setItems(timeFromList);
 		toTime.setItems(timeToList);
 
-		
-//		
+
+		//		
 
 	}
 
@@ -83,13 +84,19 @@ public class EditEvent1Controller {
 			JSONObject room = (JSONObject) ConnectionForReal.scon.sendGet("rooms/rid/" + app.get("rid")).get(0);
 			spacesField.setText(room.get("capacity").toString());
 		} catch (Exception e) {
-			
+
 			e.printStackTrace();
 		}
 		for (Person person : mainApp.getPersonList()) {
 			personKeyList.put(person.toString(), person);
 		}
+		for (Person person : mainApp.getRecipientList()) {
+			personKeyList.put(person.toString(), person);
+		}
 		for(Group group:mainApp.getGroupList()){
+			groupKeyList.put(group.getName(), group);
+		}
+		for(Group group:mainApp.getChosenGroupList()){
 			groupKeyList.put(group.getName(), group);
 		}
 
@@ -99,6 +106,7 @@ public class EditEvent1Controller {
 		new AutoCompleteCombobox<>(this.groupSearchField);
 
 		mainApp.getPersonList().sort(new PersonComparator());
+		mainApp.getGroupList().sort(new GroupComparator());
 
 		if(mainApp.getName() != null && mainApp.getDate() != null && mainApp.getFromTime() != null && mainApp.getToTime() != null && mainApp.getDesc() != null && mainApp.getSpaces() != null){
 			nameField.setText(mainApp.getName());
@@ -114,8 +122,15 @@ public class EditEvent1Controller {
 	@FXML
 	private  void handleLeggTilPerson(){
 		if(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()) != null){
+			if(mainApp.getRemovedPerson().contains(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()))){
+				mainApp.getRemovedPerson().remove(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()));
+			}
+			if(!mainApp.getOriginalPerson().contains(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()))){
+				mainApp.getAddedPerson().add(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()));
+			}
 			mainApp.getRecipientList().add(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()));
 			mainApp.getPersonList().remove(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()));
+			System.out.println(mainApp.getAddedPerson().toString());
 		}
 	}
 
@@ -124,7 +139,15 @@ public class EditEvent1Controller {
 		if(recipientTable.getSelectionModel().getSelectedItem() != null){
 			mainApp.getPersonList().add(recipientTable.getSelectionModel().getSelectedItem());
 			mainApp.getPersonList().sort(new PersonComparator());
+			
+			if(mainApp.getOriginalPerson().contains(recipientTable.getSelectionModel().getSelectedItem())){
+				mainApp.getRemovedPerson().add(recipientTable.getSelectionModel().getSelectedItem());
+			}
+			if(mainApp.getAddedPerson().contains(recipientTable.getSelectionModel().getSelectedItem())){
+				mainApp.getAddedPerson().remove(recipientTable.getSelectionModel().getSelectedItem());
+			}
 			mainApp.getRecipientList().remove(recipientTable.getSelectionModel().getSelectedItem());
+			System.out.println(mainApp.getAddedPerson().toString());
 		}
 	}
 
@@ -132,6 +155,12 @@ public class EditEvent1Controller {
 	private void handleAddGroup(){
 		if(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()) != null){
 			mainApp.getChosenGroupList().add(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
+			if(mainApp.getRemovedGroup().contains(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()))){
+				mainApp.getRemovedGroup().remove(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
+			}
+			if(!mainApp.getOriginalGroup().contains(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()))){
+				mainApp.getAddedGroup().add(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
+			}
 			mainApp.getGroupList().remove(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
 		}
 	}
@@ -140,6 +169,14 @@ public class EditEvent1Controller {
 	private void handleRemoveGroup(){
 		if(groupTable.getSelectionModel().getSelectedItem() != null){
 			mainApp.getGroupList().add(groupTable.getSelectionModel().getSelectedItem());
+			mainApp.getRemovedGroup().add(groupTable.getSelectionModel().getSelectedItem());
+			mainApp.getGroupList().sort(new GroupComparator());
+			if(mainApp.getOriginalGroup().contains(groupTable.getSelectionModel().getSelectedItem())){
+				mainApp.getRemovedGroup().add(groupTable.getSelectionModel().getSelectedItem());
+			}
+			if(mainApp.getAddedGroup().contains(groupTable.getSelectionModel().getSelectedItem())){
+				mainApp.getAddedGroup().remove(groupTable.getSelectionModel().getSelectedItem());
+			}
 			mainApp.getChosenGroupList().remove(groupTable.getSelectionModel().getSelectedItem());
 		}
 	}

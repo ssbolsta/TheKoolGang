@@ -3,7 +3,10 @@ package kalenderGUI;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -25,16 +28,22 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class EditEventMain extends Application{
-	
+
 	private AnchorPane root;
 	private Stage primaryStage;
-	
+
 	private ObservableList<Person> personList = FXCollections.observableArrayList();
 	private ObservableList<Group> groupList = FXCollections.observableArrayList();
 	private ObservableList<Person> recipientList = FXCollections.observableArrayList();
+	private ObservableList<Person> originalPersonList = FXCollections.observableArrayList();
 	private ObservableList<Room> roomList = FXCollections.observableArrayList();
 	private ObservableList<Group> chosenGroupList = FXCollections.observableArrayList();
-	
+	private ObservableList<Group> originalGroupList = FXCollections.observableArrayList();
+	private ObservableList<Person> addedPersonList = FXCollections.observableArrayList();
+	private ObservableList<Person> removedPersonList = FXCollections.observableArrayList();
+	private ObservableList<Group> addedGroupList = FXCollections.observableArrayList();
+	private ObservableList<Group> removedGroupList = FXCollections.observableArrayList();
+
 	private String name;
 	private String desc;
 	private LocalTime fromTime;
@@ -44,11 +53,11 @@ public class EditEventMain extends Application{
 	private ServerConnection sc;
 	private int eid = 13;
 	private JSONObject app;
-	
+
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
-		ConnectionForReal.setURL("http://78.91.44.241:5050/");
+		ConnectionForReal.setURL("http://78.91.50.66:5050/");
 		try {
 			ConnectionForReal.scon.login("krissvor","passord");
 			app = (JSONObject) ConnectionForReal.scon.sendGet("events/eid/" + eid).get(0);
@@ -59,7 +68,7 @@ public class EditEventMain extends Application{
 		showEditEvent1();
 
 	}
-	
+
 	public void showEditEvent1(){
 		try{
 			FXMLLoader loader = new FXMLLoader();
@@ -67,11 +76,11 @@ public class EditEventMain extends Application{
 			root = (AnchorPane) loader.load();
 			EditEvent1Controller controller = loader.getController();
 			controller.setMainApp(this);
-			
-			
-			
-//			Henter alle brukere
-			
+
+
+
+			//			Henter alle brukere
+
 			JSONArray response = ConnectionForReal.scon.sendGet("users");
 			Iterator itr = response.iterator();
 			while(itr.hasNext()) {
@@ -80,12 +89,10 @@ public class EditEventMain extends Application{
 				Person p = new Person(person.get("firstname").toString(),person.get("lastname").toString(),person.get("username").toString(), Integer.parseInt(person.get("uid").toString()));
 				personList.add(p);
 			}
-			System.out.println(personList.toString());
-			
-			
-			
-//			Henter alle brukere som er med på arrangementet
-			
+
+
+			//			Henter alle brukere som er med på arrangementet
+
 			JSONArray response1 = ConnectionForReal.scon.sendGet("users/participantof/" + eid);
 			Iterator itr1 = response1.iterator();
 			while(itr1.hasNext()) {
@@ -94,16 +101,18 @@ public class EditEventMain extends Application{
 				int uid = Integer.parseInt(person.get("uid").toString());
 				for(Person p : personList){
 					if(p.getUid() == uid){
-						recipientList.add(new Person(person.get("firstname").toString(),person.get("lastname").toString(),person.get("username").toString(), Integer.parseInt(person.get("uid").toString())));
+						Person pers = (new Person(person.get("firstname").toString(),person.get("lastname").toString(),person.get("username").toString(), Integer.parseInt(person.get("uid").toString())));
+						recipientList.add(pers);
+						originalPersonList.add(pers);
 						personList.remove(p);
 						break;
 					}
 				}
 			}
-			
-			
-//			Henter alle grupper
-			
+
+
+			//			Henter alle grupper
+
 			JSONArray response3 = ConnectionForReal.scon.sendGet("groups");
 			Iterator itr3 = response3.iterator();
 			while(itr3.hasNext()){
@@ -112,8 +121,8 @@ public class EditEventMain extends Application{
 				Group g = new Group(Integer.parseInt(group.get("gid").toString()), group.get("name").toString());
 				groupList.add(g);
 			}
-			
-//			Henter alle grupper som er med på arrangementet
+
+			//			Henter alle grupper som er med på arrangementet
 			JSONArray response2 = ConnectionForReal.scon.sendGet("groups/participantof/" + eid);
 			Iterator itr2 = response2.iterator();
 			while(itr2.hasNext()){
@@ -123,13 +132,14 @@ public class EditEventMain extends Application{
 				for(Group g : groupList){
 					System.out.println("1");
 					if(g.getGroupID() == gid){
-						chosenGroupList.add(new Group(Integer.parseInt(group.get("gid").toString()), group.get("name").toString()));
+						Group gro = new Group(Integer.parseInt(group.get("gid").toString()), group.get("name").toString());
+						chosenGroupList.add(gro);
 						groupList.remove(g);
 						break;
 					}
 				}
 			}
-			
+
 			controller.showData();
 			this.primaryStage.setScene(new Scene(root));
 			this.primaryStage.show();
@@ -145,7 +155,7 @@ public class EditEventMain extends Application{
 			root = (AnchorPane) loader.load();
 			EditEvent2Controller controller = loader.getController();
 			controller.setMainApp(this);
-			
+
 			try {
 				JSONArray response4 = ConnectionForReal.scon.sendGet("rooms");
 				Iterator itr4 = response4.iterator();
@@ -158,8 +168,8 @@ public class EditEventMain extends Application{
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
-			
+
+
 			controller.showData();
 			this.primaryStage.setScene(new Scene(root));
 			this.primaryStage.show();
@@ -169,12 +179,98 @@ public class EditEventMain extends Application{
 		}
 
 	}
-	
+
 	public void editEvent(Room room){
-//		ConnectionForReal.scon.sendPut(path, param)
+
+
+		ArrayList<Integer> persons = new ArrayList<Integer>();
+		ArrayList<Integer> groups = new ArrayList<Integer>();
+		ArrayList<Integer> removedGroup = new ArrayList<Integer>();
+		ArrayList<Integer> removedPerson = new ArrayList<Integer>();
+
+		for (Person person:addedPersonList){
+			persons.add(person.getUid());
+		}
+
+		for (Person person:removedPersonList){
+			removedPerson.add(person.getUid());
+		}
+
+		for(Group group:addedGroupList){
+			groups.add(group.getGroupID());
+		}
+
+		for(Group group:removedGroupList){
+			removedGroup.add(group.getGroupID());
+		}
+
+		HashMap<String, String > eventValue = new HashMap<String, String>();
+		eventValue.put("name", this.name);
+		eventValue.put("starttime", this.fromTime + ":00");
+		eventValue.put("endtime", this.toTime + ":00");
+		eventValue.put("rid", room.getRoomID().toString());
+		eventValue.put("eventdate", this.date.toString());
+
+		// first remove, then add. Groups, then people
+
+		HashMap<String, String> removedGroupsValues = new HashMap<String, String>();
+		removedGroupsValues.put("eid", Integer.toString(eid));
+		removedGroupsValues.put("groups", joinArrayList(removedGroup, ","));
+
+		HashMap<String, String> removedUsersValues = new HashMap<String, String>();
+		removedUsersValues.put("eid", Integer.toString(eid));
+		removedUsersValues.put("users", joinArrayList(removedPerson, ","));
+
+		HashMap<String, String> groupsValues = new HashMap<String, String>();
+		groupsValues.put("eid", Integer.toString(eid));
+		groupsValues.put("groups", joinArrayList(groups, ","));
+
+		HashMap<String, String> userValues = new HashMap<String, String>();
+		userValues.put("eid", Integer.toString(eid));
+		userValues.put("users", joinArrayList(persons, ","));
+		//		userValues.put("groups", joinArrayList(groups, ","));
 		
+		
+
+
+		// Add users
+		try {
+			ConnectionForReal.scon.sendPut("events/eid/"+ eid, eventValue);
+			if(removedGroupList.size() >0){
+				ConnectionForReal.scon.sendPost("events/remove/groups" , removedGroupsValues);
+			}
+			if(removedPersonList.size() >0){
+				ConnectionForReal.scon.sendPost("events/remove/users" , removedUsersValues);
+			}
+			if(addedPersonList.size() >0){
+				ConnectionForReal.scon.sendPost("events/add/users", userValues);
+				HashMap<String, String> invitePers = new HashMap<String, String>();
+				invitePers.put("uid", joinArrayList(persons, ","));
+				invitePers.put("description", "Du har blitt lagt til i et arrangement, " +  this.date + ", kl " + this.fromTime + ".");
+				ConnectionForReal.scon.sendPost("notifications", invitePers);
+			}
+			if(addedGroupList.size() >0){
+				ConnectionForReal.scon.sendPost("events/add/groups", groupsValues);		
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	
+
+	private String joinArrayList(ArrayList<Integer> r, String delimiter) {
+		if(r == null || r.size() == 0 ){
+			return "";
+		}
+		StringBuffer sb = new StringBuffer();
+		int i, len = r.size() - 1;
+		for (i = 0; i < len; i++){
+			sb.append(r.get(i).toString() + delimiter);
+		}
+		return sb.toString() + r.get(i).toString();
+	}
+
+
 	public void close(){
 		this.primaryStage.close();
 		try {
@@ -183,7 +279,7 @@ public class EditEventMain extends Application{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Stage getPrimaryStage(){
 		return this.primaryStage;
 	}
@@ -198,7 +294,7 @@ public class EditEventMain extends Application{
 	public Integer getSpaces(){
 		return spaces;
 	}
-	
+
 	public JSONObject getAppointment(){
 		return app;
 	}
@@ -209,6 +305,38 @@ public class EditEventMain extends Application{
 	}
 	public ObservableList<Person> getRecipientList(){
 		return recipientList;
+	}
+
+	public ObservableList<Person> getOriginalPerson(){
+		return 	originalPersonList;
+	}
+	public ObservableList<Group> getOriginalGroup(){
+		return 	originalGroupList;
+	}
+
+	public void setRemovedPerson(ObservableList<Person> removedList){
+		this.removedPersonList = removedList;
+	}
+	public ObservableList<Person> getRemovedPerson(){
+		return this.removedPersonList;
+	}
+	public void setAddedPerson(ObservableList<Person> addedList){
+		this.addedPersonList = addedList;
+	}
+	public ObservableList<Person> getAddedPerson(){
+		return this.addedPersonList;
+	}
+	public void setRemovedGroup(ObservableList<Group> removedList){
+		this.removedGroupList = removedList;
+	}
+	public ObservableList<Group> getRemovedGroup(){
+		return removedGroupList;
+	}
+	public void setAddedGroup(ObservableList<Group> addedList){
+		this.addedGroupList = addedList;
+	}
+	public ObservableList<Group> getAddedGroup(){
+		return this.addedGroupList;
 	}
 
 
@@ -271,5 +399,5 @@ public class EditEventMain extends Application{
 	}
 
 
-	
+
 }

@@ -30,6 +30,7 @@ public class ShowGroupsMain extends Application{
 	public ShowGroupsMain(){
 		try {
 			JSONArray response = ConnectionForReal.scon.sendGet("groups/user");
+			@SuppressWarnings("rawtypes")
 			Iterator itr = response.iterator();
 			while(itr.hasNext()){ 
 				JSONObject group;
