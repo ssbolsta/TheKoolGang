@@ -64,9 +64,9 @@ public class EditEventMain extends Application{
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
-		ConnectionForReal.setURL("http://78.91.50.66:5050/");
+
 		try {
-			ConnectionForReal.scon.login("krissvor","passord");
+
 			app = (JSONObject) ConnectionForReal.scon.sendGet("events/eid/" + eid).get(0);
 			System.out.println(app.toJSONString());
 		} catch (Exception e) {

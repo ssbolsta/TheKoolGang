@@ -259,6 +259,19 @@ public class AgendaApplication extends Application
 				System.out.println(param.getDescription());
 				if(eventDetailsStage == null && evAdmin != ConnectionForReal.uid){
 
+					eventDetailsStage = new Stage();
+					eventDetailsStage.setOnCloseRequest(eventDetailsClosed);
+					eventDetailsStage.setOnHidden(eventDetailsClosed);
+					eventDetailsStage.initModality(Modality.WINDOW_MODAL);
+					eventDetailsStage.initOwner(primaryStage);
+
+					ng.start(eventDetailsStage);
+
+
+
+				}
+
+				if(eventDetailsStage== null && evAdmin == ConnectionForReal.uid) {
 
 					eventDetailsStage = new Stage();
 					eventDetailsStage.setOnCloseRequest(eventDetailsClosed);
@@ -268,19 +281,6 @@ public class AgendaApplication extends Application
 
 					edd.start(eventDetailsStage);
 
-
-				}
-
-				if(eventDetailsStage== null && evAdmin == ConnectionForReal.uid) {
-
-
-					eventDetailsStage = new Stage();
-					eventDetailsStage.setOnCloseRequest(eventDetailsClosed);
-					eventDetailsStage.setOnHidden(eventDetailsClosed);
-					eventDetailsStage.initModality(Modality.WINDOW_MODAL);
-					eventDetailsStage.initOwner(primaryStage);
-
-					ng.start(eventDetailsStage);
 
 
 				}
