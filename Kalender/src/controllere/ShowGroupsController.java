@@ -148,6 +148,8 @@ public class ShowGroupsController {
 				
 			}
 			
+			searchBox.getSelectionModel().clearSelection();
+			
 			showMembers();
 			
 		}

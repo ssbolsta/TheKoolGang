@@ -97,6 +97,7 @@ public class NewEvent1Controller {
 		if(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()) != null){
 			mainApp.getRecipientList().add(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()));
 			mainApp.getPersonList().remove(personKeyList.get(personSearchField.getSelectionModel().getSelectedItem()));
+			personSearchField.getSelectionModel().clearSelection();
 		}
 	}
 	
@@ -114,6 +115,7 @@ public class NewEvent1Controller {
 		if(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()) != null){
 			mainApp.getChosenGroupList().add(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
 			mainApp.getGroupList().remove(groupKeyList.get(groupSearchField.getSelectionModel().getSelectedItem()));
+			groupSearchField.getSelectionModel().clearSelection();
 		}
 	}
 
