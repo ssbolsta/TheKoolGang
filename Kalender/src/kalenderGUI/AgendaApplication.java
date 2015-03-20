@@ -269,16 +269,19 @@ public class AgendaApplication extends Application
 
 
 
+
+
+
 				}
 
-				if(eventDetailsStage== null && evAdmin == ConnectionForReal.uid) {
+				else if (eventDetailsStage == null ){
+
 
 					eventDetailsStage = new Stage();
 					eventDetailsStage.setOnCloseRequest(eventDetailsClosed);
 					eventDetailsStage.setOnHidden(eventDetailsClosed);
 					eventDetailsStage.initModality(Modality.WINDOW_MODAL);
 					eventDetailsStage.initOwner(primaryStage);
-
 					edd.start(eventDetailsStage);
 
 

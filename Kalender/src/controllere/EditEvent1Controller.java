@@ -65,7 +65,7 @@ public class EditEvent1Controller {
 		toTime.setItems(timeToList);
 
 
-		//		
+		//
 
 	}
 
@@ -75,8 +75,16 @@ public class EditEvent1Controller {
 		if(app.get("name") != null){
 			nameField.setText(app.get("name").toString());
 		}
-		fromTime.setValue(LocalTime.parse(app.get("starttime").toString().substring(0,5)));
-		toTime.setValue(LocalTime.parse(app.get("endtime").toString().substring(0,5)));
+
+		String[] t1 = app.get("starttime").toString().split(":");
+		String t2 = String.format("%02d:%02d:%02d", Integer.parseInt(t1[0]), Integer.parseInt(t1[1]), Integer.parseInt(t1[2]));
+
+		fromTime.setValue(LocalTime.parse(t2));
+
+		t1 = app.get("endtime").toString().split(":");
+		t2 = String.format("%02d:%02d:%02d", Integer.parseInt(t1[0]), Integer.parseInt(t1[1]), Integer.parseInt(t1[2]));
+
+		toTime.setValue(LocalTime.parse(t2));
 		dateField.setValue(LocalDate.parse(app.get("eventdate").toString()));
 		recipientTable.setItems(mainApp.getRecipientList());
 		groupTable.setItems(mainApp.getChosenGroupList());
@@ -139,7 +147,7 @@ public class EditEvent1Controller {
 		if(recipientTable.getSelectionModel().getSelectedItem() != null){
 			mainApp.getPersonList().add(recipientTable.getSelectionModel().getSelectedItem());
 			mainApp.getPersonList().sort(new PersonComparator());
-			
+
 			if(mainApp.getOriginalPerson().contains(recipientTable.getSelectionModel().getSelectedItem())){
 				mainApp.getRemovedPerson().add(recipientTable.getSelectionModel().getSelectedItem());
 			}
