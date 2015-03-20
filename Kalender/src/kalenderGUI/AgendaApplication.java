@@ -245,13 +245,17 @@ public class AgendaApplication extends Application
 		public Void call(Appointment param) {
 
 
+			try {
+				JSONObject eventPressed =(JSONObject) ConnectionForReal.scon.sendGet("events/eid/"+ Integer.parseInt(param.getDescription())).get(0);
+				long evAdmin = (long) eventPressed.get("admin");
+				System.out.println("event admin: "+evAdmin);
+				System.out.println("real uid: "+ConnectionForReal.uid);
+				EventDetailsMain ng = new EventDetailsMain(Integer.parseInt(param.getDescription()));
+				System.out.println("new Edit sier dette : ");
 
-			EventDetailsMain ng = new EventDetailsMain(Integer.parseInt(param.getDescription()));
-			System.out.println("new Edit sier dette : ");
+				System.out.println(param.getDescription());
+				if(eventDetailsStage == null && evAdmin != ConnectionForReal.uid){
 
-			System.out.println(param.getDescription());
-			if(eventDetailsStage == null){
-				try{
 
 					eventDetailsStage = new Stage();
 					eventDetailsStage.setOnCloseRequest(eventDetailsClosed);
@@ -260,11 +264,20 @@ public class AgendaApplication extends Application
 					eventDetailsStage.initOwner(primaryStage);
 
 					ng.start(eventDetailsStage);
+
+
 				}
-				catch(Exception e){
-					System.out.println(e);
+
+				if(eventDetailsStage== null && evAdmin == ConnectionForReal.uid) {
+
+					System.out.println("Her skal event det poppe opp event redigerings greia. ");
+
 				}
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
+
 
 			return null;
 		}
@@ -398,11 +411,13 @@ public class AgendaApplication extends Application
 
 
 
-
+		JSONArray groupResult;
 		JSONArray result;
 		try {
 
 			result = ConnectionForReal.scon.sendGet("events/user/between/" + from + "/" + to);
+
+			groupResult = ConnectionForReal.scon.sendGet("events/group/between/" + from + "/" + to);
 
 			Iterator itter = result.iterator();
 			while (itter.hasNext()){
@@ -430,11 +445,46 @@ public class AgendaApplication extends Application
 				appList.add(new Agenda.AppointmentImpl()
 				.withStartTime(new GregorianCalendar(eventYear, eventMonth-1, eventDay, startTime, startMinutt))
 				.withEndTime(new GregorianCalendar(eventYear, eventMonth-1, eventDay, endTime, endMinutt))
-				.withAppointmentGroup(lAppointmentGroupMap.get("1"))
+				.withAppointmentGroup(lAppointmentGroupMap.get("3"))
 				.withSummary(sumEvent)
 				.withDescription(descEvent));
 
 			}
+
+
+
+			Iterator itterGroup = groupResult.iterator();
+			while (itterGroup.hasNext()){
+				JSONObject o = (JSONObject) itterGroup.next();
+
+				String[] Stime = ((String)o.get("starttime")).split(":");
+				int startTime = Integer.parseInt( Stime[0]);
+				int startMinutt = Integer.parseInt( Stime[1]);
+
+
+				String[] Etime = ((String)o.get("endtime")).split(":");
+				int endTime = Integer.parseInt( Etime[0]);
+				int endMinutt = Integer.parseInt( Etime[1]);
+
+				String[] datoEvent = ((String)o.get("eventdate")).split("-");
+				int eventYear = Integer.parseInt( datoEvent[0]);
+				int eventMonth = Integer.parseInt( datoEvent[1]);
+				int eventDay = Integer.parseInt( datoEvent[2]);
+
+				String descEvent = (o.get("eid").toString());
+				String sumEvent = ((String) o.get("name"));
+
+
+
+				appList.add(new Agenda.AppointmentImpl()
+				.withStartTime(new GregorianCalendar(eventYear, eventMonth-1, eventDay, startTime, startMinutt))
+				.withEndTime(new GregorianCalendar(eventYear, eventMonth-1, eventDay, endTime, endMinutt))
+				.withAppointmentGroup(lAppointmentGroupMap.get("6"))
+				.withSummary(sumEvent)
+				.withDescription(descEvent));
+
+			}
+
 		} catch ( Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -586,8 +636,7 @@ public class AgendaApplication extends Application
 					public void updateItem(LocalDate item, boolean empty) {
 						super.updateItem(item, empty);
 
-						if (item.isBefore(
-								datePick.getValue())
+						if (item.isBefore(datePick.getValue())
 								) {
 
 							setStyle(" -fx-text-fill: #d3d3d3");
@@ -964,16 +1013,15 @@ public class AgendaApplication extends Application
 
 						}
 					} else if (c.wasUpdated()) {
-						System.out.println(" Nå ble det trykket UPDATE " );
+
 					} else {
 						for (Appointment a : c.getRemoved()) {
-							System.out.println("Avtalen som ble trykket på er ikke lenger trykket på");
+
 						}
 						for (Appointment a : c.getAddedSubList()) {
 
 							ap = c.getAddedSubList().get(0);
 
-							System.out.println("Avtale har blitt trykket på. " + ap.toString());
 						}
 
 

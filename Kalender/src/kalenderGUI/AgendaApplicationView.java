@@ -224,27 +224,6 @@ public class AgendaApplicationView extends Application
 		public Void call(Appointment param) {
 
 
-
-			EventDetailsMain ng = new EventDetailsMain(Integer.parseInt(param.getDescription()));
-			System.out.println("new Edit sier dette : ");
-
-			System.out.println(param.getDescription());
-			if(eventDetailsStage == null){
-				try{
-
-					eventDetailsStage = new Stage();
-					eventDetailsStage.setOnCloseRequest(eventDetailsClosed);
-					eventDetailsStage.setOnHidden(eventDetailsClosed);
-					eventDetailsStage.initModality(Modality.WINDOW_MODAL);
-					eventDetailsStage.initOwner(primaryStage);
-
-					ng.start(eventDetailsStage);
-				}
-				catch(Exception e){
-					System.out.println(e);
-				}
-			}
-
 			return null;
 		}
 
@@ -752,7 +731,7 @@ public class AgendaApplicationView extends Application
 
 
 
-		agenda.editAppointmentCallbackProperty().setValue(newEdit);;
+		agenda.editAppointmentCallbackProperty().setValue(newEdit);
 		agenda.getStyleClass().add("agenda-style");
 		agenda.setLayoutY(60);
 		agenda.selectedAppointments().addListener(new ListChangeListener< Appointment >() {
