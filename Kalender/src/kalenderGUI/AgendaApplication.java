@@ -196,7 +196,7 @@ public class AgendaApplication extends Application
 	private EventHandler<KeyEvent> visGruppePressed = new EventHandler<KeyEvent>(){
 		@Override
 		public void handle(KeyEvent arg0) {
-			ShowGroups sg = new ShowGroups();
+			ShowGroupsMain sg = new ShowGroupsMain();
 			if(newGroupStage == null){
 				try{
 					newGroupStage = new Stage();

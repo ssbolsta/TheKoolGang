@@ -31,6 +31,6 @@ public class Group{
 	}
 	
 	public StringProperty getGidStringProperty(){
-		return new SimpleStringProperty(groupID.toString());
+		return new SimpleStringProperty(Integer.toString(getGroupID()));
 	}
 }
