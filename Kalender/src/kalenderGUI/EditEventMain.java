@@ -35,8 +35,10 @@ public class EditEventMain extends Application{
 	private ObservableList<Person> personList = FXCollections.observableArrayList();
 	private ObservableList<Group> groupList = FXCollections.observableArrayList();
 	private ObservableList<Person> recipientList = FXCollections.observableArrayList();
+	private ObservableList<Person> originalPersonList = FXCollections.observableArrayList();
 	private ObservableList<Room> roomList = FXCollections.observableArrayList();
 	private ObservableList<Group> chosenGroupList = FXCollections.observableArrayList();
+	private ObservableList<Group> originalGroupList = FXCollections.observableArrayList();
 	private ObservableList<Person> addedPersonList = FXCollections.observableArrayList();
 	private ObservableList<Person> removedPersonList = FXCollections.observableArrayList();
 	private ObservableList<Group> addedGroupList = FXCollections.observableArrayList();
@@ -55,7 +57,7 @@ public class EditEventMain extends Application{
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
-		ConnectionForReal.setURL("http://78.91.49.239:5050/");
+		ConnectionForReal.setURL("http://78.91.50.66:5050/");
 		try {
 			ConnectionForReal.scon.login("krissvor","passord");
 			app = (JSONObject) ConnectionForReal.scon.sendGet("events/eid/" + eid).get(0);
@@ -87,8 +89,6 @@ public class EditEventMain extends Application{
 				Person p = new Person(person.get("firstname").toString(),person.get("lastname").toString(),person.get("username").toString(), Integer.parseInt(person.get("uid").toString()));
 				personList.add(p);
 			}
-			System.out.println(personList.toString());
-
 
 
 			//			Henter alle brukere som er med på arrangementet
@@ -101,7 +101,9 @@ public class EditEventMain extends Application{
 				int uid = Integer.parseInt(person.get("uid").toString());
 				for(Person p : personList){
 					if(p.getUid() == uid){
-						recipientList.add(new Person(person.get("firstname").toString(),person.get("lastname").toString(),person.get("username").toString(), Integer.parseInt(person.get("uid").toString())));
+						Person pers = (new Person(person.get("firstname").toString(),person.get("lastname").toString(),person.get("username").toString(), Integer.parseInt(person.get("uid").toString())));
+						recipientList.add(pers);
+						originalPersonList.add(pers);
 						personList.remove(p);
 						break;
 					}
@@ -130,7 +132,8 @@ public class EditEventMain extends Application{
 				for(Group g : groupList){
 					System.out.println("1");
 					if(g.getGroupID() == gid){
-						chosenGroupList.add(new Group(Integer.parseInt(group.get("gid").toString()), group.get("name").toString()));
+						Group gro = new Group(Integer.parseInt(group.get("gid").toString()), group.get("name").toString());
+						chosenGroupList.add(gro);
 						groupList.remove(g);
 						break;
 					}
@@ -185,15 +188,15 @@ public class EditEventMain extends Application{
 		ArrayList<Integer> removedGroup = new ArrayList<Integer>();
 		ArrayList<Integer> removedPerson = new ArrayList<Integer>();
 
-		for (Person person:recipientList){
+		for (Person person:addedPersonList){
 			persons.add(person.getUid());
 		}
-		
+
 		for (Person person:removedPersonList){
 			removedPerson.add(person.getUid());
 		}
 
-		for(Group group:chosenGroupList){
+		for(Group group:addedGroupList){
 			groups.add(group.getGroupID());
 		}
 
@@ -203,35 +206,52 @@ public class EditEventMain extends Application{
 
 		HashMap<String, String > eventValue = new HashMap<String, String>();
 		eventValue.put("name", this.name);
-		eventValue.put("eid", Integer.toString(eid));
+		eventValue.put("starttime", this.fromTime + ":00");
+		eventValue.put("endtime", this.toTime + ":00");
+		eventValue.put("rid", room.getRoomID().toString());
+		eventValue.put("eventdate", this.date.toString());
 
 		// first remove, then add. Groups, then people
-		
+
 		HashMap<String, String> removedGroupsValues = new HashMap<String, String>();
 		removedGroupsValues.put("eid", Integer.toString(eid));
 		removedGroupsValues.put("groups", joinArrayList(removedGroup, ","));
-		
+
 		HashMap<String, String> removedUsersValues = new HashMap<String, String>();
 		removedUsersValues.put("eid", Integer.toString(eid));
 		removedUsersValues.put("users", joinArrayList(removedPerson, ","));
-		
+
 		HashMap<String, String> groupsValues = new HashMap<String, String>();
 		groupsValues.put("eid", Integer.toString(eid));
 		groupsValues.put("groups", joinArrayList(groups, ","));
-		
+
 		HashMap<String, String> userValues = new HashMap<String, String>();
 		userValues.put("eid", Integer.toString(eid));
 		userValues.put("users", joinArrayList(persons, ","));
 		//		userValues.put("groups", joinArrayList(groups, ","));
+		
+		
 
 
 		// Add users
 		try {
-			ConnectionForReal.scon.sendPost("events/remove/groups" , removedGroupsValues);
-			ConnectionForReal.scon.sendPost("events/remove/users" , removedUsersValues);
-			
-			ConnectionForReal.scon.sendPost("events/add/users", userValues);
-			ConnectionForReal.scon.sendPost("events/add/groups", groupsValues);		
+			ConnectionForReal.scon.sendPut("events/eid/"+ eid, eventValue);
+			if(removedGroupList.size() >0){
+				ConnectionForReal.scon.sendPost("events/remove/groups" , removedGroupsValues);
+			}
+			if(removedPersonList.size() >0){
+				ConnectionForReal.scon.sendPost("events/remove/users" , removedUsersValues);
+			}
+			if(addedPersonList.size() >0){
+				ConnectionForReal.scon.sendPost("events/add/users", userValues);
+				HashMap<String, String> invitePers = new HashMap<String, String>();
+				invitePers.put("uid", joinArrayList(persons, ","));
+				invitePers.put("description", "Du har blitt lagt til i et arrangement, " +  this.date + ", kl " + this.fromTime + ".");
+				ConnectionForReal.scon.sendPost("notifications", invitePers);
+			}
+			if(addedGroupList.size() >0){
+				ConnectionForReal.scon.sendPost("events/add/groups", groupsValues);		
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -286,7 +306,14 @@ public class EditEventMain extends Application{
 	public ObservableList<Person> getRecipientList(){
 		return recipientList;
 	}
-	
+
+	public ObservableList<Person> getOriginalPerson(){
+		return 	originalPersonList;
+	}
+	public ObservableList<Group> getOriginalGroup(){
+		return 	originalGroupList;
+	}
+
 	public void setRemovedPerson(ObservableList<Person> removedList){
 		this.removedPersonList = removedList;
 	}
