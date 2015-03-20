@@ -888,7 +888,7 @@ public class AgendaApplication extends Application
 		visGrupper.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
 			public void 	handle(ActionEvent arg0) {
-				ShowGroupsMain sg = new ShowGroupsMain();
+				ShowGroups sg = new ShowGroups();
 				if(newGroupStage == null){
 					try{
 						newGroupStage = new Stage();
