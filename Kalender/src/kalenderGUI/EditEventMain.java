@@ -51,8 +51,15 @@ public class EditEventMain extends Application{
 	private LocalDate date;
 	private Integer spaces;
 	private ServerConnection sc;
-	private int eid = 13;
+	private int eid;
 	private JSONObject app;
+
+
+
+	public EditEventMain(int eid) {
+		this.eid = eid;
+	}
+
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -229,8 +236,8 @@ public class EditEventMain extends Application{
 		userValues.put("eid", Integer.toString(eid));
 		userValues.put("users", joinArrayList(persons, ","));
 		//		userValues.put("groups", joinArrayList(groups, ","));
-		
-		
+
+
 
 
 		// Add users
@@ -250,7 +257,7 @@ public class EditEventMain extends Application{
 				ConnectionForReal.scon.sendPost("notifications", invitePers);
 			}
 			if(addedGroupList.size() >0){
-				ConnectionForReal.scon.sendPost("events/add/groups", groupsValues);		
+				ConnectionForReal.scon.sendPost("events/add/groups", groupsValues);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -253,6 +253,7 @@ public class AgendaApplication extends Application
 				System.out.println("event admin: "+evAdmin);
 				System.out.println("real uid: "+ConnectionForReal.uid);
 				EventDetailsMain ng = new EventDetailsMain(Integer.parseInt(param.getDescription()));
+				EditEventMain edd = new EditEventMain(Integer.parseInt(param.getDescription()));
 				System.out.println("new Edit sier dette : ");
 
 				System.out.println(param.getDescription());
@@ -265,14 +266,22 @@ public class AgendaApplication extends Application
 					eventDetailsStage.initModality(Modality.WINDOW_MODAL);
 					eventDetailsStage.initOwner(primaryStage);
 
-					ng.start(eventDetailsStage);
+					edd.start(eventDetailsStage);
 
 
 				}
 
 				if(eventDetailsStage== null && evAdmin == ConnectionForReal.uid) {
 
-					System.out.println("Her skal event det poppe opp event redigerings greia. ");
+
+					eventDetailsStage = new Stage();
+					eventDetailsStage.setOnCloseRequest(eventDetailsClosed);
+					eventDetailsStage.setOnHidden(eventDetailsClosed);
+					eventDetailsStage.initModality(Modality.WINDOW_MODAL);
+					eventDetailsStage.initOwner(primaryStage);
+
+					ng.start(eventDetailsStage);
+
 
 				}
 			} catch (Exception e1) {
