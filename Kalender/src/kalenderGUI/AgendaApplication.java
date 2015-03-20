@@ -76,6 +76,8 @@ public class AgendaApplication extends Application
 	Button next=new Button();
 	ComboBox<Person> choosePerson = new ComboBox<Person>();
 	HashMap<String,Person> hashMap = new HashMap<String,Person>();
+	LocalDate dateTodayOne;
+	LocalDate thisIsNow = dateTodayOne.now();
 
 
 
@@ -415,9 +417,8 @@ public class AgendaApplication extends Application
 		JSONArray result;
 		try {
 
-			result = ConnectionForReal.scon.sendGet("events/user/between/" + from + "/" + to);
+			result = ConnectionForReal.scon.sendGet("events/user/"+ConnectionForReal.uid+"/between/" + from + "/" + to);
 
-			groupResult = ConnectionForReal.scon.sendGet("events/group/between/" + from + "/" + to);
 
 			Iterator itter = result.iterator();
 			while (itter.hasNext()){
@@ -440,12 +441,10 @@ public class AgendaApplication extends Application
 				String descEvent = (o.get("eid").toString());
 				String sumEvent = ((String) o.get("name"));
 
-
-
 				appList.add(new Agenda.AppointmentImpl()
 				.withStartTime(new GregorianCalendar(eventYear, eventMonth-1, eventDay, startTime, startMinutt))
 				.withEndTime(new GregorianCalendar(eventYear, eventMonth-1, eventDay, endTime, endMinutt))
-				.withAppointmentGroup(lAppointmentGroupMap.get("3"))
+				.withAppointmentGroup(lAppointmentGroupMap.get("9"))
 				.withSummary(sumEvent)
 				.withDescription(descEvent));
 
@@ -453,37 +452,7 @@ public class AgendaApplication extends Application
 
 
 
-			Iterator itterGroup = groupResult.iterator();
-			while (itterGroup.hasNext()){
-				JSONObject o = (JSONObject) itterGroup.next();
 
-				String[] Stime = ((String)o.get("starttime")).split(":");
-				int startTime = Integer.parseInt( Stime[0]);
-				int startMinutt = Integer.parseInt( Stime[1]);
-
-
-				String[] Etime = ((String)o.get("endtime")).split(":");
-				int endTime = Integer.parseInt( Etime[0]);
-				int endMinutt = Integer.parseInt( Etime[1]);
-
-				String[] datoEvent = ((String)o.get("eventdate")).split("-");
-				int eventYear = Integer.parseInt( datoEvent[0]);
-				int eventMonth = Integer.parseInt( datoEvent[1]);
-				int eventDay = Integer.parseInt( datoEvent[2]);
-
-				String descEvent = (o.get("eid").toString());
-				String sumEvent = ((String) o.get("name"));
-
-
-
-				appList.add(new Agenda.AppointmentImpl()
-				.withStartTime(new GregorianCalendar(eventYear, eventMonth-1, eventDay, startTime, startMinutt))
-				.withEndTime(new GregorianCalendar(eventYear, eventMonth-1, eventDay, endTime, endMinutt))
-				.withAppointmentGroup(lAppointmentGroupMap.get("6"))
-				.withSummary(sumEvent)
-				.withDescription(descEvent));
-
-			}
 
 		} catch ( Exception e) {
 			// TODO Auto-generated catch block
@@ -636,7 +605,7 @@ public class AgendaApplication extends Application
 					public void updateItem(LocalDate item, boolean empty) {
 						super.updateItem(item, empty);
 
-						if (item.isBefore(datePick.getValue())
+						if (item.isBefore(thisIsNow)
 								) {
 
 							setStyle(" -fx-text-fill: #d3d3d3");
