@@ -259,6 +259,7 @@ public class EditEventMain extends Application{
 			if(addedGroupList.size() >0){
 				ConnectionForReal.scon.sendPost("events/add/groups", groupsValues);
 			}
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

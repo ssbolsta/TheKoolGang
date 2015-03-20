@@ -250,13 +250,11 @@ public class AgendaApplication extends Application
 			try {
 				JSONObject eventPressed =(JSONObject) ConnectionForReal.scon.sendGet("events/eid/"+ Integer.parseInt(param.getDescription())).get(0);
 				long evAdmin = (long) eventPressed.get("admin");
-				System.out.println("event admin: "+evAdmin);
-				System.out.println("real uid: "+ConnectionForReal.uid);
+
 				EventDetailsMain ng = new EventDetailsMain(Integer.parseInt(param.getDescription()));
 				EditEventMain edd = new EditEventMain(Integer.parseInt(param.getDescription()));
-				System.out.println("new Edit sier dette : ");
 
-				System.out.println(param.getDescription());
+
 				if(eventDetailsStage == null && evAdmin != ConnectionForReal.uid){
 
 					eventDetailsStage = new Stage();
@@ -669,7 +667,7 @@ public class AgendaApplication extends Application
 		notific.setLayoutY(36);
 
 		try {
-			System.out.println(((JSONObject)ConnectionForReal.scon.sendGet("notifications/count").get(0)).get("count"));
+
 			notific.setText("Notifikasjoner ("+ ((JSONObject)ConnectionForReal.scon.sendGet("notifications/count").get(0)).get("count")  +")");
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
@@ -781,13 +779,11 @@ public class AgendaApplication extends Application
 							JSONObject eventA;
 							try {
 								eventA = (JSONObject) ConnectionForReal.scon.sendGet("events/eid/"+ eid).get(0);
-								System.out.println(" ConnectionForReal sin UID: "+String.valueOf(ConnectionForReal.uid));
-								System.out.println("Database event admin UID: "+ eventA.get("admin"));
+
 								if (ConnectionForReal.uid == (long) eventA.get("admin")){
 
 									agenda.appointments().remove(i);
 
-									System.out.println(eid);
 
 									ConnectionForReal.scon.sendDelete("events/eid/"+ eid);
 								}
@@ -969,7 +965,7 @@ public class AgendaApplication extends Application
 		// Define an event filter
 		EventHandler filter = new EventHandler<InputEvent>() {
 			public void handle(InputEvent event) {
-				System.out.println("Filtering out event " + event.getEventType());
+
 				event.consume();
 			}
 		};
@@ -990,7 +986,7 @@ public class AgendaApplication extends Application
 				while (c.next()) {
 					if (c.wasPermutated()) {
 						for (int i = c.getFrom(); i < c.getTo(); ++i) {
-							System.out.println("Nå ble det trykket PERMUTATED");
+
 
 						}
 					} else if (c.wasUpdated()) {
