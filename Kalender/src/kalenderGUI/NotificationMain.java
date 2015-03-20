@@ -5,8 +5,6 @@ import java.util.Iterator;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
-import models.Invitation;
 import models.Notification;
 import controllere.ConnectionForReal;
 import controllere.NotificationController;
@@ -29,6 +27,7 @@ public class NotificationMain extends Application{
 	public NotificationMain(){
 		try {
 			JSONArray response = ConnectionForReal.scon.sendGet("notifications");
+			@SuppressWarnings("rawtypes")
 			Iterator itr = response.iterator();
 			while(itr.hasNext()){
 				JSONObject invitation;

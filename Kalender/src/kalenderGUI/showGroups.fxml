@@ -21,8 +21,8 @@
       </Label>
       <HBox alignment="CENTER" layoutX="73.0" layoutY="393.0" prefHeight="46.0" prefWidth="380.0" spacing="10.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="440.0">
          <children>
-            <Button mnemonicParsing="false" styleClass="button-normal" text="Meld deg ut" />
-            <Button mnemonicParsing="false" styleClass="button-normal" text="Lukk" />
+            <Button mnemonicParsing="false" onAction="#handleMeld" styleClass="button-normal" text="Meld deg ut" />
+            <Button mnemonicParsing="false" onAction="#handleCancel" styleClass="button-normal" text="Lukk" />
          </children>
       </HBox>
       <ListView fx:id="membersList" layoutX="10.0" layoutY="236.0" prefHeight="130.0" prefWidth="390.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="250.0" />

@@ -131,7 +131,7 @@ public class ShowGroupsController {
 	@FXML
 	private void handleAddMember(){
 		
-		if(personKeyList.get(searchBox.getSelectionModel().getSelectedItem()) != null){
+		if( personKeyList.get(searchBox.getSelectionModel().getSelectedItem()) != null && groupTable.getSelectionModel().getSelectedItem() != null ){
 			
 			HashMap<String,String> hasj = new HashMap<String,String>();
 			
@@ -161,6 +161,27 @@ public class ShowGroupsController {
 	
 	@FXML
 	private void handleMeld(){
+		
+		if( groupTable.getSelectionModel().getSelectedItem() != null ){
+			
+			try{
+				
+				HashMap<String,String> hasj = new HashMap<String,String>();
+				hasj.put("gid", groupTable.getSelectionModel().getSelectedItem().getGroupID().toString());
+				
+				ConnectionForReal.scon.sendPost("groups/remove/user", hasj);
+				
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+				
+			}
+			
+			this.mainApp.getGroups().remove(groupTable.getSelectionModel().getSelectedItem());
+			
+			showMembers();
+			
+		}
 		
 	}
 	

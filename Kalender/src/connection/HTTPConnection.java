@@ -33,6 +33,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 
+@SuppressWarnings({ "deprecation", "unused" })
 public class HTTPConnection {
 
     private final String USER_AGENT = "Mozilla/5.0";
